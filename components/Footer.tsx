@@ -1,0 +1,86 @@
+
+import React from 'react';
+import { Instagram, Facebook, Phone, Mail, MapPin, Globe2, Heart } from 'lucide-react';
+
+const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="relative bg-brand-dark text-gray-300 pt-32 pb-32 md:pb-24 font-sans overflow-hidden">
+      
+      {/* Wavy Top Border */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+        <svg className="relative block w-[calc(100%+1.3px)] h-[80px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#f0f9ff"></path>
+        </svg>
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid md:grid-cols-4 gap-12 mb-16">
+            
+            {/* Brand */}
+            <div className="md:col-span-2">
+                <div className="mb-6">
+                    <img 
+                        src="/assets/LOGO ANHANGA VIAGENS - BRANCO.svg" 
+                        alt="Anhangá Viagens" 
+                        className="h-32 w-auto object-contain"
+                    />
+                </div>
+                <p className="text-gray-400 leading-relaxed max-w-sm font-medium">
+                    Planejamento de viagens com alma, design e zero estresse. <br/>
+                    Vamos criar memórias?
+                </p>
+            </div>
+
+            {/* Links */}
+            <div>
+                <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-xs">Menu</h4>
+                <ul className="space-y-3 font-medium">
+                    <li><a href="#destinos" className="hover:text-brand-yellow transition-colors">Destinos</a></li>
+                    <li><a href="#experiencia" className="hover:text-brand-yellow transition-colors">Experiência</a></li>
+                    <li><a href="#como-funciona" className="hover:text-brand-yellow transition-colors">Como Funciona</a></li>
+                    <li><a href="#depoimentos" className="hover:text-brand-yellow transition-colors">Love Notes</a></li>
+                </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+                <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-xs">Fale Conosco</h4>
+                <ul className="space-y-4 font-medium text-sm">
+                    <li className="flex items-center gap-3">
+                        <Phone className="w-5 h-5 text-brand-cyan" /> (11) 5283-3309
+                    </li>
+                    <li className="flex items-center gap-3">
+                        <Mail className="w-5 h-5 text-brand-cyan" /> contato@anhanga.tur.br
+                    </li>
+                    <li className="flex items-start gap-3">
+                        <MapPin className="w-5 h-5 text-brand-cyan shrink-0 mt-1" /> 
+                        <span className="leading-snug">Av. Dom Pedro I, 773<br/>Vila Monumento, São Paulo-SP</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        {/* Bottom */}
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex gap-4 order-2 md:order-1">
+                 <a href="https://instagram.com/anhangaviagens" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full hover:bg-brand-vibrant hover:text-white transition-colors"><Instagram className="w-5 h-5" /></a>
+                 <a href="https://facebook.com/profile.php?id=61585422494271" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full hover:bg-brand-vibrant hover:text-white transition-colors"><Facebook className="w-5 h-5" /></a>
+            </div>
+            
+            <div className="flex flex-col md:items-end gap-2 text-center md:text-right order-1 md:order-2">
+                <div className="text-xs text-gray-500 font-medium flex items-center justify-center md:justify-end gap-1">
+                    Feito com <Heart className="w-3 h-3 text-red-500 fill-current" /> pela Anhangá.tech • {currentYear}
+                </div>
+                <div className="text-[10px] text-gray-600 font-medium">
+                    ANHANGA TURISMO LTDA • CNPJ/Cadastur: 37.036.732/0001-41
+                </div>
+            </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

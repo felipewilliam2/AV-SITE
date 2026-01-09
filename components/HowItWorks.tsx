@@ -1,0 +1,183 @@
+import React from 'react';
+import { MessageCircle, PenTool, CreditCard, Plane, Sparkles, ArrowRight, Star, Heart } from 'lucide-react';
+
+const HowItWorks: React.FC = () => {
+  const steps = [
+    {
+      id: 1,
+      icon: <MessageCircle className="w-8 h-8 text-white" />,
+      title: "Oie! Vamos conversar?",
+      desc: "Nada de formulários chatos. A gente bate um papo no WhatsApp para entender seus sonhos e quanto você quer investir.",
+      color: "bg-brand-yellow",
+      lightColor: "bg-yellow-50",
+      borderColor: "border-yellow-200",
+      rotate: "-rotate-2",
+      sticker: <Heart className="w-20 h-20 text-yellow-400 fill-yellow-400 drop-shadow-md" />
+    },
+    {
+      id: 2,
+      icon: <PenTool className="w-8 h-8 text-white" />,
+      title: "Desenhando o Sonho",
+      desc: "Nossos especialistas criam um roteiro dia-a-dia só seu. Ajustamos cada detalhe até você dizer: 'É isso!'",
+      color: "bg-brand-cyan",
+      lightColor: "bg-sky-50",
+      borderColor: "border-sky-200",
+      rotate: "rotate-3",
+      sticker: <Star className="w-24 h-24 text-sky-400 fill-sky-200 drop-shadow-md" />
+    },
+    {
+      id: 3,
+      icon: <CreditCard className="w-8 h-8 text-white" />,
+      title: "Burocracia? Deixa com a gente",
+      desc: "Aprovado? Ótimo! Nós emitimos voos, hotéis e passeios. Parcelamos tudo e você recebe os vouchers organizadinhos.",
+      color: "bg-purple-500",
+      lightColor: "bg-purple-50",
+      borderColor: "border-purple-200",
+      rotate: "-rotate-1",
+      sticker: <div className="text-8xl drop-shadow-md filter hue-rotate-15">✈️</div>
+    },
+    {
+      id: 4,
+      icon: <Plane className="w-8 h-8 text-white" />,
+      title: "Fui! Partiu Viajar",
+      desc: "Agora é só fazer as malas! E se precisar de algo lá longe? Nosso time fica de plantão 24h por você.",
+      color: "bg-green-500",
+      lightColor: "bg-green-50",
+      borderColor: "border-green-200",
+      rotate: "rotate-2",
+      sticker: <div className="text-8xl drop-shadow-md">🏝️</div>
+    }
+  ];
+
+  return (
+    <section id="como-funciona" className="pt-24 pb-32 relative overflow-hidden bg-[#fffdf5]">
+      
+      {/* Background Pattern - Dot Grid */}
+      <div className="absolute inset-0 z-0 opacity-[0.4]" 
+           style={{ backgroundImage: 'radial-gradient(#cbd5e1 1.5px, transparent 1.5px)', backgroundSize: '24px 24px' }}>
+      </div>
+
+      {/* Floating Blobs (Background) */}
+      <div className="absolute top-20 left-10 w-64 h-64 bg-yellow-200/40 rounded-full blur-3xl mix-blend-multiply filter animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-80 h-80 bg-cyan-200/40 rounded-full blur-3xl mix-blend-multiply filter animate-pulse" style={{ animationDelay: '2s' }}></div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        
+        {/* Header Divertido */}
+        <div className="text-center max-w-3xl mx-auto mb-20">
+            <div className="inline-block relative">
+                <span className="absolute -inset-1 block -skew-y-2 bg-brand-yellow rounded-lg" aria-hidden="true"></span>
+                <span className="relative text-brand-dark font-black text-sm uppercase tracking-widest px-2 py-1">Sem Complicação</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-extrabold text-brand-dark mt-6 mb-6 leading-tight">
+                Como a mágica <br className="md:hidden"/> acontece?
+            </h2>
+            <p className="text-xl text-gray-600 font-medium font-sans">
+                Planejar viagem não precisa ser chato. <br className="hidden md:block"/>
+                Veja como transformamos seu sonho em realidade em 4 passos simples.
+            </p>
+        </div>
+
+        {/* Timeline Container */}
+        <div className="relative max-w-5xl mx-auto mb-20">
+            
+            {/* The Winding Path (Dashed Line SVG) - Desktop Only */}
+            <div className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+                <svg className="w-full h-full" viewBox="0 0 1000 800" preserveAspectRatio="none">
+                    <path 
+                        d="M 500 50 C 500 150, 200 150, 200 250 C 200 350, 800 350, 800 450 C 800 550, 200 550, 200 650 C 200 750, 500 750, 500 800" 
+                        fill="none" 
+                        stroke="#cbd5e1" 
+                        strokeWidth="4" 
+                        strokeDasharray="12 12"
+                        className="opacity-60"
+                    />
+                </svg>
+            </div>
+
+            {/* Mobile Vertical Line */}
+            <div className="md:hidden absolute top-4 bottom-4 left-8 w-1 bg-gray-200 border-l-2 border-dashed border-gray-300 z-0"></div>
+
+            <div className="flex flex-col gap-12 md:gap-0">
+                {steps.map((step, idx) => {
+                    const isEven = idx % 2 === 0;
+                    return (
+                        <div key={step.id} className={`flex flex-col md:flex-row items-center w-full relative z-10 ${isEven ? 'md:justify-start' : 'md:justify-end'}`}>
+                            
+                            {/* The Card */}
+                            <div className={`
+                                w-full md:w-[45%] bg-white p-8 rounded-[2rem] shadow-[8px_8px_0px_rgba(0,0,0,0.05)] border-2 ${step.borderColor}
+                                transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-[12px_12px_0px_rgba(0,0,0,0.08)]
+                                relative group overflow-visible ${step.rotate}
+                            `}>
+                                {/* Fake Tape Effect */}
+                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-white/40 backdrop-blur-sm shadow-sm rotate-1 border-l border-r border-white/60"></div>
+                                
+                                {/* Header: Icon + Number */}
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className={`w-16 h-16 rounded-2xl ${step.color} shadow-lg flex items-center justify-center transform -rotate-6 group-hover:rotate-0 transition-transform duration-300`}>
+                                        {step.icon}
+                                    </div>
+                                    <span className="font-black text-6xl text-gray-100 select-none absolute top-4 right-6 z-0">
+                                        0{step.id}
+                                    </span>
+                                </div>
+
+                                {/* Content */}
+                                <div className="relative z-10">
+                                    <h3 className="text-2xl font-bold text-gray-800 mb-3">{step.title}</h3>
+                                    <p className="text-gray-600 leading-relaxed font-medium">
+                                        {step.desc}
+                                    </p>
+                                </div>
+
+                                {/* Sticker Decoration */}
+                                <div className="absolute -bottom-8 -right-8 transform rotate-12 group-hover:scale-110 transition-transform z-20">
+                                    {step.sticker}
+                                </div>
+                            </div>
+                            
+                            {/* Empty space for the zig-zag on desktop */}
+                            <div className="hidden md:block md:w-[10%]"></div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+
+        {/* Bottom CTA - Fun Style */}
+        <div className="mt-24 text-center relative z-20">
+            <div className="inline-block relative group">
+                {/* Blobs behind button - Adjusted opacity and size */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-brand-yellow/30 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
+                
+                <a 
+                    href="#contato"
+                    className="relative z-10 flex items-center gap-4 bg-white text-brand-dark px-10 py-6 rounded-full font-black text-xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.15)] hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.25)] transform transition-all hover:scale-105 active:scale-95 border-4 border-transparent hover:border-brand-yellow"
+                >
+                    <Sparkles className="w-6 h-6 text-brand-yellow fill-brand-yellow" />
+                    <span>Quero meu roteiro agora!</span>
+                    <div className="w-10 h-10 bg-brand-dark rounded-full flex items-center justify-center text-white">
+                        <ArrowRight className="w-5 h-5" />
+                    </div>
+                </a>
+            </div>
+            <p className="mt-6 text-gray-400 font-medium text-sm">
+                (Prometemos: Zero estresse, 100% diversão)
+            </p>
+        </div>
+
+      </div>
+
+      {/* Cloud Wave Separator for Smooth Transition */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10">
+        <svg className="relative block w-[calc(100%+1.3px)] h-[80px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" className="fill-brand-light"></path>
+        </svg>
+      </div>
+
+    </section>
+  );
+};
+
+export default HowItWorks;
