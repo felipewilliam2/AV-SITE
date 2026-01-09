@@ -113,15 +113,26 @@ Site institucional da Anhangá Viagens com chat AI integrado para consultas de v
    }
    ```
 
-3. Configure a base no `vite.config.ts`:
-   ```ts
-   base: '/nome-do-repositorio/'
+3. **Configure o base path** criando um arquivo `.env.production`:
+   
+   Se o repositório for `username.github.io/repo-name`:
+   ```env
+   VITE_BASE_PATH=/repo-name/
+   GEMINI_API_KEY=sua_chave_aqui
+   ```
+   
+   Se for `username.github.io` (sem subdiretório):
+   ```env
+   VITE_BASE_PATH=/
+   GEMINI_API_KEY=sua_chave_aqui
    ```
 
 4. Faça o deploy:
    ```bash
    npm run deploy
    ```
+   
+   > ⚠️ **Importante**: O `vite.config.ts` já está configurado para usar `VITE_BASE_PATH` automaticamente. Não é necessário editar o arquivo de configuração.
 
 #### 4. **Servidor Próprio (Nginx/Apache)**
 

@@ -88,15 +88,24 @@ npm install --save-dev gh-pages
 }
 ```
 
-3. Configure a base no `vite.config.ts`:
-```ts
-base: '/nome-do-repositorio/'
-```
+3. **IMPORTANTE**: Configure o base path antes do build:
+   - Se o repositório for `username.github.io/repo-name`, crie um arquivo `.env.production`:
+   ```env
+   VITE_BASE_PATH=/repo-name/
+   GEMINI_API_KEY=sua_chave_aqui
+   ```
+   - Se for `username.github.io` (sem subdiretório), use:
+   ```env
+   VITE_BASE_PATH=/
+   GEMINI_API_KEY=sua_chave_aqui
+   ```
 
 4. Deploy:
 ```bash
 npm run deploy
 ```
+
+**Nota**: O `vite.config.ts` já está configurado para usar `VITE_BASE_PATH` automaticamente.
 
 ## 🐛 Troubleshooting
 

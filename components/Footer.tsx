@@ -4,6 +4,7 @@ import { Instagram, Facebook, Phone, Mail, MapPin, Globe2, Heart } from 'lucide-
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const baseUrl = import.meta.env.BASE_URL;
 
   return (
     <footer className="relative bg-brand-dark text-gray-300 pt-32 pb-32 md:pb-24 font-sans overflow-hidden">
@@ -22,7 +23,7 @@ const Footer: React.FC = () => {
             <div className="md:col-span-2">
                 <div className="mb-6">
                     <img 
-                        src="/assets/LOGO ANHANGA VIAGENS - BRANCO.svg" 
+                        src={`${baseUrl}assets/LOGO ANHANGA VIAGENS - BRANCO.svg`} 
                         alt="Anhangá Viagens" 
                         className="h-32 w-auto object-contain"
                     />

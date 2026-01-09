@@ -1,7 +1,10 @@
 
 import { GoogleGenAI, Type, FunctionDeclaration, Content } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Usar process.env.API_KEY que é definido no vite.config.ts via define
+// Em produção, isso será substituído pelo valor da variável de ambiente GEMINI_API_KEY
+const apiKey = (process.env as any).API_KEY || (process.env as any).GEMINI_API_KEY || '';
+const ai = new GoogleGenAI({ apiKey });
 
 // Definição da ferramenta para gerar o link
 const budgetTool: FunctionDeclaration = {
@@ -147,8 +150,15 @@ export const getTravelAdvice = async (history: {role: 'user' | 'model', text: st
 
     return result;
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("Erro ao consultar Gemini:", error);
+    
+    // Se não houver API key configurada
+    if (!apiKey) {
+      return { text: "⚠️ A chave da API não está configurada. Por favor, configure a variável GEMINI_API_KEY no ambiente de deploy." };
+    }
+    
+    // Outros erros
     return { text: "Desculpe, tive um problema técnico. Poderia tentar novamente?" };
   }
 };

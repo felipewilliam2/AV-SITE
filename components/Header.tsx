@@ -63,10 +63,11 @@ const Header: React.FC = () => {
     ? 'bg-white/90 backdrop-blur-md shadow-lg py-3 text-brand-dark' 
     : 'bg-transparent py-6 text-white';
 
-  // Lógica de seleção do Logo
+  // Lógica de seleção do Logo - usando BASE_URL do Vite para suportar GitHub Pages
+  const baseUrl = import.meta.env.BASE_URL;
   const logoSrc = isScrolled || forceWhiteHeader 
-    ? '/assets/LOGO ANHANGA VIAGENS - AZUL.svg' 
-    : '/assets/LOGO ANHANGA VIAGENS - BRANCO.svg';
+    ? `${baseUrl}assets/LOGO ANHANGA VIAGENS - AZUL.svg` 
+    : `${baseUrl}assets/LOGO ANHANGA VIAGENS - BRANCO.svg`;
 
   const navTextClass = isScrolled || forceWhiteHeader ? 'text-gray-600 hover:text-brand-vibrant' : 'text-white/90 hover:text-white';
   const buttonClass = isScrolled || forceWhiteHeader
