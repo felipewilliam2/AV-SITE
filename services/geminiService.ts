@@ -46,8 +46,14 @@ export const getTravelAdvice = async (history: {role: 'user' | 'model', text: st
       parts: [{ text: msg.text }]
     }));
 
+    // Modelo: gemini-2.5-flash (conforme solicitado)
+    // Se não estiver disponível, pode tentar: gemini-2.0-flash ou gemini-1.5-flash
+    const modelName = (process.env as any).GEMINI_MODEL || 'gemini-2.5-flash';
+    
+    console.log(`🤖 Usando modelo: ${modelName}`);
+    
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: modelName,
       contents: contents,
       config: {
         tools: [{ functionDeclarations: [budgetTool] }],
@@ -158,7 +164,24 @@ export const getTravelAdvice = async (history: {role: 'user' | 'model', text: st
       return { text: "⚠️ A chave da API não está configurada. Por favor, configure a variável GEMINI_API_KEY no ambiente de deploy." };
     }
     
+    // Log detalhado do erro para debug
+    if (error?.message) {
+      console.error("Detalhes do erro:", error.message);
+      console.error("Código do erro:", error.code);
+      console.error("Status do erro:", error.status);
+    }
+    
+    // Mensagens de erro mais específicas
+    if (error?.message?.includes('model') || error?.message?.includes('Model') || error?.message?.includes('not found')) {
+      const currentModel = (process.env as any).GEMINI_MODEL || 'gemini-2.5-flash';
+      return { text: `⚠️ Erro com o modelo de IA '${currentModel}'. O modelo pode não estar disponível. Tente usar 'gemini-2.0-flash' ou 'gemini-1.5-flash' configurando a variável GEMINI_MODEL.` };
+    }
+    
+    if (error?.message?.includes('API key') || error?.message?.includes('authentication')) {
+      return { text: "⚠️ Erro de autenticação. Verifique se a chave da API está correta e válida." };
+    }
+    
     // Outros erros
-    return { text: "Desculpe, tive um problema técnico. Poderia tentar novamente?" };
+    return { text: `Desculpe, tive um problema técnico: ${error?.message || 'Erro desconhecido'}. Poderia tentar novamente?` };
   }
 };
