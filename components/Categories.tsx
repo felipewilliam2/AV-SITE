@@ -10,7 +10,7 @@ const Categories: React.FC = () => {
       tag: "Destino dos Sonhos",
       rotate: "-rotate-2",
       color: "bg-blue-100 text-blue-600",
-      link: "/landing-orlando-placeholder" // Placeholder
+      link: "https://orlando.anhanga.tur.br"
     },
     {
       title: "Beto Carrero",
