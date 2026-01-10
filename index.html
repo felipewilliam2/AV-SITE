@@ -10,12 +10,16 @@
     gtag('js', new Date());
 
     gtag('config', 'G-QDBT5PM4KP');
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l] = w[l] || [];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-T2KGS86G');</script>
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-T2KGS86G');</script>
   <!-- End Google Tag Manager -->
   </script>
   <meta charset="UTF-8" />
@@ -28,70 +32,70 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
   <script>
-  tailwind.config = {
-    theme: {
-    extend: {
-    colors: {
-    brand: {
-    cyan: '#0ea5e9', // Sky 500
-  cyanDark: '#0284c7', // Sky 600
-  blue: '#1e40af', // Blue 800
-  vibrant: '#0ea5e9', // Cyan
-  yellow: '#fbbf24', // Amber 400
-  dark: '#0f172a', // Slate 900
-  light: '#f0f9ff', // Sky 50
-              }
-            },
-  fontFamily: {
-    sans: ['Poppins', 'Inter', 'sans-serif'],
-  serif: ['Merriweather', 'serif'], // Fonte editorial para o blog
-            },
-  boxShadow: {
-    'glow': '0 0 20px rgba(14, 165, 233, 0.5)',
-  'float': '0 10px 40px -10px rgba(0,0,0,0.15)',
-            },
-  animation: {
-    'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-  'fade-in-down': 'fadeInDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-  'pop-in': 'popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
-  'draw': 'draw 1.5s ease-in-out forwards',
-  'float': 'float 6s ease-in-out infinite',
-  'blob': 'blob 10s infinite',
-            },
-  keyframes: {
-    fadeInUp: {
-    '0%': {opacity: '0', transform: 'translateY(30px)' },
-  '100%': {opacity: '1', transform: 'translateY(0)' },
-              },
-  fadeInDown: {
-    '0%': {opacity: '0', transform: 'translateY(-20px)' },
-  '100%': {opacity: '1', transform: 'translateY(0)' },
-              },
-  popIn: {
-    '0%': {opacity: '0', transform: 'scale(0.9) translateY(10px)' },
-  '100%': {opacity: '1', transform: 'scale(1) translateY(0)' },
-              },
-  draw: {
-    '0%': {strokeDasharray: '100', strokeDashoffset: '100' },
-  '100%': {strokeDashoffset: '0' },
-              },
-  float: {
-    '0%, 100%': {transform: 'translateY(0)' },
-  '50%': {transform: 'translateY(-10px)' },
-              },
-  blob: {
-    '0%': {transform: 'translate(0px, 0px) scale(1)' },
-  '33%': {transform: 'translate(30px, -50px) scale(1.1)' },
-  '66%': {transform: 'translate(-20px, 20px) scale(0.9)' },
-  '100%': {transform: 'translate(0px, 0px) scale(1)' },
-              }
-            },
-  transitionTimingFunction: {
-    'spring': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#0ea5e9', // Sky 500
+              cyanDark: '#0284c7', // Sky 600
+              blue: '#1e40af', // Blue 800
+              vibrant: '#0ea5e9', // Cyan
+              yellow: '#fbbf24', // Amber 400
+              dark: '#0f172a', // Slate 900
+              light: '#f0f9ff', // Sky 50
             }
+          },
+          fontFamily: {
+            sans: ['Poppins', 'Inter', 'sans-serif'],
+            serif: ['Merriweather', 'serif'], // Fonte editorial para o blog
+          },
+          boxShadow: {
+            'glow': '0 0 20px rgba(14, 165, 233, 0.5)',
+            'float': '0 10px 40px -10px rgba(0,0,0,0.15)',
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'fade-in-down': 'fadeInDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'pop-in': 'popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+            'draw': 'draw 1.5s ease-in-out forwards',
+            'float': 'float 6s ease-in-out infinite',
+            'blob': 'blob 10s infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeInDown: {
+              '0%': { opacity: '0', transform: 'translateY(-20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            popIn: {
+              '0%': { opacity: '0', transform: 'scale(0.9) translateY(10px)' },
+              '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+            },
+            draw: {
+              '0%': { strokeDasharray: '100', strokeDashoffset: '100' },
+              '100%': { strokeDashoffset: '0' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' },
+            }
+          },
+          transitionTimingFunction: {
+            'spring': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
           }
         }
       }
+    }
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');
