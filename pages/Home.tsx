@@ -10,6 +10,10 @@ import Blog from '../components/Blog';
 import FAQ from '../components/FAQ';
 import CallToAction from '../components/CallToAction';
 
+import { OrganizationSchema } from '../components/schemas/OrganizationSchema';
+import { BreadcrumbSchema } from '../components/schemas/BreadcrumbSchema';
+import { FaqSchema } from '../components/schemas/FaqSchema';
+
 const Home: React.FC = () => {
   const location = useLocation();
 
@@ -19,13 +23,13 @@ const Home: React.FC = () => {
     if (location.state && location.state.targetId) {
       const targetId = location.state.targetId;
       const element = document.getElementById(targetId);
-      
+
       if (element) {
         // Pequeno timeout para garantir que o DOM esteja pronto
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth' });
         }, 100);
-        
+
         // Limpeza opcional do estado (embora o history mantenha, evita scrolls indesejados em refresh simples sem limpar history)
         window.history.replaceState({}, document.title);
       }
@@ -34,15 +38,18 @@ const Home: React.FC = () => {
 
   return (
     <>
-        <Hero />
-        <Highlights />
-        <Categories />
-        <Destinations />
-        <HowItWorks />
-        <Testimonials />
-        <Blog />
-        <FAQ />
-        <CallToAction />
+      <OrganizationSchema />
+      <BreadcrumbSchema />
+      <FaqSchema />
+      <Hero />
+      <Highlights />
+      <Categories />
+      <Destinations />
+      <HowItWorks />
+      <Testimonials />
+      <Blog />
+      <FAQ />
+      <CallToAction />
     </>
   );
 };
