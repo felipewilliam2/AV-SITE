@@ -9,6 +9,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import BlogList from './pages/BlogList';
 import BlogPost from './pages/BlogPost';
+import Terms from './pages/Terms';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             {/* Rotas do Blog */}
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="/termos-de-uso" element={<Terms />} />
 
             {/* Rota de Fallback (Catch-all): Redireciona qualquer URL inválida/desconhecida para a Home */}
             <Route path="*" element={<Navigate to="/" replace />} />

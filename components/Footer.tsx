@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Phone, Mail, MapPin, Globe2, Heart } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -42,6 +43,7 @@ const Footer: React.FC = () => {
                             <li><a href="#experiencia" className="hover:text-brand-yellow transition-colors">Experiência</a></li>
                             <li><a href="#como-funciona" className="hover:text-brand-yellow transition-colors">Como Funciona</a></li>
                             <li><a href="#depoimentos" className="hover:text-brand-yellow transition-colors">Love Notes</a></li>
+                            <li><Link to="/termos-de-uso" className="hover:text-brand-yellow transition-colors">Termos de Uso</Link></li>
                         </ul>
                     </div>
 
