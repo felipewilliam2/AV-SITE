@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AIChat from './components/AIChat';
@@ -20,11 +20,11 @@ function App() {
           <Routes>
             {/* Rota Principal (Home) - Garante renderização inicial */}
             <Route path="/" element={<Home />} />
-            
+
             {/* Rotas do Blog */}
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:id" element={<BlogPost />} />
-            
+
             {/* Rota de Fallback (Catch-all): Redireciona qualquer URL inválida/desconhecida para a Home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
