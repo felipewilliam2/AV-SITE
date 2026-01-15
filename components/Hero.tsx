@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { getWhatsAppLink } from '../utils/whatsapp';
 import { Search, MapPin, ChevronDown, Plus, Minus, ChevronLeft, ChevronRight, Plane, Loader2, Sparkles, Calendar, User, Briefcase, Wallet, Palmtree, Heart, Baby, Compass, Users, DollarSign, Gem, Crown } from 'lucide-react';
 
 // --- VIDEO DATABASE ---
@@ -408,7 +409,7 @@ const Hero: React.FC = () => {
     if (tripType) message += `🎭 *Tipo de Viagem:* ${tripType}\n`;
     if (budget) message += `💰 *Orçamento:* ${budget}\n`;
 
-    const whatsappUrl = `https://wa.me/551152833309?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = getWhatsAppLink(message);
 
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');

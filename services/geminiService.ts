@@ -1,5 +1,6 @@
 
 import { GoogleGenAI, Type, FunctionDeclaration, Content } from "@google/genai";
+import { getWhatsAppLink } from "../utils/whatsapp";
 
 // Usar process.env.API_KEY que é definido no vite.config.ts via define
 // Em produção, isso será substituído pelo valor da variável de ambiente GEMINI_API_KEY
@@ -16,10 +17,10 @@ const budgetTool: FunctionDeclaration = {
       destination: { type: Type.STRING, description: "O destino desejado para a viagem." },
       dates: { type: Type.STRING, description: "Data aproximada da viagem ou mês/ano." },
       adults: { type: Type.INTEGER, description: "Quantidade de adultos viajando." },
-      child_ages: { 
-        type: Type.ARRAY, 
+      child_ages: {
+        type: Type.ARRAY,
         items: { type: Type.INTEGER },
-        description: "Lista com as idades das crianças. Se não houver crianças, envie um array vazio." 
+        description: "Lista com as idades das crianças. Se não houver crianças, envie um array vazio."
       },
       interests: { type: Type.STRING, description: "Interesses específicos (ex: luxo, aventura, família)." }
     },
@@ -38,7 +39,7 @@ interface ChatResponse {
   };
 }
 
-export const getTravelAdvice = async (history: {role: 'user' | 'model', text: string}[]): Promise<ChatResponse> => {
+export const getTravelAdvice = async (history: { role: 'user' | 'model', text: string }[]): Promise<ChatResponse> => {
   try {
     // Converter histórico simples para o formato da API
     const contents: Content[] = history.map(msg => ({
@@ -49,9 +50,9 @@ export const getTravelAdvice = async (history: {role: 'user' | 'model', text: st
     // Modelo: gemini-2.5-flash (conforme solicitado)
     // Se não estiver disponível, pode tentar: gemini-2.0-flash ou gemini-1.5-flash
     const modelName = (process.env as any).GEMINI_MODEL || 'gemini-2.5-flash';
-    
+
     console.log(`🤖 Usando modelo: ${modelName}`);
-    
+
     const response = await ai.models.generateContent({
       model: modelName,
       contents: contents,
@@ -112,75 +113,74 @@ export const getTravelAdvice = async (history: {role: 'user' | 'model', text: st
     // Verificar texto normal primeiro (para capturar o comentário empático da IA ou o aviso de segurança)
     const textParts = candidate?.content?.parts?.filter(part => part.text);
     if (textParts && textParts.length > 0) {
-        result.text = textParts.map(p => p.text).join(' ');
+      result.text = textParts.map(p => p.text).join(' ');
     }
 
     // Verificar se houve chamada de ferramenta (Function Call)
     const functionCalls = candidate?.content?.parts?.filter(part => part.functionCall);
-    
+
     if (functionCalls && functionCalls.length > 0) {
       const call = functionCalls[0].functionCall;
       if (call && call.name === 'generate_budget_link') {
         const args = call.args as any;
-        
+
         // Formatar texto de viajantes
-        const adultsCount = args.adults || 2; 
+        const adultsCount = args.adults || 2;
         const childAges = Array.isArray(args.child_ages) ? args.child_ages : [];
-        
+
         let travelersText = `${adultsCount} Adulto${adultsCount !== 1 ? 's' : ''}`;
-        
+
         if (childAges.length > 0) {
-            const agesString = childAges.map((age: number) => `${age} anos`).join(', ');
-            travelersText += `, ${childAges.length} Criança${childAges.length !== 1 ? 's' : ''} (${agesString})`;
+          const agesString = childAges.map((age: number) => `${age} anos`).join(', ');
+          travelersText += `, ${childAges.length} Criança${childAges.length !== 1 ? 's' : ''} (${agesString})`;
         }
 
         // Construir link do WhatsApp
         const text = `Olá! Vim pelo Chatbot da Anhangá. Gostaria de um orçamento:\n\n📍 Destino: ${args.destination}\n📅 Data: ${args.dates || 'A definir'}\n👥 Viajantes: ${travelersText}\n✨ Interesses: ${args.interests || 'Geral'}`;
-        const encodedText = encodeURIComponent(text);
-        
+
         result.budgetLink = {
-            destination: args.destination,
-            dates: args.dates || 'A definir',
-            travelers: travelersText,
-            interests: args.interests || '',
-            url: `https://wa.me/551152833309?text=${encodedText}`
+          destination: args.destination,
+          dates: args.dates || 'A definir',
+          travelers: travelersText,
+          interests: args.interests || '',
+          url: getWhatsAppLink(text)
         };
-        
+
         // Fallback inteligente: Se o modelo chamou a função mas não mandou texto (comum em function calling puro),
         // inserimos um texto genérico mas agradável. Se ele mandou texto (capturado acima), mantemos o texto dele.
         if (!result.text) {
-             result.text = "Prontinho! ✨ Preparei seu link direto para falar com nossos especialistas. É só clicar abaixo 👇";
+          result.text = "Prontinho! ✨ Preparei seu link direto para falar com nossos especialistas. É só clicar abaixo 👇";
         }
       }
-    } 
+    }
 
     return result;
 
   } catch (error: any) {
     console.error("Erro ao consultar Gemini:", error);
-    
+
     // Se não houver API key configurada
     if (!apiKey) {
       return { text: "⚠️ A chave da API não está configurada. Por favor, configure a variável GEMINI_API_KEY no ambiente de deploy." };
     }
-    
+
     // Log detalhado do erro para debug
     if (error?.message) {
       console.error("Detalhes do erro:", error.message);
       console.error("Código do erro:", error.code);
       console.error("Status do erro:", error.status);
     }
-    
+
     // Mensagens de erro mais específicas
     if (error?.message?.includes('model') || error?.message?.includes('Model') || error?.message?.includes('not found')) {
       const currentModel = (process.env as any).GEMINI_MODEL || 'gemini-2.5-flash';
       return { text: `⚠️ Erro com o modelo de IA '${currentModel}'. O modelo pode não estar disponível. Tente usar 'gemini-2.0-flash' ou 'gemini-1.5-flash' configurando a variável GEMINI_MODEL.` };
     }
-    
+
     if (error?.message?.includes('API key') || error?.message?.includes('authentication')) {
       return { text: "⚠️ Erro de autenticação. Verifique se a chave da API está correta e válida." };
     }
-    
+
     // Outros erros
     return { text: `Desculpe, tive um problema técnico: ${error?.message || 'Erro desconhecido'}. Poderia tentar novamente?` };
   }

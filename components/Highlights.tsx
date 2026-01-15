@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getWhatsAppLink } from '../utils/whatsapp';
 import { UserCheck, Sparkles, FileCheck, Compass, ShieldCheck, Loader2, ArrowRight } from 'lucide-react';
 
 interface HighlightItem {
@@ -12,136 +13,136 @@ interface HighlightItem {
 }
 
 const Highlights: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-      e.preventDefault();
-      setIsLoading(true);
-      const href = e.currentTarget.href;
-      
-      setTimeout(() => {
-          window.open(href, '_blank');
-          setIsLoading(false);
-      }, 1500);
-  };
+    const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        setIsLoading(true);
+        const href = e.currentTarget.href;
 
-  const highlights: HighlightItem[] = [
-    {
-      icon: UserCheck,
-      title: "Concierge Humano",
-      description: "Esqueça os robôs. Fale com gente que entende de gente.",
-      bg: "bg-orange-100",
-      accent: "border-orange-200",
-      iconColor: "text-orange-600",
-      rotate: "-rotate-1"
-    },
-    {
-      icon: Sparkles,
-      title: "Roteiros à Mão",
-      description: "Desenhamos cada dia da viagem do zero, só pra você.",
-      bg: "bg-purple-100",
-      accent: "border-purple-200",
-      iconColor: "text-purple-600",
-      rotate: "rotate-2"
-    },
-    {
-      icon: FileCheck,
-      title: "Zero Burocracia",
-      description: "Vistos, formulários e chatices? Deixa com a gente.",
-      bg: "bg-blue-100",
-      accent: "border-blue-200",
-      iconColor: "text-blue-600",
-      rotate: "-rotate-2"
-    },
-    {
-      icon: Compass,
-      title: "Achados Secretos",
-      description: "Lugares autênticos que não estão na primeira página do Google.",
-      bg: "bg-emerald-100",
-      accent: "border-emerald-200",
-      iconColor: "text-emerald-600",
-      rotate: "rotate-1"
-    }
-  ];
+        setTimeout(() => {
+            window.open(href, '_blank');
+            setIsLoading(false);
+        }, 1500);
+    };
 
-  return (
-    <section id="experiencia" className="py-24 bg-[#fffdf5] relative overflow-hidden">
-      
-      {/* Dot Pattern Background */}
-      <div className="absolute inset-0 z-0 opacity-[0.3]" 
-           style={{ backgroundImage: 'radial-gradient(#cbd5e1 1.5px, transparent 1.5px)', backgroundSize: '24px 24px' }}>
-      </div>
+    const highlights: HighlightItem[] = [
+        {
+            icon: UserCheck,
+            title: "Concierge Humano",
+            description: "Esqueça os robôs. Fale com gente que entende de gente.",
+            bg: "bg-orange-100",
+            accent: "border-orange-200",
+            iconColor: "text-orange-600",
+            rotate: "-rotate-1"
+        },
+        {
+            icon: Sparkles,
+            title: "Roteiros à Mão",
+            description: "Desenhamos cada dia da viagem do zero, só pra você.",
+            bg: "bg-purple-100",
+            accent: "border-purple-200",
+            iconColor: "text-purple-600",
+            rotate: "rotate-2"
+        },
+        {
+            icon: FileCheck,
+            title: "Zero Burocracia",
+            description: "Vistos, formulários e chatices? Deixa com a gente.",
+            bg: "bg-blue-100",
+            accent: "border-blue-200",
+            iconColor: "text-blue-600",
+            rotate: "-rotate-2"
+        },
+        {
+            icon: Compass,
+            title: "Achados Secretos",
+            description: "Lugares autênticos que não estão na primeira página do Google.",
+            bg: "bg-emerald-100",
+            accent: "border-emerald-200",
+            iconColor: "text-emerald-600",
+            rotate: "rotate-1"
+        }
+    ];
 
-      <div className="container mx-auto px-6 relative z-10">
-        
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
-            
-            {/* LEFT COLUMN: Sticky Content - Entrance Animation */}
-            <div className="w-full lg:w-5/12 lg:sticky lg:top-32 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                
-                {/* Visual Image with Tape Effect & Smoother Hover */}
-                <div className="relative mb-10 group cursor-pointer perspective-1000">
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-8 bg-yellow-100/80 rotate-2 backdrop-blur-sm z-20 shadow-sm border-l border-r border-white/50"></div>
-                    <div className="relative rounded-2xl overflow-hidden border-8 border-white shadow-[0_10px_30px_rgba(0,0,0,0.1)] rotate-[-3deg] transition-all duration-700 ease-spring group-hover:rotate-0 group-hover:scale-[1.02] group-hover:shadow-2xl">
-                        <img 
-                            src="https://images.pexels.com/photos/1450372/pexels-photo-1450372.jpeg" 
-                            alt="Praia" 
-                            className="w-full object-cover aspect-[4/3] transition-transform duration-1000 group-hover:scale-110"
-                        />
-                        <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-1 rounded-full text-xs font-bold text-gray-700 shadow-sm transition-transform duration-300 group-hover:scale-110">
-                            📍 Caribe? Talvez.
-                        </div>
-                    </div>
-                </div>
+    return (
+        <section id="experiencia" className="py-24 bg-[#fffdf5] relative overflow-hidden">
 
-                <div className="bg-white p-8 rounded-[2rem] border-2 border-gray-100 shadow-[8px_8px_0px_rgba(0,0,0,0.05)] text-center lg:text-left transition-transform duration-300 hover:translate-y-[-2px]">
-                     <h4 className="font-black text-2xl text-gray-900 mb-2">Viaje Leve! 🎈</h4>
-                     <p className="text-gray-500 text-lg mb-6 leading-relaxed">
-                        Comece a planejar agora e receba um roteiro prévio sem compromisso.
-                     </p>
-                     <a 
-                        href="https://wa.me/551152833309?text=Ol%C3%A1!%20Quero%20conhecer%20a%20experi%C3%AAncia%20Anhang%C3%A1."
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={handleContactClick}
-                        className={`flex items-center justify-center gap-3 w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold transition-all duration-300 ease-spring shadow-[4px_4px_0px_#94a3b8] hover:shadow-[2px_2px_0px_#94a3b8] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none ${isLoading ? 'opacity-90 cursor-wait' : ''}`}
-                    >
-                        {isLoading ? (
-                             <Loader2 className="w-5 h-5 animate-spin" />
-                        ) : (
-                            <>
-                                <ShieldCheck className="w-5 h-5" />
-                                <span>Falar com Especialista</span>
-                            </>
-                        )}
-                    </a>
-                </div>
+            {/* Dot Pattern Background */}
+            <div className="absolute inset-0 z-0 opacity-[0.3]"
+                style={{ backgroundImage: 'radial-gradient(#cbd5e1 1.5px, transparent 1.5px)', backgroundSize: '24px 24px' }}>
             </div>
 
-            {/* RIGHT COLUMN: Grid Cards */}
-            <div className="w-full lg:w-7/12">
-                <div className="mb-12 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-                    <div className="inline-block relative mb-4">
-                        <span className="absolute inset-0 bg-blue-100 transform -skew-x-12 rounded-lg"></span>
-                        <span className="relative px-3 py-1 text-blue-600 font-black uppercase tracking-widest text-sm flex items-center gap-2">
-                             <Sparkles className="w-4 h-4" /> O Jeito Anhangá
-                        </span>
+            <div className="container mx-auto px-6 relative z-10">
+
+                <div className="flex flex-col lg:flex-row gap-16 items-start">
+
+                    {/* LEFT COLUMN: Sticky Content - Entrance Animation */}
+                    <div className="w-full lg:w-5/12 lg:sticky lg:top-32 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+
+                        {/* Visual Image with Tape Effect & Smoother Hover */}
+                        <div className="relative mb-10 group cursor-pointer perspective-1000">
+                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-8 bg-yellow-100/80 rotate-2 backdrop-blur-sm z-20 shadow-sm border-l border-r border-white/50"></div>
+                            <div className="relative rounded-2xl overflow-hidden border-8 border-white shadow-[0_10px_30px_rgba(0,0,0,0.1)] rotate-[-3deg] transition-all duration-700 ease-spring group-hover:rotate-0 group-hover:scale-[1.02] group-hover:shadow-2xl">
+                                <img
+                                    src="https://images.pexels.com/photos/1450372/pexels-photo-1450372.jpeg"
+                                    alt="Praia"
+                                    className="w-full object-cover aspect-[4/3] transition-transform duration-1000 group-hover:scale-110"
+                                />
+                                <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-1 rounded-full text-xs font-bold text-gray-700 shadow-sm transition-transform duration-300 group-hover:scale-110">
+                                    📍 Caribe? Talvez.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-white p-8 rounded-[2rem] border-2 border-gray-100 shadow-[8px_8px_0px_rgba(0,0,0,0.05)] text-center lg:text-left transition-transform duration-300 hover:translate-y-[-2px]">
+                            <h4 className="font-black text-2xl text-gray-900 mb-2">Viaje Leve! 🎈</h4>
+                            <p className="text-gray-500 text-lg mb-6 leading-relaxed">
+                                Comece a planejar agora e receba um roteiro prévio sem compromisso.
+                            </p>
+                            <a
+                                href={getWhatsAppLink("Olá! Quero conhecer a experiência Anhangá.")}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={handleContactClick}
+                                className={`flex items-center justify-center gap-3 w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold transition-all duration-300 ease-spring shadow-[4px_4px_0px_#94a3b8] hover:shadow-[2px_2px_0px_#94a3b8] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none ${isLoading ? 'opacity-90 cursor-wait' : ''}`}
+                            >
+                                {isLoading ? (
+                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                ) : (
+                                    <>
+                                        <ShieldCheck className="w-5 h-5" />
+                                        <span>Falar com Especialista</span>
+                                    </>
+                                )}
+                            </a>
+                        </div>
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-black text-brand-dark leading-none">
-                        A gente cuida <br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-blue-500">
-                        do "chato"
-                        </span>
-                    </h2>
-                </div>
-                
-                <div className="grid md:grid-cols-2 gap-8">
-                    {highlights.map((item, idx) => {
-                        const Icon = item.icon;
-                        return (
-                            <div 
-                                key={idx} 
-                                className={`
+
+                    {/* RIGHT COLUMN: Grid Cards */}
+                    <div className="w-full lg:w-7/12">
+                        <div className="mb-12 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                            <div className="inline-block relative mb-4">
+                                <span className="absolute inset-0 bg-blue-100 transform -skew-x-12 rounded-lg"></span>
+                                <span className="relative px-3 py-1 text-blue-600 font-black uppercase tracking-widest text-sm flex items-center gap-2">
+                                    <Sparkles className="w-4 h-4" /> O Jeito Anhangá
+                                </span>
+                            </div>
+                            <h2 className="text-4xl md:text-6xl font-black text-brand-dark leading-none">
+                                A gente cuida <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-blue-500">
+                                    do "chato"
+                                </span>
+                            </h2>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-8">
+                            {highlights.map((item, idx) => {
+                                const Icon = item.icon;
+                                return (
+                                    <div
+                                        key={idx}
+                                        className={`
                                     group relative p-8 rounded-[2.5rem] bg-white border-[3px] ${item.accent}
                                     shadow-[8px_8px_0px_rgba(0,0,0,0.05)] hover:shadow-[14px_14px_0px_rgba(0,0,0,0.05)] 
                                     transition-all duration-500 cubic-bezier(0.34, 1.56, 0.64, 1)
@@ -149,42 +150,42 @@ const Highlights: React.FC = () => {
                                     flex flex-col h-full overflow-visible
                                     opacity-0 animate-fade-in-up
                                 `}
-                                style={{ animationDelay: `${0.4 + (idx * 0.1)}s` }}
-                            >
-                                {/* Washi Tape Effect */}
-                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-yellow-50/90 backdrop-blur-sm border-l-2 border-r-2 border-white/40 rotate-1 shadow-sm z-20 opacity-90"></div>
+                                        style={{ animationDelay: `${0.4 + (idx * 0.1)}s` }}
+                                    >
+                                        {/* Washi Tape Effect */}
+                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-yellow-50/90 backdrop-blur-sm border-l-2 border-r-2 border-white/40 rotate-1 shadow-sm z-20 opacity-90"></div>
 
-                                {/* Icon Badge */}
-                                <div className={`
+                                        {/* Icon Badge */}
+                                        <div className={`
                                     w-16 h-16 rounded-2xl ${item.bg} border-2 ${item.accent}
                                     flex items-center justify-center mb-6 
                                     shadow-sm transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6
                                 `}>
-                                    <Icon className={`w-8 h-8 ${item.iconColor}`} strokeWidth={2.5} />
-                                </div>
+                                            <Icon className={`w-8 h-8 ${item.iconColor}`} strokeWidth={2.5} />
+                                        </div>
 
-                                {/* Content */}
-                                <h3 className="text-xl font-extrabold text-gray-900 mb-3 leading-tight group-hover:text-brand-cyan transition-colors duration-300">
-                                    {item.title}
-                                </h3>
-                                <p className="text-gray-500 font-medium leading-relaxed text-sm md:text-base">
-                                    {item.description}
-                                </p>
+                                        {/* Content */}
+                                        <h3 className="text-xl font-extrabold text-gray-900 mb-3 leading-tight group-hover:text-brand-cyan transition-colors duration-300">
+                                            {item.title}
+                                        </h3>
+                                        <p className="text-gray-500 font-medium leading-relaxed text-sm md:text-base">
+                                            {item.description}
+                                        </p>
 
-                                {/* Corner Decoration */}
-                                <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0">
-                                    <ArrowRight className={`w-5 h-5 ${item.iconColor}`} />
-                                </div>
-                            </div>
-                        );
-                    })}
+                                        {/* Corner Decoration */}
+                                        <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0">
+                                            <ArrowRight className={`w-5 h-5 ${item.iconColor}`} />
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-        </div>
-      </div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default Highlights;

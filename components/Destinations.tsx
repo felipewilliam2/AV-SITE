@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { getWhatsAppLink } from '../utils/whatsapp';
 import L from 'leaflet';
 import { MapPin, X, Calendar, ArrowRight, Star, Compass, MousePointerClick, Share2, ImageIcon, Loader2, Plus, Minus } from 'lucide-react';
 
@@ -549,8 +550,8 @@ const Destinations: React.FC = () => {
                                 key={filter}
                                 onClick={() => setActiveFilter(filter)}
                                 className={`px-5 py-2 rounded-lg text-sm font-bold border-2 transition-all whitespace-nowrap flex-shrink-0 shadow-[3px_3px_0px_rgba(0,0,0,0.1)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] ${activeFilter === filter
-                                        ? 'bg-brand-dark text-white border-brand-dark transform -rotate-1'
-                                        : 'bg-white text-gray-600 border-gray-100 hover:border-brand-vibrant hover:text-brand-vibrant'
+                                    ? 'bg-brand-dark text-white border-brand-dark transform -rotate-1'
+                                    : 'bg-white text-gray-600 border-gray-100 hover:border-brand-vibrant hover:text-brand-vibrant'
                                     }`}
                             >
                                 {filter}
@@ -678,7 +679,7 @@ const Destinations: React.FC = () => {
                             </div>
 
                             <a
-                                href={`https://wa.me/551152833309?text=${encodeURIComponent(`Quero cotar ${selectedDestination.city}!`)}`}
+                                href={getWhatsAppLink(`Quero cotar ${selectedDestination.city}!`)}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={handleBookingClick}
