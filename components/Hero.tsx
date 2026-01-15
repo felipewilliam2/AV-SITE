@@ -6,7 +6,7 @@ const HERO_VIDEOS = [
   {
     // Rio de Janeiro / Tropical Brazil
     id: 1,
-    url: "https://videos.pexels.com/video-files/4323649/4323649-hd_1920_1080_30fps.mp4", 
+    url: "https://videos.pexels.com/video-files/4323649/4323649-hd_1920_1080_30fps.mp4",
     poster: "https://images.pexels.com/photos/2868242/pexels-photo-2868242.jpeg"
   },
   {
@@ -24,14 +24,14 @@ const HERO_VIDEOS = [
   {
     // New York / Urbano
     id: 4,
-    url: "https://videos.pexels.com/video-files/3196654/3196654-hd_1920_1080_25fps.mp4",
-    poster: "https://images.pexels.com/photos/2224861/pexels-photo-2224861.png"
+    url: "https://www.pexels.com/pt-br/download/video/31312984/",
+    poster: "https://images.pexels.com/photos/12110576/pexels-photo-12110576.jpeg"
   },
   {
     // Natureza / Montanhas
     id: 5,
-    url: "https://videos.pexels.com/video-files/4232368/4232368-hd_1920_1080_30fps.mp4",
-    poster: "https://images.pexels.com/photos/1671325/pexels-photo-1671325.jpeg"
+    url: "https://www.pexels.com/pt-br/download/video/3120431/",
+    poster: "https://images.pexels.com/photos/4027087/pexels-photo-4027087.jpeg"
   }
 ];
 
@@ -179,8 +179,8 @@ const BUDGET_TIERS = [
 const Hero: React.FC = () => {
   // State for Background Video - Lazy Init to avoid double render & interruption
   const [backgroundVideo] = useState(() => {
-     const randomIndex = Math.floor(Math.random() * HERO_VIDEOS.length);
-     return HERO_VIDEOS[randomIndex];
+    const randomIndex = Math.floor(Math.random() * HERO_VIDEOS.length);
+    return HERO_VIDEOS[randomIndex];
   });
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -188,12 +188,12 @@ const Hero: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [validCityForTitle, setValidCityForTitle] = useState<string | null>(null);
   const [showDestSuggestions, setShowDestSuggestions] = useState(false);
-  
+
   // State for Dates (Custom Calendar)
   const [showCalendar, setShowCalendar] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [currentMonth, setCurrentMonth] = useState(new Date()); 
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
   // State for Guests
   const [showGuestDropdown, setShowGuestDropdown] = useState(false);
@@ -204,7 +204,7 @@ const Hero: React.FC = () => {
   // State for Advanced Filters
   const [tripType, setTripType] = useState('');
   const [showTripTypeDropdown, setShowTripTypeDropdown] = useState(false);
-  
+
   const [budget, setBudget] = useState('');
   const [showBudgetDropdown, setShowBudgetDropdown] = useState(false);
 
@@ -221,59 +221,59 @@ const Hero: React.FC = () => {
   // Handle Video Autoplay Robustly
   useEffect(() => {
     if (videoRef.current) {
-        // Explicitly set muted property to ensure browser allows autoplay
-        videoRef.current.defaultMuted = true;
-        videoRef.current.muted = true;
-        
-        // Use play() promise to catch interruption errors
-        const playPromise = videoRef.current.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                // Silently handle autoplay prevention or interruption
-                console.warn("Autoplay prevented or interrupted (safely handled):", error);
-            });
-        }
+      // Explicitly set muted property to ensure browser allows autoplay
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+
+      // Use play() promise to catch interruption errors
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          // Silently handle autoplay prevention or interruption
+          console.warn("Autoplay prevented or interrupted (safely handled):", error);
+        });
+      }
     }
   }, []); // Run only once as video source is now stable via lazy init
 
   // Filter Destinations Logic (Memoized for performance)
   const filteredDestinations = useMemo(() => {
     if (!inputValue) return [];
-    
+
     // Normalize input for search (remove accents, lower case)
     const normalize = (str: string) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const search = normalize(inputValue);
 
-    return DESTINATIONS_DATABASE.filter(d => 
-        normalize(d.label).includes(search)
+    return DESTINATIONS_DATABASE.filter(d =>
+      normalize(d.label).includes(search)
     ).slice(0, 8); // Limit suggestions to 8 to avoid huge lists
   }, [inputValue]);
 
   // Handle Input Change with strict validation for H1
   const handleDestinationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const val = e.target.value;
-      setInputValue(val);
-      setShowDestSuggestions(true);
+    const val = e.target.value;
+    setInputValue(val);
+    setShowDestSuggestions(true);
 
-      // Reset Title immediately if user is typing (safety first)
-      // Only set title if exact match exists in DB (Case insensitive check)
-      const exactMatch = DESTINATIONS_DATABASE.find(d => 
-          d.label.toLowerCase() === val.toLowerCase() || 
-          d.city.toLowerCase() === val.toLowerCase()
-      );
+    // Reset Title immediately if user is typing (safety first)
+    // Only set title if exact match exists in DB (Case insensitive check)
+    const exactMatch = DESTINATIONS_DATABASE.find(d =>
+      d.label.toLowerCase() === val.toLowerCase() ||
+      d.city.toLowerCase() === val.toLowerCase()
+    );
 
-      if (exactMatch) {
-          setValidCityForTitle(exactMatch.city);
-      } else {
-          setValidCityForTitle(null);
-      }
+    if (exactMatch) {
+      setValidCityForTitle(exactMatch.city);
+    } else {
+      setValidCityForTitle(null);
+    }
   };
 
   // Handle Selection from Dropdown
   const selectDestination = (dest: { label: string, city: string }) => {
-      setInputValue(dest.label);
-      setValidCityForTitle(dest.city); // Guaranteed to be a valid place
-      setShowDestSuggestions(false);
+    setInputValue(dest.label);
+    setValidCityForTitle(dest.city); // Guaranteed to be a valid place
+    setShowDestSuggestions(false);
   };
 
   // Handle Click Outside
@@ -324,7 +324,7 @@ const Hero: React.FC = () => {
     const month = date.getMonth();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayOfWeek = new Date(year, month, 1).getDay();
-    
+
     const days = [];
     for (let i = 0; i < firstDayOfWeek; i++) {
       days.push(null);
@@ -393,414 +393,414 @@ const Hero: React.FC = () => {
 
     const startStr = startDate.toLocaleDateString('pt-BR');
     const endStr = endDate ? endDate.toLocaleDateString('pt-BR') : 'A definir';
-    
+
     // Formatar idades das crianças
-    const childAgesStr = children > 0 
-        ? ` (${childAges.map(a => a ? `${a} anos` : 'Idade N/I').join(', ')})` 
-        : '';
+    const childAgesStr = children > 0
+      ? ` (${childAges.map(a => a ? `${a} anos` : 'Idade N/I').join(', ')})`
+      : '';
 
     let message = `Olá! Vim pelo site. Gostaria de cotar:\n\n`;
     message += `📍 *Destino:* ${inputValue}\n`;
     message += `📅 *Ida:* ${startStr}\n`;
     message += `📅 *Volta:* ${endStr}\n`;
     message += `👥 *Viajantes:* ${adults} Adt, ${children} Chd${childAgesStr}\n`;
-    
+
     if (tripType) message += `🎭 *Tipo de Viagem:* ${tripType}\n`;
     if (budget) message += `💰 *Orçamento:* ${budget}\n`;
 
     const whatsappUrl = `https://wa.me/551152833309?text=${encodeURIComponent(message)}`;
-    
+
     setTimeout(() => {
-        window.open(whatsappUrl, '_blank');
-        setIsSearchLoading(false);
+      window.open(whatsappUrl, '_blank');
+      setIsSearchLoading(false);
     }, 1500);
   };
 
   return (
     <section className="relative w-full min-h-[850px] flex items-center bg-brand-light pb-20 overflow-hidden">
-      
+
       {/* Background Video with Creative Mask */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-          <video
-            ref={videoRef}
-            // Key removed to prevent re-mounting on re-renders, state handles initial random selection
-            autoPlay
-            loop
-            muted
-            playsInline
-            poster={backgroundVideo.poster}
-            className="w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
-          >
-            <source src={backgroundVideo.url} type="video/mp4" />
-            Seu navegador não suporta vídeos.
-          </video>
-          
-          {/* Overlay Gradient - Darkened slightly for video text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/80 to-blue-900/70 mix-blend-multiply"></div>
-          
-          {/* Paper Texture Overlay */}
-          <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-          
-          {/* Floating Blobs for Fluidity */}
-          <div className="absolute top-20 right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-float pointer-events-none"></div>
-          <div className="absolute bottom-40 left-10 w-48 h-48 bg-yellow-300/20 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }}></div>
+        <video
+          ref={videoRef}
+          // Key removed to prevent re-mounting on re-renders, state handles initial random selection
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={backgroundVideo.poster}
+          className="w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
+        >
+          <source src={backgroundVideo.url} type="video/mp4" />
+          Seu navegador não suporta vídeos.
+        </video>
+
+        {/* Overlay Gradient - Darkened slightly for video text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/80 to-blue-900/70 mix-blend-multiply"></div>
+
+        {/* Paper Texture Overlay */}
+        <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+
+        {/* Floating Blobs for Fluidity */}
+        <div className="absolute top-20 right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-float pointer-events-none"></div>
+        <div className="absolute bottom-40 left-10 w-48 h-48 bg-yellow-300/20 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10 pt-40 pb-12">
         <div className="flex flex-col items-center justify-center text-center">
-            
-            {/* Sticker Badge - Staggered Entry */}
-            <div className="transform -rotate-2 hover:rotate-2 transition-transform duration-300 mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                <div className="inline-flex items-center gap-2 px-6 py-2 bg-brand-yellow text-brand-dark font-black text-sm uppercase tracking-widest shadow-[4px_4px_0px_rgba(0,0,0,0.2)] border-2 border-white/20 rounded-lg">
-                    <Plane className="w-4 h-4" />
-                    Viagem sem Complicações
-                </div>
+
+          {/* Sticker Badge - Staggered Entry */}
+          <div className="transform -rotate-2 hover:rotate-2 transition-transform duration-300 mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <div className="inline-flex items-center gap-2 px-6 py-2 bg-brand-yellow text-brand-dark font-black text-sm uppercase tracking-widest shadow-[4px_4px_0px_rgba(0,0,0,0.2)] border-2 border-white/20 rounded-lg">
+              <Plane className="w-4 h-4" />
+              Viagem sem Complicações
             </div>
+          </div>
 
-            {/* Fun Typography - Dynamic sizing based on content length */}
-            <h1 
-                className={`font-extrabold text-white mb-6 leading-[0.9] tracking-tight drop-shadow-lg opacity-0 animate-fade-in-up transition-all duration-500
+          {/* Fun Typography - Dynamic sizing based on content length */}
+          <h1
+            className={`font-extrabold text-white mb-6 leading-[0.9] tracking-tight drop-shadow-lg opacity-0 animate-fade-in-up transition-all duration-500
                 ${validCityForTitle ? 'text-4xl sm:text-5xl md:text-7xl' : 'text-5xl sm:text-6xl md:text-8xl'}
-                `} 
-                style={{ animationDelay: '0.2s' }}
-            >
-              Sua Próxima <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500 relative inline-block pb-2">
-                {validCityForTitle ? `Aventura em ${validCityForTitle}` : 'Aventura'}
-                {/* Underline Scribble with Draw Animation */}
-                <svg className="absolute w-full h-4 -bottom-0 left-0 text-yellow-400 overflow-visible" viewBox="0 0 100 10" preserveAspectRatio="none">
-                    <path 
-                        d="M0 5 Q 50 15 100 5" 
-                        stroke="currentColor" 
-                        strokeWidth="3" 
-                        fill="none" 
-                        className="animate-draw"
-                        strokeDasharray="100" 
-                        strokeDashoffset="100"
-                    />
-                </svg>
-              </span>
-            </h1>
-            
-            <p className="text-white/90 text-xl md:text-2xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed drop-shadow-md opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-              Roteiros que parecem feitos à mão. <br/>
-              Porque sua viagem merece ser única.
-            </p>
+                `}
+            style={{ animationDelay: '0.2s' }}
+          >
+            Sua Próxima <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500 relative inline-block pb-2">
+              {validCityForTitle ? `Aventura em ${validCityForTitle}` : 'Aventura'}
+              {/* Underline Scribble with Draw Animation */}
+              <svg className="absolute w-full h-4 -bottom-0 left-0 text-yellow-400 overflow-visible" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <path
+                  d="M0 5 Q 50 15 100 5"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  fill="none"
+                  className="animate-draw"
+                  strokeDasharray="100"
+                  strokeDashoffset="100"
+                />
+              </svg>
+            </span>
+          </h1>
 
-            {/* SEARCH BAR - Extended Ticket Style - Pop In Animation */}
-            <div className="w-full max-w-5xl mx-auto bg-white rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] p-2 relative z-50 border-[6px] border-white/20 backdrop-blur-sm opacity-0 animate-fade-in-up flex flex-col" style={{ animationDelay: '0.4s' }}>
-                
-                {/* --- ROW 1: BASIC INFO --- */}
-                <div className="flex flex-col md:flex-row items-center w-full divide-y md:divide-y-0 md:divide-x divide-gray-100">
-                    
-                    {/* 1. Destination */}
-                    <div className="w-full md:flex-[1.5] p-3 md:p-6 relative group text-left cursor-text hover:bg-gray-50/80 transition-all duration-300 rounded-t-[2rem] md:rounded-tl-[2rem] md:rounded-tr-none" ref={destRef}>
-                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-focus-within:text-brand-cyan transition-colors">
-                             <MapPin className="w-3 h-3" /> Para onde?
-                        </label>
-                        <input 
-                            type="text" 
-                            value={inputValue}
-                            onChange={handleDestinationChange}
-                            onFocus={() => setShowDestSuggestions(true)}
-                            placeholder="Ex: Orlando, Paris, Brasil..." 
-                            className="w-full outline-none text-gray-800 font-bold placeholder-gray-300 bg-transparent text-lg md:text-xl truncate transition-colors"
-                            autoComplete="off"
-                        />
-                         {/* Dropdown - Pop In */}
-                         {showDestSuggestions && filteredDestinations.length > 0 && (
-                            <div className="absolute top-full left-0 w-full bg-white rounded-2xl shadow-xl border-2 border-gray-100 mt-4 overflow-hidden z-[60] animate-pop-in origin-top">
-                                 <ul className="max-h-60 overflow-y-auto custom-scrollbar">
-                                     {filteredDestinations.map((dest, idx) => (
-                                         <li 
-                                            key={idx}
-                                            onClick={() => selectDestination(dest)}
-                                            className="px-6 py-3 hover:bg-brand-light cursor-pointer text-left text-sm text-gray-700 font-medium border-b border-gray-50 last:border-0 flex items-center gap-2 transition-colors"
-                                         >
-                                             <MapPin className="w-4 h-4 text-brand-cyan/50 shrink-0" />
-                                             <span className="truncate">{dest.label}</span>
-                                         </li>
-                                     ))}
-                                 </ul>
-                            </div>
-                        )}
-                        {/* No results state */}
-                        {showDestSuggestions && inputValue.length > 1 && filteredDestinations.length === 0 && (
-                            <div className="absolute top-full left-0 w-full bg-white rounded-2xl shadow-xl border-2 border-gray-100 mt-4 p-4 z-[60] animate-pop-in origin-top">
-                                <p className="text-gray-400 text-sm font-medium text-center">Nenhum destino encontrado. Tente outra cidade ou país.</p>
-                            </div>
-                        )}
+          <p className="text-white/90 text-xl md:text-2xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed drop-shadow-md opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            Roteiros que parecem feitos à mão. <br />
+            Porque sua viagem merece ser única.
+          </p>
+
+          {/* SEARCH BAR - Extended Ticket Style - Pop In Animation */}
+          <div className="w-full max-w-5xl mx-auto bg-white rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] p-2 relative z-50 border-[6px] border-white/20 backdrop-blur-sm opacity-0 animate-fade-in-up flex flex-col" style={{ animationDelay: '0.4s' }}>
+
+            {/* --- ROW 1: BASIC INFO --- */}
+            <div className="flex flex-col md:flex-row items-center w-full divide-y md:divide-y-0 md:divide-x divide-gray-100">
+
+              {/* 1. Destination */}
+              <div className="w-full md:flex-[1.5] p-3 md:p-6 relative group text-left cursor-text hover:bg-gray-50/80 transition-all duration-300 rounded-t-[2rem] md:rounded-tl-[2rem] md:rounded-tr-none" ref={destRef}>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-focus-within:text-brand-cyan transition-colors">
+                  <MapPin className="w-3 h-3" /> Para onde?
+                </label>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={handleDestinationChange}
+                  onFocus={() => setShowDestSuggestions(true)}
+                  placeholder="Ex: Orlando, Paris, Brasil..."
+                  className="w-full outline-none text-gray-800 font-bold placeholder-gray-300 bg-transparent text-lg md:text-xl truncate transition-colors"
+                  autoComplete="off"
+                />
+                {/* Dropdown - Pop In */}
+                {showDestSuggestions && filteredDestinations.length > 0 && (
+                  <div className="absolute top-full left-0 w-full bg-white rounded-2xl shadow-xl border-2 border-gray-100 mt-4 overflow-hidden z-[60] animate-pop-in origin-top">
+                    <ul className="max-h-60 overflow-y-auto custom-scrollbar">
+                      {filteredDestinations.map((dest, idx) => (
+                        <li
+                          key={idx}
+                          onClick={() => selectDestination(dest)}
+                          className="px-6 py-3 hover:bg-brand-light cursor-pointer text-left text-sm text-gray-700 font-medium border-b border-gray-50 last:border-0 flex items-center gap-2 transition-colors"
+                        >
+                          <MapPin className="w-4 h-4 text-brand-cyan/50 shrink-0" />
+                          <span className="truncate">{dest.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {/* No results state */}
+                {showDestSuggestions && inputValue.length > 1 && filteredDestinations.length === 0 && (
+                  <div className="absolute top-full left-0 w-full bg-white rounded-2xl shadow-xl border-2 border-gray-100 mt-4 p-4 z-[60] animate-pop-in origin-top">
+                    <p className="text-gray-400 text-sm font-medium text-center">Nenhum destino encontrado. Tente outra cidade ou país.</p>
+                  </div>
+                )}
+              </div>
+
+              {/* 2. Dates */}
+              <div className="w-full md:flex-1 p-3 md:p-6 relative cursor-pointer hover:bg-gray-50/80 transition-all duration-300" ref={calendarRef} onClick={() => setShowCalendar(!showCalendar)}>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-hover:text-brand-cyan transition-colors">
+                  <Calendar className="w-3 h-3" /> Quando?
+                </label>
+                <div className="flex items-center justify-between">
+                  <span className={`text-lg md:text-xl font-bold truncate transition-colors ${startDate ? "text-gray-800" : "text-gray-300"}`}>
+                    {startDate ? `${formatDateDisplay(startDate)} - ${endDate ? formatDateDisplay(endDate) : '...'}` : "Definir datas"}
+                  </span>
+                  <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${showCalendar ? 'rotate-180' : ''}`} />
+                </div>
+
+                {/* Calendar Dropdown */}
+                {showCalendar && (
+                  <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 md:left-auto md:right-0 bg-white rounded-3xl shadow-2xl border-2 border-gray-100 mt-4 p-6 z-[60] w-full md:w-80 cursor-default animate-pop-in origin-top">
+                    <div className="flex items-center justify-between mb-4">
+                      <button onClick={() => changeMonth(-1)} className="p-1 hover:bg-gray-100 rounded-full text-gray-600 transition-colors"><ChevronLeft className="w-5 h-5" /></button>
+                      <span className="font-bold text-gray-800">{MONTH_NAMES[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
+                      <button onClick={() => changeMonth(1)} className="p-1 hover:bg-gray-100 rounded-full text-gray-600 transition-colors"><ChevronRight className="w-5 h-5" /></button>
                     </div>
-
-                    {/* 2. Dates */}
-                    <div className="w-full md:flex-1 p-3 md:p-6 relative cursor-pointer hover:bg-gray-50/80 transition-all duration-300" ref={calendarRef} onClick={() => setShowCalendar(!showCalendar)}>
-                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-hover:text-brand-cyan transition-colors">
-                             <Calendar className="w-3 h-3" /> Quando?
-                        </label>
-                        <div className="flex items-center justify-between">
-                            <span className={`text-lg md:text-xl font-bold truncate transition-colors ${startDate ? "text-gray-800" : "text-gray-300"}`}>
-                                {startDate ? `${formatDateDisplay(startDate)} - ${endDate ? formatDateDisplay(endDate) : '...'}` : "Definir datas"}
-                            </span>
-                            <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${showCalendar ? 'rotate-180' : ''}`} />
-                        </div>
-                        
-                        {/* Calendar Dropdown */}
-                        {showCalendar && (
-                            <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 md:left-auto md:right-0 bg-white rounded-3xl shadow-2xl border-2 border-gray-100 mt-4 p-6 z-[60] w-full md:w-80 cursor-default animate-pop-in origin-top">
-                                <div className="flex items-center justify-between mb-4">
-                                  <button onClick={() => changeMonth(-1)} className="p-1 hover:bg-gray-100 rounded-full text-gray-600 transition-colors"><ChevronLeft className="w-5 h-5" /></button>
-                                  <span className="font-bold text-gray-800">{MONTH_NAMES[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
-                                  <button onClick={() => changeMonth(1)} className="p-1 hover:bg-gray-100 rounded-full text-gray-600 transition-colors"><ChevronRight className="w-5 h-5" /></button>
-                                </div>
-                                <div className="grid grid-cols-7 mb-2 text-center text-xs font-bold text-gray-400">
-                                  {WEEK_DAYS.map((day, i) => <div key={i}>{day}</div>)}
-                                </div>
-                                <div className="grid grid-cols-7 gap-y-1">
-                                  {getDaysInMonth(currentMonth).map((date, i) => {
-                                    if (!date) return <div key={`empty-${i}`} />;
-                                    const isSelected = isDateSelected(date);
-                                    const inRange = isDateInRange(date);
-                                    return (
-                                      <button
-                                        key={i}
-                                        onClick={() => handleDateClick(date)}
-                                        className={`h-9 w-9 mx-auto flex items-center justify-center text-sm rounded-full transition-all duration-200 border-2 
+                    <div className="grid grid-cols-7 mb-2 text-center text-xs font-bold text-gray-400">
+                      {WEEK_DAYS.map((day, i) => <div key={i}>{day}</div>)}
+                    </div>
+                    <div className="grid grid-cols-7 gap-y-1">
+                      {getDaysInMonth(currentMonth).map((date, i) => {
+                        if (!date) return <div key={`empty-${i}`} />;
+                        const isSelected = isDateSelected(date);
+                        const inRange = isDateInRange(date);
+                        return (
+                          <button
+                            key={i}
+                            onClick={() => handleDateClick(date)}
+                            className={`h-9 w-9 mx-auto flex items-center justify-center text-sm rounded-full transition-all duration-200 border-2 
                                           ${isSelected ? 'bg-brand-cyan border-brand-cyan text-white font-bold scale-110' : inRange ? 'bg-brand-light border-transparent text-brand-cyan font-bold' : 'border-transparent text-gray-600 hover:bg-gray-100'}
                                         `}
-                                      >
-                                        {date.getDate()}
-                                      </button>
-                                    );
-                                  })}
-                                </div>
-                            </div>
-                        )}
+                          >
+                            {date.getDate()}
+                          </button>
+                        );
+                      })}
                     </div>
+                  </div>
+                )}
+              </div>
 
-                    {/* 3. Guests */}
-                    <div className="w-full md:flex-1 p-3 md:p-6 relative cursor-pointer hover:bg-gray-50/80 transition-all duration-300 md:rounded-tr-[2rem]" ref={guestDropdownRef} onClick={() => setShowGuestDropdown(!showGuestDropdown)}>
-                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-hover:text-brand-cyan transition-colors">
-                             <User className="w-3 h-3" /> Quem vai?
-                        </label>
-                         <div className="flex items-center justify-between">
-                            <span className="text-lg md:text-xl font-bold text-gray-800 truncate transition-colors">{guestSummary}</span>
-                            <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${showGuestDropdown ? 'rotate-180' : ''}`} />
-                        </div>
-
-                        {/* Guest Dropdown */}
-                        {showGuestDropdown && (
-                            <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 md:left-auto md:right-0 bg-white rounded-3xl shadow-2xl border-2 border-gray-100 mt-4 p-6 z-[60] w-full md:w-72 cursor-default animate-pop-in origin-top">
-                                <div className="flex justify-between items-center mb-4">
-                                    <p className="font-bold text-gray-800">Adultos</p>
-                                    <div className="flex items-center gap-3">
-                                        <button 
-                                            type="button"
-                                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setAdults(prev => Math.max(1, prev - 1)); }} 
-                                            className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand-cyan hover:text-brand-cyan transition-all"
-                                        >
-                                            <Minus className="w-4 h-4" />
-                                        </button>
-                                        <span className="font-bold w-8 text-center text-gray-900">{adults}</span>
-                                        <button 
-                                            type="button"
-                                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setAdults(prev => prev + 1); }} 
-                                            className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand-cyan hover:text-brand-cyan transition-all"
-                                        >
-                                            <Plus className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="flex justify-between items-center mb-4">
-                                    <p className="font-bold text-gray-800">Crianças</p>
-                                    <div className="flex items-center gap-3">
-                                        <button 
-                                            type="button"
-                                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleChildChange('remove'); }} 
-                                            className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand-cyan hover:text-brand-cyan transition-all"
-                                        >
-                                            <Minus className="w-4 h-4" />
-                                        </button>
-                                        <span className="font-bold w-8 text-center text-gray-900">{children}</span>
-                                        <button 
-                                            type="button"
-                                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleChildChange('add'); }} 
-                                            className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand-cyan hover:text-brand-cyan transition-all"
-                                        >
-                                            <Plus className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* Child Ages Inputs */}
-                                {children > 0 && (
-                                    <div className="mb-4 grid grid-cols-2 gap-2 max-h-32 overflow-y-auto pr-1 custom-scrollbar animate-fade-in-up">
-                                        {childAges.map((age, idx) => (
-                                            <div key={idx} className="flex flex-col">
-                                                <label className="text-[10px] text-gray-400 font-bold mb-1">Idade Criança {idx + 1}</label>
-                                                <input 
-                                                    type="number" 
-                                                    min="0"
-                                                    max="17"
-                                                    value={age}
-                                                    onClick={(e) => e.stopPropagation()}
-                                                    onChange={(e) => handleChildAgeChange(idx, e.target.value)}
-                                                    className="w-full border-2 border-gray-100 rounded-lg px-2 py-1 text-sm font-bold text-gray-700 outline-none focus:border-brand-cyan transition-colors"
-                                                    placeholder="Ex: 5"
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-
-                                <button onClick={() => setShowGuestDropdown(false)} className="w-full mt-2 bg-brand-cyan text-white rounded-xl py-3 font-bold hover:bg-brand-cyanDark transition-all active:scale-95 shadow-[0_4px_0px_#0284c7] hover:shadow-[0_2px_0px_#0284c7] hover:translate-y-[2px]">Pronto</button>
-                            </div>
-                        )}
-                    </div>
+              {/* 3. Guests */}
+              <div className="w-full md:flex-1 p-3 md:p-6 relative cursor-pointer hover:bg-gray-50/80 transition-all duration-300 md:rounded-tr-[2rem]" ref={guestDropdownRef} onClick={() => setShowGuestDropdown(!showGuestDropdown)}>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-hover:text-brand-cyan transition-colors">
+                  <User className="w-3 h-3" /> Quem vai?
+                </label>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg md:text-xl font-bold text-gray-800 truncate transition-colors">{guestSummary}</span>
+                  <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${showGuestDropdown ? 'rotate-180' : ''}`} />
                 </div>
 
-                {/* --- TICKET SEPARATOR --- */}
-                <div className="w-full h-[2px] border-t-2 border-dashed border-gray-200 relative my-1">
-                     <div className="absolute left-[-16px] top-[-8px] w-4 h-4 bg-brand-light rounded-full"></div>
-                     <div className="absolute right-[-16px] top-[-8px] w-4 h-4 bg-brand-light rounded-full"></div>
-                </div>
-
-                {/* --- ROW 2: ADVANCED FILTERS + SEARCH --- */}
-                <div className="flex flex-col md:flex-row items-stretch w-full divide-y md:divide-y-0 md:divide-x divide-gray-100">
-                    
-                    {/* 4. Trip Type - Redesigned */}
-                    <div className="w-full md:flex-1 p-3 md:p-6 relative cursor-pointer hover:bg-gray-50/80 transition-all duration-300" ref={tripTypeRef} onClick={() => setShowTripTypeDropdown(!showTripTypeDropdown)}>
-                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-hover:text-brand-cyan transition-colors">
-                             <Briefcase className="w-3 h-3" /> Tipo de Viagem
-                        </label>
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2 overflow-hidden">
-                                {selectedTripObj && (
-                                    <selectedTripObj.icon className={`w-5 h-5 ${selectedTripObj.color}`} />
-                                )}
-                                <span className={`text-lg md:text-lg font-bold truncate transition-colors ${tripType ? "text-gray-800" : "text-gray-300"}`}>
-                                    {tripType || "Lazer, Lua de Mel..."}
-                                </span>
-                            </div>
-                            <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${showTripTypeDropdown ? 'rotate-180' : ''}`} />
-                        </div>
-
-                         {/* Trip Type Dropdown - Modern Grid */}
-                         {showTripTypeDropdown && (
-                            <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 w-full md:w-[400px] bg-white rounded-3xl shadow-2xl border-2 border-gray-100 mt-2 z-[60] animate-pop-in origin-top overflow-hidden p-4">
-                                <div className="grid grid-cols-2 gap-3">
-                                    {TRIP_OPTIONS.map((type, idx) => (
-                                        <button 
-                                            key={idx}
-                                            onClick={() => { setTripType(type.label); setShowTripTypeDropdown(false); }}
-                                            className={`
-                                                flex flex-col items-start gap-2 p-3 rounded-2xl border-2 transition-all duration-200 text-left
-                                                ${tripType === type.label 
-                                                    ? 'bg-brand-light border-brand-cyan shadow-sm' 
-                                                    : 'bg-white border-transparent hover:bg-gray-50 hover:border-gray-100'
-                                                }
-                                            `}
-                                        >
-                                            <div className={`p-2 rounded-xl ${type.bg} ${type.color}`}>
-                                                <type.icon className="w-5 h-5" />
-                                            </div>
-                                            <span className={`font-bold text-base ${tripType === type.label ? 'text-brand-dark' : 'text-gray-600'}`}>
-                                                {type.label}
-                                            </span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* 5. Budget - Redesigned */}
-                    <div className="w-full md:flex-1 p-3 md:p-6 relative cursor-pointer hover:bg-gray-50/80 transition-all duration-300" ref={budgetRef} onClick={() => setShowBudgetDropdown(!showBudgetDropdown)}>
-                         <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-hover:text-brand-cyan transition-colors">
-                             <Wallet className="w-3 h-3" /> Orçamento Aprox.
-                        </label>
-                        <div className="flex items-center justify-between">
-                             <div className="flex items-center gap-2 overflow-hidden">
-                                {selectedBudgetObj && (
-                                    <div className="flex text-green-600 font-bold text-xs bg-green-50 px-1.5 py-0.5 rounded-md">
-                                        {[...Array(selectedBudgetObj.level)].map((_, i) => <span key={i}>$</span>)}
-                                    </div>
-                                )}
-                                <span className={`text-lg md:text-lg font-bold truncate transition-colors ${budget ? "text-gray-800" : "text-gray-300"}`}>
-                                    {budget || "Definir padrão"}
-                                </span>
-                            </div>
-                            <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${showBudgetDropdown ? 'rotate-180' : ''}`} />
-                        </div>
-
-                         {/* Budget Dropdown - Rich List */}
-                         {showBudgetDropdown && (
-                            <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 w-full md:w-[320px] bg-white rounded-3xl shadow-2xl border-2 border-gray-100 mt-2 z-[60] animate-pop-in origin-top overflow-hidden p-3">
-                                {BUDGET_TIERS.map((opt, idx) => (
-                                    <button 
-                                        key={idx}
-                                        onClick={() => { setBudget(opt.label); setShowBudgetDropdown(false); }}
-                                        className={`
-                                            w-full flex items-center gap-4 p-3 rounded-2xl border-2 transition-all duration-200 mb-2 last:mb-0
-                                            ${budget === opt.label 
-                                                ? 'bg-brand-light border-brand-cyan shadow-sm' 
-                                                : 'bg-white border-transparent hover:bg-gray-50 hover:border-gray-100'
-                                            }
-                                        `}
-                                    >
-                                        <div className={`p-2 rounded-xl bg-gray-100 text-gray-600 ${budget === opt.label ? 'bg-brand-vibrant text-white' : ''}`}>
-                                            <opt.icon className="w-5 h-5" />
-                                        </div>
-                                        <div className="text-left">
-                                            <div className="flex items-center gap-2">
-                                                <span className={`font-bold text-base ${budget === opt.label ? 'text-brand-dark' : 'text-gray-800'}`}>
-                                                    {opt.label}
-                                                </span>
-                                                <div className="flex text-[10px] font-black text-green-600 bg-green-50 px-1.5 rounded">
-                                                    {[...Array(opt.level)].map((_, i) => <span key={i}>$</span>)}
-                                                </div>
-                                            </div>
-                                            <span className="text-sm text-gray-400 font-medium">{opt.desc}</span>
-                                        </div>
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* 6. Search Button */}
-                    <div className="p-2 w-full md:w-auto flex-shrink-0">
-                        <button 
-                            onClick={handleSearch}
-                            disabled={isSearchLoading}
-                            className={`w-full md:w-40 h-full min-h-[70px] bg-brand-yellow hover:bg-yellow-400 text-brand-dark rounded-2xl md:rounded-[1.5rem] shadow-lg flex items-center justify-center gap-2 transition-all duration-300 ease-spring hover:scale-105 hover:shadow-xl active:scale-90 group border-2 border-transparent`}
+                {/* Guest Dropdown */}
+                {showGuestDropdown && (
+                  <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 md:left-auto md:right-0 bg-white rounded-3xl shadow-2xl border-2 border-gray-100 mt-4 p-6 z-[60] w-full md:w-72 cursor-default animate-pop-in origin-top">
+                    <div className="flex justify-between items-center mb-4">
+                      <p className="font-bold text-gray-800">Adultos</p>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setAdults(prev => Math.max(1, prev - 1)); }}
+                          className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand-cyan hover:text-brand-cyan transition-all"
                         >
-                             {isSearchLoading ? (
-                                <Loader2 className="w-6 h-6 animate-spin" />
-                             ) : (
-                                <>
-                                    <Search className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300 ease-spring" strokeWidth={2.5} />
-                                    <span className="font-black text-lg">Buscar</span>
-                                </>
-                             )}
+                          <Minus className="w-4 h-4" />
                         </button>
+                        <span className="font-bold w-8 text-center text-gray-900">{adults}</span>
+                        <button
+                          type="button"
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setAdults(prev => prev + 1); }}
+                          className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand-cyan hover:text-brand-cyan transition-all"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center mb-4">
+                      <p className="font-bold text-gray-800">Crianças</p>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleChildChange('remove'); }}
+                          className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand-cyan hover:text-brand-cyan transition-all"
+                        >
+                          <Minus className="w-4 h-4" />
+                        </button>
+                        <span className="font-bold w-8 text-center text-gray-900">{children}</span>
+                        <button
+                          type="button"
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleChildChange('add'); }}
+                          className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-600 hover:border-brand-cyan hover:text-brand-cyan transition-all"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
 
-                </div>
+                    {/* Child Ages Inputs */}
+                    {children > 0 && (
+                      <div className="mb-4 grid grid-cols-2 gap-2 max-h-32 overflow-y-auto pr-1 custom-scrollbar animate-fade-in-up">
+                        {childAges.map((age, idx) => (
+                          <div key={idx} className="flex flex-col">
+                            <label className="text-[10px] text-gray-400 font-bold mb-1">Idade Criança {idx + 1}</label>
+                            <input
+                              type="number"
+                              min="0"
+                              max="17"
+                              value={age}
+                              onClick={(e) => e.stopPropagation()}
+                              onChange={(e) => handleChildAgeChange(idx, e.target.value)}
+                              className="w-full border-2 border-gray-100 rounded-lg px-2 py-1 text-sm font-bold text-gray-700 outline-none focus:border-brand-cyan transition-colors"
+                              placeholder="Ex: 5"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <button onClick={() => setShowGuestDropdown(false)} className="w-full mt-2 bg-brand-cyan text-white rounded-xl py-3 font-bold hover:bg-brand-cyanDark transition-all active:scale-95 shadow-[0_4px_0px_#0284c7] hover:shadow-[0_2px_0px_#0284c7] hover:translate-y-[2px]">Pronto</button>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Quick Features - Staggered */}
-            <div className="mt-10 flex flex-wrap justify-center gap-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-                 {[
-                    { text: "Roteiros Exclusivos", icon: <Sparkles className="w-4 h-4 text-yellow-300" /> }, 
-                    { text: "Suporte 24/7", icon: <Sparkles className="w-4 h-4 text-yellow-300" /> }, 
-                    { text: "Melhores Preços", icon: <Sparkles className="w-4 h-4 text-yellow-300" /> }
-                 ].map((feat, i) => (
-                     <div key={i} className="flex items-center gap-2 text-white/90 font-bold text-sm bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-105 cursor-default">
-                         {feat.icon}
-                         {feat.text}
-                     </div>
-                 ))}
+            {/* --- TICKET SEPARATOR --- */}
+            <div className="w-full h-[2px] border-t-2 border-dashed border-gray-200 relative my-1">
+              <div className="absolute left-[-16px] top-[-8px] w-4 h-4 bg-brand-light rounded-full"></div>
+              <div className="absolute right-[-16px] top-[-8px] w-4 h-4 bg-brand-light rounded-full"></div>
             </div>
+
+            {/* --- ROW 2: ADVANCED FILTERS + SEARCH --- */}
+            <div className="flex flex-col md:flex-row items-stretch w-full divide-y md:divide-y-0 md:divide-x divide-gray-100">
+
+              {/* 4. Trip Type - Redesigned */}
+              <div className="w-full md:flex-1 p-3 md:p-6 relative cursor-pointer hover:bg-gray-50/80 transition-all duration-300" ref={tripTypeRef} onClick={() => setShowTripTypeDropdown(!showTripTypeDropdown)}>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-hover:text-brand-cyan transition-colors">
+                  <Briefcase className="w-3 h-3" /> Tipo de Viagem
+                </label>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    {selectedTripObj && (
+                      <selectedTripObj.icon className={`w-5 h-5 ${selectedTripObj.color}`} />
+                    )}
+                    <span className={`text-lg md:text-lg font-bold truncate transition-colors ${tripType ? "text-gray-800" : "text-gray-300"}`}>
+                      {tripType || "Lazer, Lua de Mel..."}
+                    </span>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${showTripTypeDropdown ? 'rotate-180' : ''}`} />
+                </div>
+
+                {/* Trip Type Dropdown - Modern Grid */}
+                {showTripTypeDropdown && (
+                  <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 w-full md:w-[400px] bg-white rounded-3xl shadow-2xl border-2 border-gray-100 mt-2 z-[60] animate-pop-in origin-top overflow-hidden p-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      {TRIP_OPTIONS.map((type, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => { setTripType(type.label); setShowTripTypeDropdown(false); }}
+                          className={`
+                                                flex flex-col items-start gap-2 p-3 rounded-2xl border-2 transition-all duration-200 text-left
+                                                ${tripType === type.label
+                              ? 'bg-brand-light border-brand-cyan shadow-sm'
+                              : 'bg-white border-transparent hover:bg-gray-50 hover:border-gray-100'
+                            }
+                                            `}
+                        >
+                          <div className={`p-2 rounded-xl ${type.bg} ${type.color}`}>
+                            <type.icon className="w-5 h-5" />
+                          </div>
+                          <span className={`font-bold text-base ${tripType === type.label ? 'text-brand-dark' : 'text-gray-600'}`}>
+                            {type.label}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 5. Budget - Redesigned */}
+              <div className="w-full md:flex-1 p-3 md:p-6 relative cursor-pointer hover:bg-gray-50/80 transition-all duration-300" ref={budgetRef} onClick={() => setShowBudgetDropdown(!showBudgetDropdown)}>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1 group-hover:text-brand-cyan transition-colors">
+                  <Wallet className="w-3 h-3" /> Orçamento Aprox.
+                </label>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    {selectedBudgetObj && (
+                      <div className="flex text-green-600 font-bold text-xs bg-green-50 px-1.5 py-0.5 rounded-md">
+                        {[...Array(selectedBudgetObj.level)].map((_, i) => <span key={i}>$</span>)}
+                      </div>
+                    )}
+                    <span className={`text-lg md:text-lg font-bold truncate transition-colors ${budget ? "text-gray-800" : "text-gray-300"}`}>
+                      {budget || "Definir padrão"}
+                    </span>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${showBudgetDropdown ? 'rotate-180' : ''}`} />
+                </div>
+
+                {/* Budget Dropdown - Rich List */}
+                {showBudgetDropdown && (
+                  <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 w-full md:w-[320px] bg-white rounded-3xl shadow-2xl border-2 border-gray-100 mt-2 z-[60] animate-pop-in origin-top overflow-hidden p-3">
+                    {BUDGET_TIERS.map((opt, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => { setBudget(opt.label); setShowBudgetDropdown(false); }}
+                        className={`
+                                            w-full flex items-center gap-4 p-3 rounded-2xl border-2 transition-all duration-200 mb-2 last:mb-0
+                                            ${budget === opt.label
+                            ? 'bg-brand-light border-brand-cyan shadow-sm'
+                            : 'bg-white border-transparent hover:bg-gray-50 hover:border-gray-100'
+                          }
+                                        `}
+                      >
+                        <div className={`p-2 rounded-xl bg-gray-100 text-gray-600 ${budget === opt.label ? 'bg-brand-vibrant text-white' : ''}`}>
+                          <opt.icon className="w-5 h-5" />
+                        </div>
+                        <div className="text-left">
+                          <div className="flex items-center gap-2">
+                            <span className={`font-bold text-base ${budget === opt.label ? 'text-brand-dark' : 'text-gray-800'}`}>
+                              {opt.label}
+                            </span>
+                            <div className="flex text-[10px] font-black text-green-600 bg-green-50 px-1.5 rounded">
+                              {[...Array(opt.level)].map((_, i) => <span key={i}>$</span>)}
+                            </div>
+                          </div>
+                          <span className="text-sm text-gray-400 font-medium">{opt.desc}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* 6. Search Button */}
+              <div className="p-2 w-full md:w-auto flex-shrink-0">
+                <button
+                  onClick={handleSearch}
+                  disabled={isSearchLoading}
+                  className={`w-full md:w-40 h-full min-h-[70px] bg-brand-yellow hover:bg-yellow-400 text-brand-dark rounded-2xl md:rounded-[1.5rem] shadow-lg flex items-center justify-center gap-2 transition-all duration-300 ease-spring hover:scale-105 hover:shadow-xl active:scale-90 group border-2 border-transparent`}
+                >
+                  {isSearchLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : (
+                    <>
+                      <Search className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300 ease-spring" strokeWidth={2.5} />
+                      <span className="font-black text-lg">Buscar</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Quick Features - Staggered */}
+          <div className="mt-10 flex flex-wrap justify-center gap-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+            {[
+              { text: "Roteiros Exclusivos", icon: <Sparkles className="w-4 h-4 text-yellow-300" /> },
+              { text: "Suporte 24/7", icon: <Sparkles className="w-4 h-4 text-yellow-300" /> },
+              { text: "Melhores Preços", icon: <Sparkles className="w-4 h-4 text-yellow-300" /> }
+            ].map((feat, i) => (
+              <div key={i} className="flex items-center gap-2 text-white/90 font-bold text-sm bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-105 cursor-default">
+                {feat.icon}
+                {feat.text}
+              </div>
+            ))}
+          </div>
 
         </div>
       </div>
@@ -808,7 +808,7 @@ const Hero: React.FC = () => {
       {/* Wavy Bottom Separator */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180">
         <svg className="relative block w-[calc(100%+1.3px)] h-[60px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#fffdf5"></path>
+          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#fffdf5"></path>
         </svg>
       </div>
     </section>
