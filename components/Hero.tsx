@@ -446,7 +446,7 @@ const Hero: React.FC = () => {
           <div className="absolute bottom-40 left-10 w-48 h-48 bg-yellow-300/20 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 pt-24 pb-12">
+      <div className="container mx-auto px-6 relative z-10 pt-40 pb-12">
         <div className="flex flex-col items-center justify-center text-center">
             
             {/* Sticker Badge - Staggered Entry */}
