@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import BlogList from './pages/BlogList';
 import BlogPost from './pages/BlogPost';
 import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:id" element={<BlogPost />} />
             <Route path="/termos-de-uso" element={<Terms />} />
+            <Route path="/politica-privacidade" element={<Privacy />} />
 
             {/* Rota de Fallback (Catch-all): Redireciona qualquer URL inválida/desconhecida para a Home */}
             <Route path="*" element={<Navigate to="/" replace />} />

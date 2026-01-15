@@ -44,6 +44,7 @@ const Footer: React.FC = () => {
                             <li><a href="#como-funciona" className="hover:text-brand-yellow transition-colors">Como Funciona</a></li>
                             <li><a href="#depoimentos" className="hover:text-brand-yellow transition-colors">Love Notes</a></li>
                             <li><Link to="/termos-de-uso" className="hover:text-brand-yellow transition-colors">Termos de Uso</Link></li>
+                            <li><Link to="/politica-privacidade" className="hover:text-brand-yellow transition-colors">Política de Privacidade</Link></li>
                         </ul>
                     </div>
 
