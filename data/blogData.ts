@@ -1,6 +1,7 @@
 
 export interface BlogPost {
     id: number;
+    slug: string;
     title: string;
     excerpt: string;
     content: string;
@@ -16,6 +17,7 @@ export interface BlogPost {
 export const BLOG_POSTS: BlogPost[] = [
     {
         id: 1,
+        slug: "5-segredos-da-disney-que-ninguem-conta",
         title: "5 Segredos da Disney que Ninguém Conta",
         excerpt: "Descubra como furar filas legalmente, onde encontrar os personagens raros e os melhores snacks escondidos nos parques.",
         content: `
@@ -69,6 +71,7 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     {
         id: 2,
+        slug: "malas-de-mao-o-guia-definitivo",
         title: "Malas de Mão: O Guia Definitivo",
         excerpt: "Aprenda a viajar leve sem esquecer nada. Checklist completo para não pagar despacho.",
         content: `
@@ -168,6 +171,7 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     {
         id: 3,
+        slug: "europa-gastronomica-roteiro-italia",
         title: "Europa Gastronômica: Roteiro Itália",
         excerpt: "De Roma a Florença: onde comer a verdadeira pasta carbonara e os melhores gelatos.",
         content: `
@@ -260,6 +264,7 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     {
         id: 4,
+        slug: "lua-de-mel-nas-maldivas",
         title: "Lua de Mel nas Maldivas",
         excerpt: "Quanto custa? Qual a melhor época? Vale a pena o All-Inclusive? Respondemos tudo.",
         content: `
@@ -374,6 +379,7 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     {
         id: 5,
+        slug: "nova-york-no-natal",
         title: "Nova York no Natal",
         excerpt: "O guia completo para ver as luzes de Dyker Heights e patinar no Central Park.",
         content: `

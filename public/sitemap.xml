@@ -1,15 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home -->
   <url>
-    <loc>https://www.anhanga.tur.br</loc>
-    <lastmod>2026-01-14</lastmod>
+    <loc>https://www.anhanga.tur.br/</loc>
+    <lastmod>2026-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Blog List -->
   <url>
     <loc>https://www.anhanga.tur.br/blog</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://www.anhanga.tur.br/blog/5-segredos-da-disney-que-ninguem-conta</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.anhanga.tur.br/blog/malas-de-mao-o-guia-definitivo</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.anhanga.tur.br/blog/europa-gastronomica-roteiro-italia</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.anhanga.tur.br/blog/lua-de-mel-nas-maldivas</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.anhanga.tur.br/blog/nova-york-no-natal</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Institutional -->
+  <url>
+    <loc>https://www.anhanga.tur.br/termos-de-uso</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.anhanga.tur.br/politica-privacidade</loc>
+    <lastmod>2026-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

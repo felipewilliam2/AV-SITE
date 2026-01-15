@@ -4,104 +4,104 @@ import { BLOG_POSTS } from '../data/blogData';
 import { Calendar, User, ArrowRight, Search, BookOpen } from 'lucide-react';
 
 const BlogList: React.FC = () => {
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
+    const [hoveredId, setHoveredId] = useState<number | null>(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredPosts = BLOG_POSTS.filter(post => 
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    const filteredPosts = BLOG_POSTS.filter(post =>
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-  return (
-    <div className="min-h-screen bg-[#fffdf5] pt-32 pb-24">
-        <div className="container mx-auto px-6">
-            
-            {/* Header */}
-            <div className="text-center mb-16 max-w-3xl mx-auto">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-brand-dark bg-brand-yellow text-brand-dark font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_#0f172a] transform -rotate-1 mb-4">
-                    <BookOpen className="w-4 h-4" /> Todos os Artigos
+    return (
+        <div className="min-h-screen bg-[#fffdf5] pt-32 pb-24">
+            <div className="container mx-auto px-6">
+
+                {/* Header */}
+                <div className="text-center mb-16 max-w-3xl mx-auto">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-brand-dark bg-brand-yellow text-brand-dark font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_#0f172a] transform -rotate-1 mb-4">
+                        <BookOpen className="w-4 h-4" /> Todos os Artigos
+                    </div>
+                    <h1 className="text-4xl md:text-6xl font-black text-brand-dark mb-6">
+                        Diário de <span className="text-brand-cyan">Bordo</span>
+                    </h1>
+                    <p className="text-xl text-gray-500 font-medium">
+                        Explore nosso acervo completo de dicas, roteiros e segredos de viagem.
+                    </p>
+
+                    {/* Search Bar */}
+                    <div className="mt-8 relative max-w-lg mx-auto">
+                        <input
+                            type="text"
+                            placeholder="Buscar por título ou categoria..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full px-6 py-4 rounded-full border-2 border-gray-200 focus:border-brand-cyan focus:outline-none shadow-sm pl-12 text-gray-700 font-medium transition-all"
+                        />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    </div>
                 </div>
-                <h1 className="text-4xl md:text-6xl font-black text-brand-dark mb-6">
-                    Diário de <span className="text-brand-cyan">Bordo</span>
-                </h1>
-                <p className="text-xl text-gray-500 font-medium">
-                    Explore nosso acervo completo de dicas, roteiros e segredos de viagem.
-                </p>
 
-                {/* Search Bar */}
-                <div className="mt-8 relative max-w-lg mx-auto">
-                    <input 
-                        type="text" 
-                        placeholder="Buscar por título ou categoria..." 
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full px-6 py-4 rounded-full border-2 border-gray-200 focus:border-brand-cyan focus:outline-none shadow-sm pl-12 text-gray-700 font-medium transition-all"
-                    />
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                </div>
-            </div>
-
-            {/* Grid */}
-            {filteredPosts.length > 0 ? (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {filteredPosts.map((post) => (
-                        <Link 
-                            to={`/blog/${post.id}`}
-                            key={post.id}
-                            className={`
+                {/* Grid */}
+                {filteredPosts.length > 0 ? (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {filteredPosts.map((post) => (
+                            <Link
+                                to={`/blog/${post.slug}`}
+                                key={post.id}
+                                className={`
                                 group bg-white rounded-3xl p-5 shadow-[0_10px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100
                                 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl
                                 flex flex-col h-full relative z-10
                             `}
-                            onMouseEnter={() => setHoveredId(post.id)}
-                            onMouseLeave={() => setHoveredId(null)}
-                        >
-                            {/* Image Area */}
-                            <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-gray-100">
-                                <img 
-                                    src={post.image} 
-                                    alt={post.title} 
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
-                                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur rounded-lg px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-800 shadow-sm">
-                                    {post.date}
+                                onMouseEnter={() => setHoveredId(post.id)}
+                                onMouseLeave={() => setHoveredId(null)}
+                            >
+                                {/* Image Area */}
+                                <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-gray-100">
+                                    <img
+                                        src={post.image}
+                                        alt={post.title}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur rounded-lg px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-800 shadow-sm">
+                                        {post.date}
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Content */}
-                            <div className="flex-1 flex flex-col">
-                                <div className="mb-3">
-                                    <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md border ${post.color}`}>
-                                        {post.category}
-                                    </span>
+                                {/* Content */}
+                                <div className="flex-1 flex flex-col">
+                                    <div className="mb-3">
+                                        <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md border ${post.color}`}>
+                                            {post.category}
+                                        </span>
+                                    </div>
+                                    <h4 className="text-2xl font-extrabold text-gray-800 mb-3 leading-tight group-hover:text-brand-cyan transition-colors">
+                                        {post.title}
+                                    </h4>
+                                    <p className="text-gray-500 font-medium leading-relaxed mb-6 flex-1 line-clamp-3">
+                                        {post.excerpt}
+                                    </p>
+
+                                    <div className="pt-4 border-t border-dashed border-gray-100 flex items-center justify-between">
+                                        <span className="text-xs font-bold text-gray-400 flex items-center gap-1">
+                                            <User className="w-3 h-3" /> {post.author}
+                                        </span>
+                                        <span className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${hoveredId === post.id ? 'bg-brand-cyan text-white' : 'bg-gray-100 text-gray-400'}`}>
+                                            <ArrowRight className="w-5 h-5" />
+                                        </span>
+                                    </div>
                                 </div>
-                                <h4 className="text-2xl font-extrabold text-gray-800 mb-3 leading-tight group-hover:text-brand-cyan transition-colors">
-                                    {post.title}
-                                </h4>
-                                <p className="text-gray-500 font-medium leading-relaxed mb-6 flex-1 line-clamp-3">
-                                    {post.excerpt}
-                                </p>
-                                
-                                <div className="pt-4 border-t border-dashed border-gray-100 flex items-center justify-between">
-                                    <span className="text-xs font-bold text-gray-400 flex items-center gap-1">
-                                        <User className="w-3 h-3" /> {post.author}
-                                    </span>
-                                    <span className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${hoveredId === post.id ? 'bg-brand-cyan text-white' : 'bg-gray-100 text-gray-400'}`}>
-                                        <ArrowRight className="w-5 h-5" />
-                                    </span>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            ) : (
-                <div className="text-center py-20">
-                    <p className="text-gray-400 text-lg font-medium">Nenhum artigo encontrado com esse termo. 🕵️‍♂️</p>
-                </div>
-            )}
+                            </Link>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-20">
+                        <p className="text-gray-400 text-lg font-medium">Nenhum artigo encontrado com esse termo. 🕵️‍♂️</p>
+                    </div>
+                )}
+            </div>
         </div>
-    </div>
-  );
+    );
 };
 
 export default BlogList;

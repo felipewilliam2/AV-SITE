@@ -34,16 +34,16 @@ const Blog: React.FC = () => {
                 {/* Featured Post Layout */}
                 {featuredPost && (
                     <div className="mb-16 group cursor-pointer relative">
-                        <Link to={`/blog/${featuredPost.id}`}>
+                        <Link to={`/blog/${featuredPost.slug}`}>
                             <div className="bg-[#fffdf5] rounded-[2.5rem] p-6 md:p-8 border-4 border-gray-100 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] flex flex-col md:flex-row gap-8 items-center transition-transform duration-300 hover:scale-[1.01]">
-                                
+
                                 {/* Featured Image */}
                                 <div className="w-full md:w-1/2 relative">
                                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-8 bg-brand-cyan/20 backdrop-blur-sm border-l border-r border-white/60 -rotate-2 shadow-sm z-20"></div>
                                     <div className="rounded-2xl overflow-hidden aspect-video border-2 border-white shadow-md">
-                                        <img 
-                                            src={featuredPost.image} 
-                                            alt={featuredPost.title} 
+                                        <img
+                                            src={featuredPost.image}
+                                            alt={featuredPost.title}
                                             className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                                         />
                                     </div>
@@ -89,8 +89,8 @@ const Blog: React.FC = () => {
                 {/* Grid Posts */}
                 <div className="grid md:grid-cols-3 gap-8">
                     {gridPosts.map((post) => (
-                        <Link 
-                            to={`/blog/${post.id}`}
+                        <Link
+                            to={`/blog/${post.slug}`}
                             key={post.id}
                             className={`
                                 group bg-white rounded-3xl p-4 shadow-[0_10px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100
@@ -102,9 +102,9 @@ const Blog: React.FC = () => {
                         >
                             {/* Image Area */}
                             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-5 bg-gray-100">
-                                <img 
-                                    src={post.image} 
-                                    alt={post.title} 
+                                <img
+                                    src={post.image}
+                                    alt={post.title}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                                 <div className="absolute top-3 right-3 bg-white/90 backdrop-blur rounded-lg px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-800 shadow-sm">
@@ -125,7 +125,7 @@ const Blog: React.FC = () => {
                                 <p className="text-sm text-gray-500 font-medium leading-relaxed mb-6 flex-1 line-clamp-3">
                                     {post.excerpt}
                                 </p>
-                                
+
                                 <div className="pt-4 border-t border-dashed border-gray-100 flex items-center justify-between">
                                     <span className="text-xs font-bold text-gray-400 flex items-center gap-1">
                                         <User className="w-3 h-3" /> {post.author}
