@@ -12,7 +12,6 @@ import CallToAction from '../components/CallToAction';
 
 import { OrganizationSchema } from '../components/schemas/OrganizationSchema';
 import { BreadcrumbSchema } from '../components/schemas/BreadcrumbSchema';
-import { FaqSchema } from '../components/schemas/FaqSchema';
 
 const Home: React.FC = () => {
   const location = useLocation();
@@ -40,15 +39,14 @@ const Home: React.FC = () => {
     <>
       <OrganizationSchema />
       <BreadcrumbSchema />
-      <FaqSchema />
       <Hero />
       <Highlights />
       <Categories />
       <Destinations />
       <HowItWorks />
+      <FAQ />
       <Testimonials />
       <Blog />
-      <FAQ />
       <CallToAction />
     </>
   );
