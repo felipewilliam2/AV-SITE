@@ -6,19 +6,19 @@ const HERO_VIDEOS = [
   {
     // Rio de Janeiro / Tropical Brazil
     id: 1,
-    url: "https://videos.pexels.com/video-files/4323649/4323649-hd_1920_1080_30fps.mp4",
+    url: "https://www.pexels.com/pt-br/download/video/16863167/",
     poster: "https://images.pexels.com/photos/2868242/pexels-photo-2868242.jpeg"
   },
   {
     // Paris / Europa
     id: 2,
-    url: "https://videos.pexels.com/video-files/1121977/1121977-hd_1920_1080_25fps.mp4",
+    url: "https://www.pexels.com/pt-br/download/video/7197880/",
     poster: "https://images.pexels.com/photos/1530259/pexels-photo-1530259.jpeg"
   },
   {
     // Maldivas / Praia Paradisíaca
     id: 3,
-    url: "https://videos.pexels.com/video-files/3209928/3209928-hd_1920_1080_25fps.mp4",
+    url: "https://www.pexels.com/pt-br/download/video/4069480/",
     poster: "https://images.pexels.com/photos/1483053/pexels-photo-1483053.jpeg"
   },
   {
