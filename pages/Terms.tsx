@@ -49,7 +49,7 @@ const Terms = () => {
                             <p>
                                 Os presentes Termos e Condições de Uso ("Termos") são estabelecidos pela <strong>Anhangá Turismo Ltda.</strong>,
                                 pessoa jurídica de direito privado, inscrita no CNPJ sob o nº <strong>37.036.732/0001-41</strong>, com sede em
-                                <em>Avenida Dom Pedro I, 773 Apto 35 Bloco 3, Vila Monumento, São Paulo-SP</em> ("Anhangá Turismo", "Controladora" ou "nós"), que opera o website
+                                <em> Avenida Dom Pedro I, 773, Vila Monumento, São Paulo-SP</em> ("Anhangá Turismo", "Controladora" ou "nós"), que opera o website
                                 <a href="https://anhanga.tur.br" target="_blank" rel="noopener noreferrer" className="text-primary underline"> https://anhanga.tur.br</a>
                                 e demais plataformas digitais correlatas.
                             </p>
