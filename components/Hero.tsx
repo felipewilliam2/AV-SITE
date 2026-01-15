@@ -417,7 +417,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full min-h-[850px] flex items-center bg-brand-light pb-20">
+    <section className="relative w-full min-h-[850px] flex items-center bg-brand-light pb-20 z-20">
 
       {/* Background Video with Creative Mask */}
       <div className="absolute inset-0 z-0 overflow-hidden">
