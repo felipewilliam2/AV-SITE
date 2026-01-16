@@ -1,108 +1,91 @@
-(function() {
-    /**
-     * UTM & GCLID Tracking Script for WhatsApp Buttons
-     * Persists marketing data in cookies and appends it to WhatsApp links.
-     */
+/**
+ * UTM & GA4 Client ID Tracking Script for WhatsApp Buttons
+ * Captures marketing parameters and GA4 Client ID, then appends them to WhatsApp links.
+ */
+(function () {
+    function initWhatsAppTracking() {
+        const BUTTON_CLASS = '.btn-whatsapp'; // Seleciona múltiplos botões se necessário
+        const GA4_MEASUREMENT_ID = 'G-QDBT5PM4KP'; // Seu ID do GA4
 
-    const TRACKING_PARAMS = ['gclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-    const COOKIE_NAME = 'tracking_data';
-    const COOKIE_EXPIRY_DAYS = 30;
+        const buttons = document.querySelectorAll(BUTTON_CLASS);
 
-    /**
-     * Utils for handling cookies
-     */
-    const setCookie = (name, value, days) => {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        const expires = "expires=" + date.toUTCString();
-        document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
-    };
-
-    const getCookie = (name) => {
-        const nameEQ = name + "=";
-        const ca = document.cookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+        if (buttons.length === 0) {
+            // Tenta também pelo ID se a classe não retornar nada
+            const mainBtn = document.getElementById('btn-whatsapp');
+            if (!mainBtn) return;
         }
-        return null;
-    };
 
-    /**
-     * Parse tracking parameters from URL or Cookie
-     */
-    const getTrackingData = () => {
+        // 1. Capturar Parâmetros da URL
         const urlParams = new URLSearchParams(window.location.search);
-        let trackingData = {};
-        let foundInUrl = false;
+        const tracking = {
+            utm_source: urlParams.get('utm_source'),
+            utm_medium: urlParams.get('utm_medium'),
+            utm_campaign: urlParams.get('utm_campaign'),
+            utm_term: urlParams.get('utm_term'),
+            utm_content: urlParams.get('utm_content'),
+            gclid: urlParams.get('gclid')
+        };
 
-        // Try getting from URL
-        TRACKING_PARAMS.forEach(param => {
-            const value = urlParams.get(param);
-            if (value) {
-                trackingData[param] = value;
-                foundInUrl = true;
+        // 2. Capturar Client ID do GA4
+        function getGACid(callback) {
+            if (typeof gtag === 'function') {
+                gtag('get', GA4_MEASUREMENT_ID, 'client_id', (cid) => {
+                    callback(cid || getCookieCid());
+                });
+            } else {
+                callback(getCookieCid());
             }
-        });
-
-        if (foundInUrl) {
-            // Save to cookie if found in URL
-            const dataString = Object.keys(trackingData)
-                .map(key => `${key}=${trackingData[key]}`)
-                .join('&');
-            setCookie(COOKIE_NAME, dataString, COOKIE_EXPIRY_DAYS);
-            return dataString;
-        } else {
-            // Try getting from Cookie
-            return getCookie(COOKIE_NAME);
         }
-    };
 
-    /**
-     * Update WhatsApp links with tracking suffix
-     */
-    const updateLinks = (dataString) => {
-        if (!dataString) return;
+        function getCookieCid() {
+            const match = document.cookie.match(/_ga=GA1\.\d+\.(\d+\.\d+)/);
+            return match ? match[1] : null;
+        }
 
-        const suffix = ` [ref:${dataString}]`;
-        const buttons = document.querySelectorAll('.btn-whatsapp');
+        // 3. Atualizar os Botões
+        getGACid((cid) => {
+            if (cid) tracking.cid = cid;
 
-        buttons.forEach(button => {
-            let href = button.getAttribute('href');
-            if (!href || !href.includes('wa.me')) return;
+            const dataString = Object.entries(tracking)
+                .filter(([_, value]) => value !== null && value !== '')
+                .map(([key, value]) => key + "=" + value)
+                .join(', ');
 
-            try {
-                const url = new URL(href);
-                let text = url.searchParams.get('text') || '';
-                
-                // Avoid double appending
-                if (!text.includes('[ref:')) {
-                    text += suffix;
-                    url.searchParams.set('text', text);
-                    button.setAttribute('href', url.toString());
+            if (!dataString) return;
+
+            const allButtons = document.querySelectorAll(BUTTON_CLASS + ', #btn-whatsapp');
+            allButtons.forEach(btn => {
+                let currentHref = btn.getAttribute('href');
+                if (!currentHref) return;
+
+                try {
+                    // Normalização do Link
+                    let cleanHref = currentHref;
+                    if (cleanHref.includes('wa.me/')) {
+                        cleanHref = 'https://' + cleanHref.replace(/^https?:\/\//, '');
+                    }
+
+                    const url = new URL(cleanHref);
+                    let text = url.searchParams.get('text') || '';
+
+                    if (!text.includes('|| Dados:')) {
+                        const separator = text.length > 0 ? " || Dados: " : "Dados: ";
+                        text += separator + dataString;
+                        url.searchParams.set('text', text);
+                        btn.setAttribute('href', url.toString());
+                    }
+                } catch (e) {
+                    console.error("Tracking: Erro ao processar link", e);
                 }
-            } catch (e) {
-                // Fail silently for malformed URLs
-                console.error('Tracking Script: Error parsing WhatsApp link', e);
-            }
+            });
         });
-    };
+    }
 
-    /**
-     * Initialize tracking
-     */
-    const init = () => {
-        const data = getTrackingData();
-        if (data) {
-            updateLinks(data);
-        }
-    };
-
-    // Run on load
+    // Inicialização
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', () => setTimeout(initWhatsAppTracking, 1500));
     } else {
-        init();
+        setTimeout(initWhatsAppTracking, 1500);
     }
 })();
+
