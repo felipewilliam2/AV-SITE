@@ -1,19 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
-import { MessageSquare, ArrowRight, Ticket, Loader2, Plane, QrCode, Smartphone } from 'lucide-react';
+import { MessageSquare, ArrowRight, Ticket, Plane, QrCode, Smartphone } from 'lucide-react';
 
 const CallToAction: React.FC = () => {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        setIsLoading(true);
-        const href = e.currentTarget.href;
-        setTimeout(() => {
-            window.open(href, '_blank');
-            setIsLoading(false);
-        }, 1500);
-    };
 
     return (
         <section id="contato" className="py-24 bg-brand-light relative overflow-hidden">
@@ -57,20 +46,10 @@ const CallToAction: React.FC = () => {
                                 href={getWhatsAppLink("Olá! Gostaria de fazer meu check-in e solicitar um orçamento personalizado.")}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                onClick={handleClick}
-                                className={`flex items-center gap-3 bg-brand-dark text-white text-lg font-bold px-8 py-4 rounded-xl shadow-[4px_4px_0px_#fbbf24] hover:shadow-[2px_2px_0px_#fbbf24] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all ${isLoading ? 'opacity-90 cursor-wait' : ''}`}
+                                className="flex items-center gap-3 bg-brand-dark text-white text-lg font-bold px-8 py-4 rounded-xl shadow-[4px_4px_0px_#fbbf24] hover:shadow-[2px_2px_0px_#fbbf24] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
                             >
-                                {isLoading ? (
-                                    <>
-                                        <span>Embarcando...</span>
-                                        <Plane className="w-5 h-5 animate-pulse" style={{ animationDuration: '1s' }} />
-                                    </>
-                                ) : (
-                                    <>
-                                        <span>Fazer Check-in (WhatsApp)</span>
-                                        <MessageSquare className="w-5 h-5" />
-                                    </>
-                                )}
+                                <span>Fazer Check-in (WhatsApp)</span>
+                                <MessageSquare className="w-5 h-5" />
                             </a>
                         </div>
 

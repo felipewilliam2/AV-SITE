@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
-import { UserCheck, Sparkles, FileCheck, Compass, ShieldCheck, Loader2, ArrowRight } from 'lucide-react';
+import { UserCheck, Sparkles, FileCheck, Compass, ShieldCheck, ArrowRight } from 'lucide-react';
 
 interface HighlightItem {
     icon: React.ElementType;
@@ -13,18 +13,6 @@ interface HighlightItem {
 }
 
 const Highlights: React.FC = () => {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        setIsLoading(true);
-        const href = e.currentTarget.href;
-
-        setTimeout(() => {
-            window.open(href, '_blank');
-            setIsLoading(false);
-        }, 1500);
-    };
 
     const highlights: HighlightItem[] = [
         {
@@ -104,17 +92,10 @@ const Highlights: React.FC = () => {
                                 href={getWhatsAppLink("Olá! Quero conhecer a experiência Anhangá.")}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                onClick={handleContactClick}
-                                className={`flex items-center justify-center gap-3 w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold transition-all duration-300 ease-spring shadow-[4px_4px_0px_#94a3b8] hover:shadow-[2px_2px_0px_#94a3b8] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none ${isLoading ? 'opacity-90 cursor-wait' : ''}`}
+                                className="flex items-center justify-center gap-3 w-full bg-brand-dark text-white px-6 py-4 rounded-xl font-bold transition-all duration-300 ease-spring shadow-[4px_4px_0px_#94a3b8] hover:shadow-[2px_2px_0px_#94a3b8] hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
                             >
-                                {isLoading ? (
-                                    <Loader2 className="w-5 h-5 animate-spin" />
-                                ) : (
-                                    <>
-                                        <ShieldCheck className="w-5 h-5" />
-                                        <span>Falar com Especialista</span>
-                                    </>
-                                )}
+                                <ShieldCheck className="w-5 h-5" />
+                                <span>Falar com Especialista</span>
                             </a>
                         </div>
                     </div>

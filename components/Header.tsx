@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
-import { Menu, X, Phone, Loader2 } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,15 +22,8 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const href = e.currentTarget.href;
-    setTimeout(() => {
-      window.open(href, '_blank');
-      setIsLoading(false);
-      setIsMobileMenuOpen(false);
-    }, 1200);
+  const handleContactClick = () => {
+    setIsMobileMenuOpen(false);
   };
 
   const navLinks = [
@@ -136,20 +129,10 @@ const Header: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Fale Conosco no WhatsApp"
-              onClick={handleContactClick}
-              className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-500 flex items-center gap-2 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-vibrant ${buttonClass} ${isLoading ? 'opacity-90 cursor-wait' : ''}`}
+              className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-500 flex items-center gap-2 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-vibrant ${buttonClass}`}
             >
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Conectando...</span>
-                </>
-              ) : (
-                <>
-                  <Phone className="w-4 h-4" />
-                  Fale Conosco
-                </>
-              )}
+              <Phone className="w-4 h-4" />
+              Fale Conosco
             </a>
           </div>
 
@@ -200,17 +183,12 @@ const Header: React.FC = () => {
           </Link>
           <a
             href={getWhatsAppLink("Olá! Gostaria de falar com um especialista.")}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-brand-vibrant text-center text-white px-5 py-3 rounded-lg font-bold mt-2 focus:ring-2 focus:ring-offset-2 focus:ring-brand-dark focus:outline-none flex justify-center items-center gap-2"
             onClick={handleContactClick}
           >
-            {isLoading ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Conectando...
-              </>
-            ) : (
-              "Fale Conosco"
-            )}
+            Fale Conosco
           </a>
         </div>
       )}
