@@ -23,7 +23,11 @@
             utm_campaign: urlParams.get('utm_campaign'),
             utm_term: urlParams.get('utm_term'),
             utm_content: urlParams.get('utm_content'),
-            gclid: urlParams.get('gclid')
+            gclid: urlParams.get('gclid'),
+            fbclid: urlParams.get('fbclid'),
+            ttclid: urlParams.get('ttclid'),
+            wbraid: urlParams.get('wbraid'),
+            gbraid: urlParams.get('gbraid')
         };
 
         // 2. Capturar Client ID do GA4
