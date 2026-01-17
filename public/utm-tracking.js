@@ -30,14 +30,35 @@
             gbraid: urlParams.get('gbraid')
         };
 
-        // 2. Capturar Client ID do GA4
+        // 2. Capturar Client ID do GA4 com Timeout de segurança
         function getGACid(callback) {
+            let callbackCalled = false;
+
+            const done = (cid) => {
+                if (!callbackCalled) {
+                    callbackCalled = true;
+                    callback(cid);
+                }
+            };
+
+            // Timeout de 2 segundos para o GA4 responder
+            const timeout = setTimeout(() => {
+                done(getCookieCid());
+            }, 2000);
+
             if (typeof gtag === 'function') {
-                gtag('get', GA4_MEASUREMENT_ID, 'client_id', (cid) => {
-                    callback(cid || getCookieCid());
-                });
+                try {
+                    gtag('get', GA4_MEASUREMENT_ID, 'client_id', (cid) => {
+                        clearTimeout(timeout);
+                        done(cid || getCookieCid());
+                    });
+                } catch (e) {
+                    clearTimeout(timeout);
+                    done(getCookieCid());
+                }
             } else {
-                callback(getCookieCid());
+                clearTimeout(timeout);
+                done(getCookieCid());
             }
         }
 
@@ -57,13 +78,13 @@
 
             if (!dataString) return;
 
-            const allButtons = document.querySelectorAll(BUTTON_CLASS + ', #btn-whatsapp');
+            const allButtons = document.querySelectorAll(BUTTON_CLASS + ', #btn-whatsapp, a[href*="wa.me"]');
             allButtons.forEach(btn => {
                 let currentHref = btn.getAttribute('href');
                 if (!currentHref) return;
 
                 try {
-                    // Normalização do Link
+                    // Normalização e limpeza para evitar duplicidade
                     let cleanHref = currentHref;
                     if (cleanHref.includes('wa.me/')) {
                         cleanHref = 'https://' + cleanHref.replace(/^https?:\/\//, '');
@@ -72,12 +93,14 @@
                     const url = new URL(cleanHref);
                     let text = url.searchParams.get('text') || '';
 
-                    if (!text.includes('|| Dados:')) {
-                        const separator = text.length > 0 ? " || Dados: " : "Dados: ";
-                        text += separator + dataString;
-                        url.searchParams.set('text', text);
-                        btn.setAttribute('href', url.toString());
-                    }
+                    // Remove lógicas antigas se existirem (limpeza de cache visual)
+                    text = text.split(' || Dados:')[0].split(' [ref:')[0];
+
+                    const separator = text.length > 0 ? " || Dados: " : "Dados: ";
+                    text += separator + dataString;
+                    url.searchParams.set('text', text);
+
+                    btn.setAttribute('href', url.toString());
                 } catch (e) {
                     console.error("Tracking: Erro ao processar link", e);
                 }
@@ -85,11 +108,10 @@
         });
     }
 
-    // Inicialização
+    // Inicialização mais agressiva
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => setTimeout(initWhatsAppTracking, 1500));
+        document.addEventListener('DOMContentLoaded', () => setTimeout(initWhatsAppTracking, 2000));
     } else {
-        setTimeout(initWhatsAppTracking, 1500);
+        setTimeout(initWhatsAppTracking, 2000);
     }
 })();
-
