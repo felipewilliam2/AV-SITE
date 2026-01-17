@@ -1,6 +1,6 @@
 /**
  * WhatsApp Tracking Utility - React Version
- * Captures UTMs, Click IDs (gclid, fbclid, ttclid, wbraid, gbraid) and GA4 Client ID
+ * Captures UTMs, Click IDs (gclid, fbclid, ttclid, wbraid, gbraid), GA4 Client ID and Session ID
  */
 
 const TRACKING_PARAMS = [
@@ -10,6 +10,8 @@ const TRACKING_PARAMS = [
 const COOKIE_NAME = 'tracking_data';
 const WHATSAPP_NUMBER = '551152833309';
 const GA4_MEASUREMENT_ID = 'G-QDBT5PM4KP';
+// Cookie name for GA4 session (dynamic based on measurement ID suffix)
+const GA4_SESSION_COOKIE = '_ga_QDBT5PM4KP';
 
 // Helper to set cookie
 const setCookie = (name: string, value: string, days: number) => {
@@ -43,8 +45,36 @@ const getGA4ClientId = (): string | null => {
 };
 
 /**
+ * Gets the GA4 Session ID from the _ga_QDBT5PM4KP cookie
+ * Cookie format: "GS1.1.SESSION_ID.COUNT.ENGAGEMENT.TIMESTAMP.0.0.0"
+ * The session_id is the third segment (index 2) after splitting by "."
+ */
+const getGA4SessionId = (): string | null => {
+    if (typeof document === 'undefined') return null;
+
+    const cookieValue = getCookie(GA4_SESSION_COOKIE);
+    if (!cookieValue) return null;
+
+    // Split the cookie value by "."
+    // Format: GS1.1.1700000000.1.1.1700000000.0.0.0
+    const parts = cookieValue.split('.');
+
+    // The session ID is typically at index 2 (third segment)
+    // Validate that it looks like a timestamp (10+ digits)
+    if (parts.length >= 3) {
+        const sessionId = parts[2];
+        // Verify it's a valid timestamp-like number (10 digits for Unix timestamp)
+        if (/^\d{10,}$/.test(sessionId)) {
+            return sessionId;
+        }
+    }
+
+    return null;
+};
+
+/**
  * Retrieves tracking reference string with all parameters
- * Format: "utm_source=google, gclid=123, cid=456.789"
+ * Format: "utm_source=google, gclid=123, cid=456.789, sid=1700000000"
  */
 export const getTrackingRef = (): string | null => {
     if (typeof window === 'undefined') return null;
@@ -68,7 +98,13 @@ export const getTrackingRef = (): string | null => {
         trackingData['cid'] = cid;
     }
 
-    if (foundInUrl || cid) {
+    // 3. Add GA4 Session ID
+    const sid = getGA4SessionId();
+    if (sid) {
+        trackingData['sid'] = sid;
+    }
+
+    if (foundInUrl || cid || sid) {
         // Construct string with comma separator for readability
         const dataString = Object.keys(trackingData)
             .map(key => `${key}=${trackingData[key]}`)
@@ -79,7 +115,7 @@ export const getTrackingRef = (): string | null => {
         return dataString;
     }
 
-    // 3. Fallback to Cookie
+    // 4. Fallback to Cookie
     return getCookie(COOKIE_NAME);
 };
 
