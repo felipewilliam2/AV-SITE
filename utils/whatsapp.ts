@@ -1,7 +1,12 @@
 /**
  * WhatsApp Tracking Utility - React Version
  * Captures UTMs, Click IDs (gclid, fbclid, ttclid, wbraid, gbraid), GA4 Client ID and Session ID
+ * 
+ * IMPORTANT: This module captures UTM params immediately on load and stores them
+ * in memory + cookie to ensure they are available even after URL changes.
  */
+
+import { useState, useEffect } from 'react';
 
 const TRACKING_PARAMS = [
     'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
@@ -9,9 +14,12 @@ const TRACKING_PARAMS = [
 ];
 const COOKIE_NAME = 'tracking_data';
 const WHATSAPP_NUMBER = '551152833309';
-const GA4_MEASUREMENT_ID = 'G-QDBT5PM4KP';
 // Cookie name for GA4 session (dynamic based on measurement ID suffix)
 const GA4_SESSION_COOKIE = '_ga_QDBT5PM4KP';
+
+// In-memory cache for captured tracking data (persists across renders)
+let cachedTrackingData: string | null = null;
+let hasInitialized = false;
 
 // Helper to set cookie
 const setCookie = (name: string, value: string, days: number) => {
@@ -73,21 +81,45 @@ const getGA4SessionId = (): string | null => {
 };
 
 /**
- * Retrieves tracking reference string with all parameters
- * Format: "utm_source=google, gclid=123, cid=456.789, sid=1700000000"
+ * Captures tracking data from URL and stores in memory/cookie.
+ * This function runs immediately and stores the result for later use.
  */
-export const getTrackingRef = (): string | null => {
+const captureTrackingData = (): string | null => {
     if (typeof window === 'undefined') return null;
 
-    const urlParams = new URLSearchParams(window.location.search);
     const trackingData: Record<string, string> = {};
     let foundInUrl = false;
+
+    // Get the full URL including hash for HashRouter support
+    let searchString = window.location.search;
+
+    // If using HashRouter, params might be after the hash
+    // Example: /#/?utm_source=... or /?utm_source=...#/
+    if (!searchString && window.location.hash.includes('?')) {
+        const hashParts = window.location.hash.split('?');
+        if (hashParts[1]) {
+            searchString = '?' + hashParts[1];
+        }
+    }
+
+    // Also check if params are before the hash (normal case)
+    if (!searchString && window.location.href.includes('?')) {
+        const url = new URL(window.location.href);
+        searchString = url.search;
+    }
+
+    const urlParams = new URLSearchParams(searchString);
 
     // 1. Try URL parameters first
     TRACKING_PARAMS.forEach(param => {
         const value = urlParams.get(param);
         if (value) {
-            trackingData[param] = value;
+            // Decode URI component to handle %20 and other encoded chars
+            try {
+                trackingData[param] = decodeURIComponent(value);
+            } catch {
+                trackingData[param] = value;
+            }
             foundInUrl = true;
         }
     });
@@ -112,11 +144,65 @@ export const getTrackingRef = (): string | null => {
 
         // Save to cookie for future persistence (30 days)
         setCookie(COOKIE_NAME, dataString, 30);
+
+        // Cache in memory
+        cachedTrackingData = dataString;
+
+        console.log('[WhatsApp Tracking] Captured data:', dataString);
+
         return dataString;
     }
 
     // 4. Fallback to Cookie
-    return getCookie(COOKIE_NAME);
+    const cookieData = getCookie(COOKIE_NAME);
+    if (cookieData) {
+        cachedTrackingData = cookieData;
+    }
+
+    return cookieData;
+};
+
+/**
+ * Initialize tracking capture immediately when module loads
+ */
+const initializeTracking = () => {
+    if (hasInitialized) return;
+    hasInitialized = true;
+
+    if (typeof window !== 'undefined') {
+        // Capture immediately
+        captureTrackingData();
+
+        // Also capture on DOMContentLoaded to catch any late URL processing
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                captureTrackingData();
+            });
+        }
+
+        // And on window load as a final fallback
+        window.addEventListener('load', () => {
+            captureTrackingData();
+        });
+    }
+};
+
+// Run initialization immediately
+initializeTracking();
+
+/**
+ * Retrieves tracking reference string with all parameters
+ * Uses cached data if available, otherwise captures fresh
+ * Format: "utm_source=google, gclid=123, cid=456.789, sid=1700000000"
+ */
+export const getTrackingRef = (): string | null => {
+    // Return cached data if available
+    if (cachedTrackingData) {
+        return cachedTrackingData;
+    }
+
+    // Try to capture fresh data
+    return captureTrackingData();
 };
 
 /**
@@ -137,5 +223,45 @@ export const getWhatsAppLink = (message: string): string => {
     }
 
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(finalMessage)}`;
+};
+
+/**
+ * React Hook for WhatsApp link that updates after component mounts.
+ * This ensures the tracking data is captured even if the initial render
+ * happens before window.location is fully processed.
+ * 
+ * @param message The message to be sent via WhatsApp
+ * @returns The WhatsApp URL, which updates after mount if needed
+ */
+export const useWhatsAppLink = (message: string): string => {
+    const [whatsappUrl, setWhatsappUrl] = useState(() => getWhatsAppLink(message));
+
+    useEffect(() => {
+        // Re-capture tracking data after mount
+        const newUrl = getWhatsAppLink(message);
+        if (newUrl !== whatsappUrl) {
+            setWhatsappUrl(newUrl);
+        }
+
+        // Also update after a short delay to catch any late-loading GA data
+        const timer = setTimeout(() => {
+            captureTrackingData();
+            const updatedUrl = getWhatsAppLink(message);
+            setWhatsappUrl(updatedUrl);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, [message]);
+
+    return whatsappUrl;
+};
+
+/**
+ * Force re-capture of tracking data.
+ * Call this if you need to refresh the tracking info.
+ */
+export const refreshTrackingData = (): string | null => {
+    cachedTrackingData = null;
+    return captureTrackingData();
 };
 
