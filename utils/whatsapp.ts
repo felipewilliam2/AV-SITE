@@ -1,6 +1,7 @@
 /**
  * WhatsApp Tracking Utility - React Version
- * Captures UTMs, Click IDs (gclid, fbclid, ttclid, wbraid, gbraid), GA4 Client ID and Session ID
+ * Captures UTMs, Click IDs (gclid, fbclid, ttclid, wbraid, gbraid), 
+ * Microsoft Ads (hsa_*) params, GA4 Client ID and Session ID
  * 
  * IMPORTANT: This module captures UTM params immediately on load and stores them
  * in memory + cookie to ensure they are available even after URL changes.
@@ -12,6 +13,8 @@ const TRACKING_PARAMS = [
     'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
     'gclid', 'fbclid', 'ttclid', 'wbraid', 'gbraid'
 ];
+// Microsoft Ads (hsa_) parameters are captured dynamically - no need to list all
+const HSA_PREFIX = 'hsa_';
 const COOKIE_NAME = 'tracking_data';
 const WHATSAPP_NUMBER = '551152833309';
 // Cookie name for GA4 session (dynamic based on measurement ID suffix)
@@ -124,13 +127,25 @@ const captureTrackingData = (): string | null => {
         }
     });
 
-    // 2. Add GA4 Client ID
+    // 2. Capture all Microsoft Ads (hsa_) parameters dynamically
+    urlParams.forEach((value, key) => {
+        if (key.startsWith(HSA_PREFIX)) {
+            try {
+                trackingData[key] = decodeURIComponent(value);
+            } catch {
+                trackingData[key] = value;
+            }
+            foundInUrl = true;
+        }
+    });
+
+    // 3. Add GA4 Client ID
     const cid = getGA4ClientId();
     if (cid) {
         trackingData['cid'] = cid;
     }
 
-    // 3. Add GA4 Session ID
+    // 4. Add GA4 Session ID
     const sid = getGA4SessionId();
     if (sid) {
         trackingData['sid'] = sid;
@@ -153,7 +168,7 @@ const captureTrackingData = (): string | null => {
         return dataString;
     }
 
-    // 4. Fallback to Cookie
+    // 5. Fallback to Cookie
     const cookieData = getCookie(COOKIE_NAME);
     if (cookieData) {
         cachedTrackingData = cookieData;
