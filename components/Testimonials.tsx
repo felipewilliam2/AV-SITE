@@ -79,6 +79,12 @@ const Testimonials: React.FC = () => {
                                         itemType="https://schema.org/Review"
                                     >
                                         {/* Schema Hidden Data */}
+                                        <div itemProp="itemReviewed" itemScope itemType="https://schema.org/LocalBusiness">
+                                            <meta itemProp="name" content="Anhangá Viagens" />
+                                            <meta itemProp="image" content="https://www.anhanga.tur.br/logo.png" />
+                                            <meta itemProp="telephone" content="+551152833309" />
+                                            <meta itemProp="address" content="Av. Dom Pedro I, 773, São Paulo, SP" />
+                                        </div>
                                         <div itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
                                             <meta itemProp="ratingValue" content="5" />
                                             <meta itemProp="bestRating" content="5" />
