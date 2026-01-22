@@ -45,7 +45,7 @@ const Home: React.FC = () => {
         canonical="https://www.anhanga.tur.br/"
       />
       <OrganizationSchema />
-      <BreadcrumbSchema />
+      <BreadcrumbSchema items={[{ name: 'Home', item: 'https://www.anhanga.tur.br/' }]} />
       <Hero />
       <Highlights />
       <Categories />

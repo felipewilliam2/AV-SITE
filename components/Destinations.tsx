@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
 import L from 'leaflet';
-import { MapPin, X, Calendar, ArrowRight, Star, Compass, MousePointerClick, Share2, ImageIcon, Loader2, Plus, Minus } from 'lucide-react';
+import 'leaflet/dist/leaflet.css';
+import { MapPin, X, Calendar, ArrowRight, Star, Compass, MousePointerClick, Share2, ImageIcon, Loader2, Plus, Minus, Share } from 'lucide-react';
+import { SocialShare } from './SocialShare';
 
 interface Destination {
     coords: [number, number];
@@ -676,6 +678,15 @@ const Destinations: React.FC = () => {
                                         {act}
                                     </span>
                                 ))}
+                            </div>
+
+                            <div className="mb-8 p-4 bg-white/50 rounded-2xl border border-gray-100">
+                                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">Compartilhar destino</p>
+                                <SocialShare
+                                    url={`https://www.anhanga.tur.br/#destinos`}
+                                    title={`Confira esse destino na Anhangá Viagens: ${selectedDestination.city}`}
+                                    excerpt={selectedDestination.details}
+                                />
                             </div>
 
                             <a

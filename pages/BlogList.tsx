@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BLOG_POSTS } from '../data/blogData';
 import { Calendar, User, ArrowRight, Search, BookOpen } from 'lucide-react';
+import { SocialShare } from '../components/SocialShare';
 
 const BlogList: React.FC = () => {
     const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -65,6 +66,14 @@ const BlogList: React.FC = () => {
                                     />
                                     <div className="absolute top-3 right-3 bg-white/90 backdrop-blur rounded-lg px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-800 shadow-sm">
                                         {post.date}
+                                    </div>
+                                    <div className="absolute bottom-3 right-3 z-30">
+                                        <SocialShare
+                                            minimal
+                                            url={`https://www.anhanga.tur.br/blog/${post.slug}`}
+                                            title={post.title}
+                                            excerpt={post.excerpt}
+                                        />
                                     </div>
                                 </div>
 

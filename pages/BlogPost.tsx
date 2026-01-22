@@ -5,6 +5,8 @@ import { Calendar, User, ArrowLeft, Clock, Share2, Tag } from 'lucide-react';
 
 import { SEO } from '../components/SEO';
 import { ArticleSchema } from '../components/schemas/ArticleSchema';
+import { BreadcrumbSchema } from '../components/schemas/BreadcrumbSchema';
+import { SocialShare } from '../components/SocialShare';
 
 const BlogPost: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -46,6 +48,11 @@ const BlogPost: React.FC = () => {
                 authorName={post.author}
                 url={`https://www.anhanga.tur.br/blog/${slug}`}
             />
+            <BreadcrumbSchema items={[
+                { name: 'Home', item: 'https://www.anhanga.tur.br/' },
+                { name: 'Blog', item: 'https://www.anhanga.tur.br/blog' },
+                { name: post.title, item: `https://www.anhanga.tur.br/blog/${slug}` }
+            ]} />
 
             {/* Hero Header */}
             <div className="relative h-[60vh] min-h-[500px] w-full overflow-hidden">
@@ -53,6 +60,8 @@ const BlogPost: React.FC = () => {
                     src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover"
+                    // @ts-ignore
+                    fetchpriority="high"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent opacity-90"></div>
 
@@ -107,6 +116,22 @@ const BlogPost: React.FC = () => {
                     <div className="w-full lg:w-2/3">
                         <div className="bg-white rounded-[2.5rem] p-8 md:p-14 shadow-xl border border-gray-100">
 
+                            {/* Top Share Section */}
+                            <div className="mb-10 pb-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div className="flex items-center gap-3">
+                                    <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest ${post.color} bg-opacity-20 border`}>
+                                        {post.category}
+                                    </span>
+                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{post.date}</span>
+                                </div>
+                                <SocialShare
+                                    minimal
+                                    url={`https://www.anhanga.tur.br/blog/${slug}`}
+                                    title={post.title}
+                                    excerpt={post.excerpt}
+                                />
+                            </div>
+
                             {/* Corpo do Texto Tipografia Editorial */}
                             <div
                                 className="
@@ -129,11 +154,11 @@ const BlogPost: React.FC = () => {
                                 <div className="flex items-center gap-2">
                                     <span className="font-bold text-brand-dark text-lg">Gostou? Espalhe a palavra:</span>
                                 </div>
-                                <div className="flex gap-3">
-                                    <button className="flex items-center gap-2 px-6 py-3 bg-brand-light text-brand-cyan font-bold rounded-full hover:bg-brand-cyan hover:text-white transition-all shadow-sm">
-                                        <Share2 className="w-5 h-5" /> Compartilhar
-                                    </button>
-                                </div>
+                                <SocialShare
+                                    url={`https://www.anhanga.tur.br/blog/${slug}`}
+                                    title={post.title}
+                                    excerpt={post.excerpt}
+                                />
                             </div>
                         </div>
                     </div>
