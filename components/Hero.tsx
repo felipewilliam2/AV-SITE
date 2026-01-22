@@ -797,26 +797,7 @@ const Hero: React.FC = () => {
             ))}
           </div>
 
-          {/* NEW: Trust Signals / E-E-A-T Bar */}
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
-            <div className="flex flex-col items-center">
-              <span className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Certificado</span>
-              <span className="text-white/60 font-black text-xs border border-white/20 px-3 py-1 rounded-md">CADASTUR 37.036.732/0001-41</span>
-            </div>
-            <div className="h-8 w-[1px] bg-white/10 hidden md:block"></div>
-            <div className="flex flex-col items-center">
-              <span className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Agência Credenciada</span>
-              <div className="flex items-center gap-4">
-                <span className="text-white/70 font-black text-xs italic tracking-tighter">Beto Carrero World</span>
-                <span className="text-white/70 font-black text-xs italic tracking-tighter">Hopi Hari</span>
-              </div>
-            </div>
-            <div className="h-8 w-[1px] bg-white/10 hidden md:block"></div>
-            <div className="flex flex-col items-center">
-              <span className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Nicho</span>
-              <span className="text-brand-yellow font-black text-xs uppercase">Lollapalooza 2026</span>
-            </div>
-          </div>
+
 
         </div>
       </div>
