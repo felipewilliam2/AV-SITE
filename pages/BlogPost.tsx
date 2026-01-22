@@ -3,6 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import { BLOG_POSTS } from '../data/blogData';
 import { Calendar, User, ArrowLeft, Clock, Share2, Tag } from 'lucide-react';
 
+import { SEO } from '../components/SEO';
+import { ArticleSchema } from '../components/schemas/ArticleSchema';
+
 const BlogPost: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
     const post = BLOG_POSTS.find(p => p.slug === slug);
@@ -28,6 +31,21 @@ const BlogPost: React.FC = () => {
 
     return (
         <article className="min-h-screen bg-[#fffdf5]">
+            <SEO
+                title={post.title}
+                description={post.excerpt}
+                image={post.image}
+                type="article"
+                canonical={`https://www.anhanga.tur.br/blog/${slug}`}
+            />
+            <ArticleSchema
+                title={post.title}
+                description={post.excerpt}
+                image={post.image}
+                datePublished={post.date}
+                authorName={post.author}
+                url={`https://www.anhanga.tur.br/blog/${slug}`}
+            />
 
             {/* Hero Header */}
             <div className="relative h-[60vh] min-h-[500px] w-full overflow-hidden">

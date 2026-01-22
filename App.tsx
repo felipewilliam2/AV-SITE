@@ -12,31 +12,35 @@ import BlogPost from './pages/BlogPost';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 
+import { HelmetProvider } from 'react-helmet-async';
+
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="flex flex-col min-h-screen bg-white">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            {/* Rota Principal (Home) - Garante renderização inicial */}
-            <Route path="/" element={<Home />} />
+    <HelmetProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="flex flex-col min-h-screen bg-white">
+          <Header />
+          <main className="flex-grow">
+            <Routes>
+              {/* Rota Principal (Home) - Garante renderização inicial */}
+              <Route path="/" element={<Home />} />
 
-            {/* Rotas do Blog */}
-            <Route path="/blog" element={<BlogList />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/termos-de-uso" element={<Terms />} />
-            <Route path="/politica-privacidade" element={<Privacy />} />
+              {/* Rotas do Blog */}
+              <Route path="/blog" element={<BlogList />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/termos-de-uso" element={<Terms />} />
+              <Route path="/politica-privacidade" element={<Privacy />} />
 
-            {/* Rota de Fallback (Catch-all): Redireciona qualquer URL inválida/desconhecida para a Home */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
-        <Footer />
-        <AIChat />
-      </div>
-    </Router>
+              {/* Rota de Fallback (Catch-all): Redireciona qualquer URL inválida/desconhecida para a Home */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+          <Footer />
+          <AIChat />
+        </div>
+      </Router>
+    </HelmetProvider>
   );
 }
 

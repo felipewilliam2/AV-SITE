@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { SEO } from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -6,32 +6,13 @@ const Terms = () => {
     const metaDescription = "Termos e Condições de Uso da Anhangá Turismo: intermediação, simulações, responsabilidade e privacidade.";
     const canonicalUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/termos-de-uso`;
 
-    useEffect(() => {
-        // Title
-        document.title = "Termos e Condições de Uso | Anhangá Turismo";
-
-        // Meta description
-        let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-        if (!meta) {
-            meta = document.createElement("meta");
-            meta.name = "description";
-            document.head.appendChild(meta);
-        }
-        meta.content = metaDescription;
-
-        // Canonical link
-        let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-        if (!link) {
-            link = document.createElement("link");
-            link.rel = "canonical";
-            document.head.appendChild(link);
-        }
-        link.href = canonicalUrl;
-    }, [canonicalUrl]);
-
-
     return (
         <div className="min-h-screen bg-background text-foreground">
+            <SEO
+                title="Termos e Condições de Uso"
+                description={metaDescription}
+                canonical={canonicalUrl}
+            />
             <Header />
             <main className="container mx-auto px-4 py-10">
                 <header className="mb-8 text-center">

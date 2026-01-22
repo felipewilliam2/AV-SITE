@@ -13,6 +13,8 @@ import CallToAction from '../components/CallToAction';
 import { OrganizationSchema } from '../components/schemas/OrganizationSchema';
 import { BreadcrumbSchema } from '../components/schemas/BreadcrumbSchema';
 
+import { SEO } from '../components/SEO';
+
 const Home: React.FC = () => {
   const location = useLocation();
 
@@ -37,6 +39,11 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <SEO
+        title="Roteiros Personalizados"
+        description="Anhangá: Agência de viagens com roteiros personalizados. Experiências transformadoras em Orlando, Machu Picchu, Europa e Brasil."
+        canonical="https://www.anhanga.tur.br/"
+      />
       <OrganizationSchema />
       <BreadcrumbSchema />
       <Hero />
