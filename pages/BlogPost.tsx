@@ -7,6 +7,7 @@ import { SEO } from '../components/SEO';
 import { ArticleSchema } from '../components/schemas/ArticleSchema';
 import { BreadcrumbSchema } from '../components/schemas/BreadcrumbSchema';
 import { SocialShare } from '../components/SocialShare';
+import DOMPurify from 'dompurify';
 
 const BlogPost: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -146,7 +147,7 @@ const BlogPost: React.FC = () => {
                                 prose-blockquote:border-l-4 prose-blockquote:border-brand-yellow prose-blockquote:bg-yellow-50 prose-blockquote:py-4 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl prose-blockquote:not-italic prose-blockquote:font-serif prose-blockquote:text-gray-700
                                 first-letter:text-5xl first-letter:font-black first-letter:text-brand-dark first-letter:mr-3 first-letter:float-left first-letter:leading-[0.8]
                             "
-                                dangerouslySetInnerHTML={{ __html: post.content || `<p>${post.excerpt}</p><p>Conteúdo completo em breve...</p>` }}
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content || `<p>${post.excerpt}</p><p>Conteúdo completo em breve...</p>`) }}
                             />
 
                             {/* Share Section */}
