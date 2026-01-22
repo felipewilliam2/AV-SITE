@@ -4,6 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapPin, X, Calendar, ArrowRight, Star, Compass, MousePointerClick, Share2, ImageIcon, Loader2, Plus, Minus, Share } from 'lucide-react';
 import { SocialShare } from './SocialShare';
+import { LazyImage } from './ui/LazyImage';
 
 interface Destination {
     coords: [number, number];
@@ -18,50 +19,8 @@ interface Destination {
     activities: string[];
 }
 
-// Componente LazyImage Otimizado
-const LazyImage: React.FC<{ src: string; alt: string; className?: string }> = ({ src, alt, className = "" }) => {
-    const [isVisible, setIsVisible] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
-            });
-        }, { rootMargin: '100px', threshold: 0.01 });
-
-        if (containerRef.current) {
-            observer.observe(containerRef.current);
-        }
-
-        return () => {
-            if (observer) observer.disconnect();
-        };
-    }, []);
-
-    return (
-        <div ref={containerRef} className="relative w-full h-full overflow-hidden bg-gray-100">
-            {!isLoaded && (
-                <div className="absolute inset-0 bg-gray-200 flex items-center justify-center z-10">
-                    <ImageIcon className="w-8 h-8 text-gray-400 opacity-40" />
-                </div>
-            )}
-            {isVisible && (
-                <img
-                    src={src}
-                    alt={alt}
-                    decoding="async"
-                    onLoad={() => setIsLoaded(true)}
-                    className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-                />
-            )}
-        </div>
-    );
-};
+// Componente LazyImage Otimizado - REFATORADO PARA COMPONENTE COMPARTILHADO
+// importado de ../components/ui/LazyImage
 
 const Destinations: React.FC = () => {
     const mapRef = useRef<HTMLDivElement>(null);
