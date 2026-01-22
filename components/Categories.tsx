@@ -29,7 +29,16 @@ const Categories: React.FC = () => {
       rotate: "-rotate-1",
       color: "bg-purple-100 text-purple-600",
       link: "https://lolla.anhanga.tur.br"
-    }
+    },
+    /* {
+      title: "Viagens 50+",
+      subtitle: "Brasil & Mundo",
+      image: "https://images.pexels.com/photos/3472901/pexels-photo-3472901.jpeg",
+      tag: "Melhor Idade",
+      rotate: "rotate-2",
+      color: "bg-green-100 text-green-700",
+      link: "#contato"
+    } */
   ];
 
   return (

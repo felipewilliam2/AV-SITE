@@ -8,26 +8,29 @@ export const OrganizationSchema = () => (
                 "@context": "https://schema.org",
                 "@type": "Organization",
                 "name": "Anhangá Viagens",
+                "alternateName": "Anhangá Turismo",
                 "url": "https://www.anhanga.tur.br",
                 "logo": "https://www.anhanga.tur.br/logo.png",
-                "description": "Agência de viagens especializada em roteiros personalizados e experiências transformadoras.",
-                "telephone": "+551152833309",
+                "description": "Agência de viagens boutique especializada em roteiros personalizados, turismo de transformação e pacotes exclusivos.",
+                "telephone": "+55-11-52833309",
                 "email": "contato@anhanga.tur.br",
+                "taxID": "37.036.732/0001-41",
+                "award": "Certificado Cadastur: 37.036.732/0001-41",
                 "sameAs": [
                     "https://www.instagram.com/anhangaviagens",
-                    "https://www.facebook.com/anhangaviagens"
+                    "https://www.facebook.com/profile.php?id=61585422494271"
                 ],
                 "address": {
                     "@type": "PostalAddress",
                     "streetAddress": "Av. Dom Pedro I, 773",
                     "addressLocality": "São Paulo",
                     "addressRegion": "SP",
-                    "postalCode": "05050-100",
+                    "postalCode": "01552-001",
                     "addressCountry": "BR"
                 },
                 "contactPoint": {
                     "@type": "ContactPoint",
-                    "telephone": "+551152833309",
+                    "telephone": "+55-11-52833309",
                     "contactType": "Customer Support",
                     "availableLanguage": "pt-BR",
                     "areaServed": "BR"

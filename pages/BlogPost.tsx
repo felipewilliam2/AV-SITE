@@ -21,7 +21,7 @@ const BlogPost: React.FC = () => {
     if (!post) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center bg-[#fffdf5]">
-                <h1 className="text-4xl font-black text-brand-dark mb-4">Ops! Artigo não encontrado.</h1>
+                <h2 className="text-4xl font-black text-brand-dark mb-4 text-center px-6">Ops! Artigo não encontrado.</h2>
                 <Link to="/blog" className="text-brand-cyan font-bold hover:underline flex items-center gap-2">
                     <ArrowLeft className="w-4 h-4" /> Voltar para o Blog
                 </Link>

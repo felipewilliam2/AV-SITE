@@ -37,8 +37,8 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, idx }) => {
                 </div>
 
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${isOpen
-                        ? 'bg-brand-cyan text-white rotate-180'
-                        : 'bg-white text-gray-400 group-hover:text-brand-cyan'
+                    ? 'bg-brand-cyan text-white rotate-180'
+                    : 'bg-white text-gray-400 group-hover:text-brand-cyan'
                     }`}>
                     {isOpen ? <ChevronUp className="w-6 h-6" /> : <ChevronDown className="w-6 h-6" />}
                 </div>
@@ -150,14 +150,35 @@ const FAQ: React.FC = () => {
             )
         },
         {
-            question: "Posso parcelar minha viagem?",
+            question: "Como funcionam os pacotes para o Lollapalooza 2026?",
             answer: (
                 <div itemProp="text">
-                    <p>
-                        Sim! Parcelamos conforme sua necessidade. Para viagens de 3-6 meses,
-                        oferecemos <strong>parcelamento em até 10x</strong> (dependendo do valor e disponibilidade).
-                        Consulte nossos especialistas para os melhores planos de financiamento.
+                    <p className="mb-4">
+                        Somos especialistas em grandes festivais. Nossos pacotes para o <strong>Lollapalooza 2026</strong> incluem translados exclusivos, hospedagem estratégica próxima ao Interlagos e suporte completo para que você foque apenas na música.
                     </p>
+                    <p className="font-bold text-brand-dark italic">Garanta seu lugar com antecedência, pois a procura é altíssima!</p>
+                </div>
+            )
+        },
+        {
+            question: "A Anhangá possui roteiros para o público 50+ (Melhor Idade)?",
+            answer: (
+                <div itemProp="text">
+                    <p className="mb-4">
+                        Sim! O <strong>Turismo 50+</strong> é um de nossos pilares. Criamos roteiros com ritmo desacelerado, foco em conforto, acessibilidade e experiências culturais enriquecedoras, tanto no Brasil quanto no exterior.
+                    </p>
+                    <p>Nossa curadoria seleciona hotéis e passeios que priorizam o bem-estar e a segurança deste público exigente.</p>
+                </div>
+            )
+        },
+        {
+            question: "A Anhangá Viagens é uma agência credenciada?",
+            answer: (
+                <div itemProp="text">
+                    <p className="mb-2">
+                        Com certeza. Somos uma agência de turismo com <strong>Certificado Cadastur (37.036.732/0001-41)</strong> e parceiros credenciados dos maiores parques do Brasil, como <strong>Beto Carrero World</strong> e <strong>Hopi Hari</strong>.
+                    </p>
+                    <p>Isso garante segurança jurídica e oficialidade em todos os ingressos e serviços que comercializamos.</p>
                 </div>
             )
         }

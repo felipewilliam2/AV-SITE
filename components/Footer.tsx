@@ -80,6 +80,9 @@ const Footer: React.FC = () => {
                         <div className="text-[10px] text-gray-600 font-medium">
                             ANHANGA TURISMO LTDA • CNPJ/Cadastur: 37.036.732/0001-41
                         </div>
+                        <div className="text-[10px] text-gray-700 font-bold uppercase tracking-widest mt-2">
+                            Conteúdo editado por Anhangá Travel Experts • Última atualização: {new Date().toLocaleDateString('pt-BR')}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -450,13 +450,7 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-6 relative z-10 pt-40 pb-12">
         <div className="flex flex-col items-center justify-center text-center">
 
-          {/* Sticker Badge - Staggered Entry */}
-          <div className="transform -rotate-2 hover:rotate-2 transition-transform duration-300 mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <div className="inline-flex items-center gap-2 px-6 py-2 bg-brand-yellow text-brand-dark font-black text-sm uppercase tracking-widest shadow-[4px_4px_0px_rgba(0,0,0,0.2)] border-2 border-white/20 rounded-lg">
-              <Plane className="w-4 h-4" />
-              Viagem sem Complicações
-            </div>
-          </div>
+
 
           {/* Fun Typography - Dynamic sizing based on content length */}
           <h1
@@ -801,6 +795,27 @@ const Hero: React.FC = () => {
                 {feat.text}
               </div>
             ))}
+          </div>
+
+          {/* NEW: Trust Signals / E-E-A-T Bar */}
+          <div className="mt-12 flex flex-wrap justify-center items-center gap-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Certificado</span>
+              <span className="text-white/60 font-black text-xs border border-white/20 px-3 py-1 rounded-md">CADASTUR 37.036.732/0001-41</span>
+            </div>
+            <div className="h-8 w-[1px] bg-white/10 hidden md:block"></div>
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Agência Credenciada</span>
+              <div className="flex items-center gap-4">
+                <span className="text-white/70 font-black text-xs italic tracking-tighter">Beto Carrero World</span>
+                <span className="text-white/70 font-black text-xs italic tracking-tighter">Hopi Hari</span>
+              </div>
+            </div>
+            <div className="h-8 w-[1px] bg-white/10 hidden md:block"></div>
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Nicho</span>
+              <span className="text-brand-yellow font-black text-xs uppercase">Lollapalooza 2026</span>
+            </div>
           </div>
 
         </div>
