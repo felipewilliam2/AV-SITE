@@ -84,6 +84,7 @@ const Header: React.FC = () => {
           <img
             src={logoSrc}
             alt="Anhangá Viagens"
+            fetchPriority="high"
             className="h-24 w-auto transition-all duration-300 object-contain"
           />
         </Link>
