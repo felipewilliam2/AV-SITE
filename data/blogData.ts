@@ -482,5 +482,60 @@ export const BLOG_POSTS: BlogPost[] = [
         author: "Carlos Viajante",
         color: "text-red-600 bg-red-50 border-red-200",
         rotate: "rotate-1"
+    },
+    {
+        id: 6,
+        slug: "guia-definitivo-sobrevivencia-festivais",
+        title: "Guia Definitivo de Sobrevivência em Festivais: Como Curtir Cada Momento como um Pro",
+        excerpt: "Estratégias práticas, dicas de alimentação e o kit de sobrevivência essencial para aproveitar seu festival ao máximo.",
+        content: `
+            <p>Se você está se preparando para viver a energia de um grande festival, sabe que a experiência vai muito além dos shows. É uma maratona de música, movimento, emoções e descobertas. E contar com um bom planejamento faz toda a diferença para aproveitar tudo ao máximo. Pensando nisso, reunimos aqui um guia completo com estratégias práticas, dicas inteligentes e truques que realmente funcionam para tornar sua jornada mais leve, segura e inesquecível.</p>
+
+            <p>Seja seu primeiro festival ou o décimo, este artigo foi feito para garantir que você chegue preparado e volte com memórias incríveis.</p>
+
+            <h3>Planejamento é tudo (e economiza sua energia)</h3>
+            <p>Ir para um festival sem um plano é como entrar em um labirinto no escuro. A experiência pode ser divertida, mas você aumenta (e muito) suas chances de perder shows importantes ou se cansar antes da hora.</p>
+            <p>Antes de sair de casa, analise o mapa oficial do evento para entender onde ficam palcos, banheiros, áreas de alimentação e pontos de hidratação. Monte sua própria "rota estratégica", priorizando shows que você realmente não quer perder. Inclua pausas estratégicas para descanso, porque festivais podem durar o dia inteiro. E sempre estabeleça um ponto de encontro caso você ou o grupo se separem. Isso acontece MUITO.</p>
+            <p>Esse planejamento simples economiza tempo, energia e evita estresse durante o festival.</p>
+
+            <h3>Alimentação e energia: o combustível da sua experiência</h3>
+            <p>Para aproveitar o festival do início ao fim, seu corpo precisa estar do seu lado. Isso significa comer bem antes de sair de casa, beber água constantemente, alternar momentos de movimento e descanso, e evitar longos períodos sem se alimentar.</p>
+            <p>Carregar snacks rápidos também ajuda: barras de cereal, castanhas e frutas desidratadas são pequenos aliados que mantêm sua energia sempre estável. E muitas vezes salvam sua noite quando as filas de comida estão extensas.</p>
+
+            <h3>O que levar: o kit de sobrevivência ideal</h3>
+            <p>A mochila certa pode transformar sua experiência. Aqui está uma lista simples e funcional do essencial:</p>
+            <ul>
+                <li><strong>Proteção:</strong> Capa de chuva ou poncho, protetor solar e óculos de sol.</li>
+                <li><strong>Hidratação:</strong> Garrafa d'água dobrável (se permitida no evento).</li>
+                <li><strong>Tecnologia:</strong> Powerbank carregado (essencial!).</li>
+                <li><strong>Acesso:</strong> Documento e ingresso em formato digital (salve offline!).</li>
+                <li><strong>Conforto:</strong> Tênis confortável (esqueça sapato novo!) e tapa-ouvido ou protetor auricular.</li>
+            </ul>
+            <p>Tenha sempre o essencial. Nada mais, nada menos.</p>
+
+            <h3>Dicas extras para uma experiência incrível</h3>
+            <p>Aqui vão truques que somente quem já viveu muitos festivais conhece:</p>
+            <ul>
+                <li><strong>Chegue cedo</strong> para garantir lugares melhores em shows muito disputados.</li>
+                <li><strong>Roupas leves</strong> e que permitam mobilidade são fundamentais.</li>
+                <li><strong>Evite as laterais</strong> dos palcos se não quiser ficar apertado; procure regiões centrais para facilitar a locomoção entre palcos.</li>
+                <li><strong>Baixe o app oficial</strong> para acompanhar horários atualizados em tempo real.</li>
+            </ul>
+            <p>Pequenos ajustes fazem uma grande diferença no seu dia.</p>
+
+            <h3>A experiência começa bem antes do primeiro show</h3>
+            <p>Com o preparo certo, qualquer festival se transforma em uma experiência memorável, da primeira música ao último acorde. E se você quiser aproveitar tudo isso com ainda mais tranquilidade, conforto e segurança, a Anhangá Viagens pode montar todo o seu pacote: ingressos, hospedagem, transporte e suporte completo antes, durante e depois do evento.</p>
+
+            <div class="bg-orange-50 p-6 rounded-2xl border border-orange-100 mt-8">
+                <p class="font-bold text-orange-800 mb-2">Quer viver seu próximo festival sem dor de cabeça?</p>
+                <p class="mb-0 text-orange-700">Fale agora com a equipe da Anhangá Viagens e receba um orçamento personalizado, feito para o seu estilo e seu roteiro. <a href="https://wa.me/5511912345678" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-orange-900">Clique aqui para conversar</a> e começar o planejamento do seu festival dos sonhos.</p>
+            </div>
+        `,
+        image: "https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        category: "Festivais",
+        date: "24 Jan, 2026",
+        author: "Equipe Anhangá",
+        color: "text-orange-600 bg-orange-50 border-orange-200",
+        rotate: "rotate-1"
     }
 ];
