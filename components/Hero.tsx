@@ -167,7 +167,7 @@ const TRIP_OPTIONS = [
   { label: "Negócios", icon: Briefcase, color: "text-blue-500", bg: "bg-blue-50" },
   { label: "Família", icon: Baby, color: "text-orange-500", bg: "bg-orange-50" },
   { label: "Aventura", icon: Compass, color: "text-yellow-600", bg: "bg-yellow-50" },
-  { label: "Grupo", icon: Users, color: "text-purple-500", bg: "bg-purple-50" }
+  { label: "Grupo", icon: Users, color: "text-emerald-500", bg: "bg-emerald-50" }
 ];
 
 const BUDGET_TIERS = [

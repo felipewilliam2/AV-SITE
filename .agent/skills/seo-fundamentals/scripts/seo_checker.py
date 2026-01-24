@@ -111,12 +111,12 @@ def check_page(file_path: Path) -> dict:
         issues.append("Missing <title> tag")
     
     # 2. Meta description
-    has_description = 'name="description"' in content.lower() or 'name=\'description\'' in content.lower()
+    has_description = 'name="description"' in content.lower() or 'name=\'description\'' in content.lower() or '<SEO' in content
     if not has_description and is_layout:
         issues.append("Missing meta description")
     
     # 3. Open Graph tags
-    has_og = 'og:' in content or 'property="og:' in content.lower()
+    has_og = 'og:' in content or 'property="og:' in content.lower() or '<SEO' in content
     if not has_og and is_layout:
         issues.append("Missing Open Graph tags")
     

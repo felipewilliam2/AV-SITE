@@ -301,8 +301,7 @@ const Destinations: React.FC = () => {
         'América do Norte': '#0ea5e9',
         'América Central': '#06b6d4',
         'América do Sul': '#10b981',
-        'Europa': '#8b5cf6',
-        'Ásia': '#f43f5e', // Rose
+                    'Europa': '#10b981',        'Ásia': '#f43f5e', // Rose
         'África': '#d97706', // Amber
         'Oceania': '#0891b2', // Cyan-700
     };

@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, ChevronDown } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,9 +29,14 @@ const Header: React.FC = () => {
 
   const navLinks = [
     { name: 'Destinos', href: 'destinos' },
-    { name: 'Serviços', href: 'experiencia' },
-    { name: 'Depoimentos', href: 'depoimentos' },
-    { name: 'Sobre', href: 'como-funciona' },
+    {
+      name: 'A Anhangá',
+      subLinks: [
+        { name: 'Serviços', href: 'experiencia' },
+        { name: 'Como Funciona', href: 'como-funciona' },
+        { name: 'Depoimentos', href: 'depoimentos' },
+      ],
+    },
     { name: 'Contato', href: 'contato' },
   ];
 
@@ -93,27 +99,57 @@ const Header: React.FC = () => {
         <div className="flex items-center gap-8">
           <nav className="hidden md:flex items-center gap-8" aria-label="Menu Principal">
             {navLinks.map((link) => (
-              isHome ? (
-                // Link de âncora simples para Home
-                <a
-                  key={link.name}
-                  href={`#${link.href}`}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className={`font-medium text-sm transition-colors duration-500 hover:opacity-80 focus:outline-none focus:underline decoration-2 underline-offset-4 cursor-pointer ${navTextClass}`}
-                >
-                  {link.name}
-                </a>
-              ) : (
-                // Link de navegação com Estado para outras páginas
-                <Link
-                  key={link.name}
-                  to="/"
-                  state={{ targetId: link.href }}
-                  className={`font-medium text-sm transition-colors duration-500 hover:opacity-80 focus:outline-none focus:underline decoration-2 underline-offset-4 cursor-pointer ${navTextClass}`}
-                >
-                  {link.name}
-                </Link>
-              )
+              <div
+                key={link.name}
+                className="relative"
+                onMouseEnter={() => link.subLinks && setActiveDropdown(link.name)}
+                onMouseLeave={() => link.subLinks && setActiveDropdown(null)}
+              >
+                {link.subLinks ? (
+                  <button className={`flex items-center gap-1 font-medium text-sm transition-colors duration-500 hover:opacity-80 focus:outline-none focus:underline decoration-2 underline-offset-4 cursor-pointer ${navTextClass}`}>
+                    {link.name}
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                ) : (
+                  isHome ? (
+                    <a
+                      href={`#${link.href}`}
+                      onClick={(e) => handleNavClick(e, link.href!)}
+                      className={`font-medium text-sm transition-colors duration-500 hover:opacity-80 focus:outline-none focus:underline decoration-2 underline-offset-4 cursor-pointer ${navTextClass}`}
+                    >
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link
+                      to="/"
+                      state={{ targetId: link.href }}
+                      className={`font-medium text-sm transition-colors duration-500 hover:opacity-80 focus:outline-none focus:underline decoration-2 underline-offset-4 cursor-pointer ${navTextClass}`}
+                    >
+                      {link.name}
+                    </Link>
+                  )
+                )}
+
+                {link.subLinks && activeDropdown === link.name && (
+                  <div className="absolute top-full pt-4 w-48 z-10">
+                    <div className="bg-white rounded-md shadow-lg py-2 animate-fade-in-down">
+                      {link.subLinks.map((subLink) => (
+                        <a
+                          key={subLink.name}
+                          href={`#${subLink.href}`}
+                          onClick={(e) => {
+                            handleNavClick(e, subLink.href);
+                            setActiveDropdown(null);
+                          }}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          {subLink.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
             <Link
               to="/blog"

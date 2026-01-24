@@ -27,7 +27,7 @@ const Categories: React.FC = () => {
       image: "https://www.riotimesonline.com/wp-content/uploads/2025/08/lollapalooza-brasil-2026-2.webp",
       tag: "Festival",
       rotate: "-rotate-1",
-      color: "bg-purple-100 text-purple-600",
+      color: "bg-emerald-100 text-emerald-600",
       link: "https://lolla.anhanga.tur.br"
     },
     /* {

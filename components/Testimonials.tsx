@@ -26,7 +26,7 @@ const Testimonials: React.FC = () => {
             destination: "Alemanha",
             text: "Viajem mais tranquila da vida. Trens, hotéis, tudo organizado perfeitamente.",
             image: "https://api.dicebear.com/9.x/adventurer/svg?seed=Roberto&backgroundColor=c0aede",
-            bg: "bg-purple-50",
+            bg: "bg-emerald-50",
             rotate: "-rotate-1",
             date: "2025-10-10"
         }

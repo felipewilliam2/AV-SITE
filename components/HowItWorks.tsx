@@ -30,9 +30,9 @@ const HowItWorks: React.FC = () => {
       icon: <CreditCard className="w-8 h-8 text-white" />,
       title: "Burocracia? Deixa com a gente",
       desc: "Aprovado? Ótimo! Nós emitimos voos, hotéis e passeios. Parcelamos tudo e você recebe os vouchers organizadinhos.",
-      color: "bg-purple-500",
-      lightColor: "bg-purple-50",
-      borderColor: "border-purple-200",
+      color: "bg-emerald-500",
+      lightColor: "bg-emerald-50",
+      borderColor: "border-emerald-200",
       rotate: "-rotate-1",
       sticker: <div className="text-8xl drop-shadow-md filter hue-rotate-15">✈️</div>
     },

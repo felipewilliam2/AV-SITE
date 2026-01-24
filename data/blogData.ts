@@ -157,16 +157,16 @@ export const BLOG_POSTS: BlogPost[] = [
             <p>No começo pode parecer desafiador. Mas depois da primeira vez, você nunca mais vai querer viajar de outro jeito.</p>
             <p>Menos peso nas costas, mais leveza na viagem.</p>
 
-            <div class="bg-purple-50 p-6 rounded-2xl border border-purple-100 mt-8">
-                <p class="font-bold text-purple-800 mb-2">Planejando sua próxima aventura?</p>
-                <p class="mb-0 text-purple-700">Entre em contato e solicite um orçamento personalizado. Vamos ajudar você a organizar cada detalhe da sua viagem, transformando sua experiência em memórias inesquecíveis.</p>
+            <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 mt-8">
+                <p class="font-bold text-emerald-800 mb-2">Planejando sua próxima aventura?</p>
+                <p class="mb-0 text-emerald-700">Entre em contato e solicite um orçamento personalizado. Vamos ajudar você a organizar cada detalhe da sua viagem, transformando sua experiência em memórias inesquecíveis.</p>
             </div>
         `,
         image: "https://images.pexels.com/photos/9185786/pexels-photo-9185786.jpeg",
         category: "Planejamento",
         date: "05 Nov, 2025",
         author: "Rafa Tech",
-        color: "text-purple-600 bg-purple-50 border-purple-200",
+        color: "text-emerald-600 bg-emerald-50 border-emerald-200",
         rotate: "-rotate-2"
     },
     {

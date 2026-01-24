@@ -29,9 +29,9 @@ const Highlights: React.FC = () => {
             icon: Sparkles,
             title: "Roteiros à Mão",
             description: "Desenhamos cada dia da viagem do zero, só pra você.",
-            bg: "bg-purple-100",
-            accent: "border-purple-200",
-            iconColor: "text-purple-600",
+            bg: "bg-emerald-100",
+            accent: "border-emerald-200",
+            iconColor: "text-emerald-600",
             rotate: "rotate-2"
         },
         {
