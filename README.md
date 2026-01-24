@@ -4,177 +4,111 @@
 
 # Anhangá Viagens - Site Institucional
 
-Site institucional da Anhangá Viagens com chat AI integrado para consultas de viagens.
+O site institucional da **Anhangá Viagens** é uma plataforma moderna e interativa desenvolvida para oferecer aos clientes uma experiência completa, desde a exploração de destinos até o planejamento de viagens com o auxílio de inteligência artificial.
+
+## ✨ Features
+
+- **🤖 Chat com IA Gemini:** Assistente de viagens integrado que responde dúvidas, sugere roteiros e oferece informações personalizadas em tempo real.
+- **✈️ Vitrine de Destinos:** Seção visualmente atraente para apresentar os principais destinos oferecidos pela agência.
+- **⭐ Depoimentos de Clientes:** Área dedicada a exibir a satisfação e as experiências de outros viajantes.
+- **❓ FAQ Interativo:** Respostas rápidas para as dúvidas mais comuns dos clientes.
+- **📝 Blog de Viagens:** Conteúdo atualizado com dicas, roteiros e novidades do mundo do turismo.
+- **📱 Design Responsivo:** Experiência de usuário otimizada para desktops, tablets e smartphones.
+- **📈 SEO Otimizado:** Estruturado para obter o melhor posicionamento em mecanismos de busca.
+- **🗺️ Mapas Interativos:** Visualização de localidades e rotas com Leaflet.
+
+## 🛠️ Tecnologias Utilizadas
+
+- **React 19:** Biblioteca para construção da interface de usuário.
+- **Vite:** Ferramenta de build e servidor de desenvolvimento de alta performance.
+- **TypeScript:** Superset do JavaScript que adiciona tipagem estática.
+- **Tailwind CSS:** Framework CSS utility-first para estilização rápida e customizável.
+- **React Router:** Para gerenciamento de rotas na aplicação.
+- **Google Gemini AI:** Modelo de IA que alimenta o chatbot.
+- **Lucide React:** Biblioteca de ícones open-source.
+- **Leaflet:** Para a criação de mapas interativos.
 
 ## 🚀 Pré-requisitos
 
-- Node.js 18+ instalado
+- Node.js 18+
 - Chave da API do Google Gemini
 
-## 📦 Instalação Local
+## 📦 Instalação
 
-1. **Clone o repositório e instale as dependências:**
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/anhanga-viagens.git
+   cd anhanga-viagens
+   ```
+
+2. **Instale as dependências:**
    ```bash
    npm install
    ```
 
-2. **Configure as variáveis de ambiente:**
+3. **Configure as variáveis de ambiente:**
    
-   Crie um arquivo `.env.local` na raiz do projeto:
+   Copie o arquivo de exemplo `.env.example` para um novo arquivo `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Em seguida, adicione sua chave da API do Gemini ao arquivo `.env`:
    ```env
    GEMINI_API_KEY=sua_chave_api_aqui
    ```
-   
-   > 💡 Obtenha sua chave em: https://aistudio.google.com/apikey
+   > 💡 Obtenha sua chave em: [Google AI Studio](https://aistudio.google.com/apikey)
 
-3. **Execute o projeto em modo desenvolvimento:**
+4. **Execute o projeto:**
    ```bash
    npm run dev
    ```
-   
-   O site estará disponível em `http://localhost:3000`
-
-## 🏗️ Build para Produção
-
-1. **Crie o arquivo `.env` ou `.env.production` com a chave da API:**
-   ```env
-   GEMINI_API_KEY=sua_chave_api_producao
-   ```
-
-2. **Gere o build de produção:**
-   ```bash
-   npm run build
-   ```
-   
-   Os arquivos otimizados serão gerados na pasta `dist/`
-
-3. **Visualize o build localmente:**
-   ```bash
-   npm run preview
-   ```
-
-## 🚢 Deploy
-
-### Opções de Deploy
-
-#### 1. **Vercel (Recomendado)**
-
-1. Instale a CLI da Vercel:
-   ```bash
-   npm i -g vercel
-   ```
-
-2. Faça login:
-   ```bash
-   vercel login
-   ```
-
-3. Configure as variáveis de ambiente no painel da Vercel:
-   - `GEMINI_API_KEY`: Sua chave da API Gemini
-
-4. Faça o deploy:
-   ```bash
-   vercel --prod
-   ```
-
-#### 2. **Netlify**
-
-1. Instale a CLI do Netlify:
-   ```bash
-   npm i -g netlify-cli
-   ```
-
-2. Faça login:
-   ```bash
-   netlify login
-   ```
-
-3. Configure o build:
-   - **Build command:** `npm run build`
-   - **Publish directory:** `dist`
-   - **Environment variables:** Adicione `GEMINI_API_KEY` no painel do Netlify
-
-4. Faça o deploy:
-   ```bash
-   netlify deploy --prod
-   ```
-
-#### 3. **GitHub Pages**
-
-1. Instale a dependência:
-   ```bash
-   npm install --save-dev gh-pages
-   ```
-
-2. Adicione ao `package.json`:
-   ```json
-   "scripts": {
-     "deploy": "npm run build && gh-pages -d dist"
-   }
-   ```
-
-3. **Configure o base path** criando um arquivo `.env.production`:
-   
-   Se o repositório for `username.github.io/repo-name`:
-   ```env
-   VITE_BASE_PATH=/repo-name/
-   GEMINI_API_KEY=sua_chave_aqui
-   ```
-   
-   Se for `username.github.io` (sem subdiretório):
-   ```env
-   VITE_BASE_PATH=/
-   GEMINI_API_KEY=sua_chave_aqui
-   ```
-
-4. Faça o deploy:
-   ```bash
-   npm run deploy
-   ```
-   
-   > ⚠️ **Importante**: O `vite.config.ts` já está configurado para usar `VITE_BASE_PATH` automaticamente. Não é necessário editar o arquivo de configuração.
-
-#### 4. **Servidor Próprio (Nginx/Apache)**
-
-1. Gere o build:
-   ```bash
-   npm run build
-   ```
-
-2. Faça upload da pasta `dist/` para o servidor
-
-3. Configure o servidor web para servir os arquivos estáticos
-
-4. Configure as variáveis de ambiente no servidor (se necessário)
-
-### ⚙️ Variáveis de Ambiente no Deploy
-
-**IMPORTANTE:** Configure a variável `GEMINI_API_KEY` no painel de configuração da sua plataforma de deploy:
-
-- **Vercel:** Settings → Environment Variables
-- **Netlify:** Site settings → Environment variables
-- **Outros:** Consulte a documentação da plataforma
+   O site estará disponível em `http://localhost:5173` (ou outra porta indicada no terminal).
 
 ## 📝 Scripts Disponíveis
 
-- `npm run dev` - Inicia o servidor de desenvolvimento
-- `npm run build` - Gera o build de produção
-- `npm run preview` - Visualiza o build de produção localmente
+- `npm run dev`: Inicia o servidor de desenvolvimento.
+- `npm run build`: Gera a versão de produção do site na pasta `dist/`.
+- `npm run preview`: Inicia um servidor local para visualizar a versão de produção.
+- `npm run deploy`: Executa o build e faz o deploy para o GitHub Pages.
 
-## 🛠️ Tecnologias Utilizadas
+## 🚢 Deploy
 
-- **React 19** - Biblioteca UI
-- **Vite** - Build tool e dev server
-- **TypeScript** - Tipagem estática
-- **React Router** - Roteamento
-- **Google Gemini AI** - Chatbot de consultas
-- **Tailwind CSS** - Estilização
-- **Leaflet** - Mapas interativos
+O projeto está pré-configurado para deploy simplificado em plataformas como Vercel e Netlify.
+
+### Vercel
+
+1. Faça o fork do repositório.
+2. Conecte sua conta do GitHub ao Vercel.
+3. Importe o repositório e configure a variável de ambiente `GEMINI_API_KEY` no painel do projeto.
+4. O deploy será feito automaticamente a cada push para a branch principal.
+
+### Netlify
+
+1. Siga os mesmos passos da Vercel.
+2. O arquivo `netlify.toml` já contém as configurações de build (`npm run build`) e o diretório de publicação (`dist`).
+
+## 📁 Estrutura do Código
+
+A estrutura do projeto foi organizada para facilitar a manutenção e escalabilidade:
+
+- **`/src`**: Contém todo o código-fonte da aplicação.
+  - **`/components`**: Componentes React reutilizáveis (Header, Footer, etc.).
+    - **`/ui`**: Componentes de UI genéricos (botões, inputs).
+    - **`/schemas`**: Componentes para dados estruturados (SEO).
+  - **`/pages`**: Componentes que representam as páginas da aplicação (Home, Blog, etc.).
+  - **`/services`**: Módulos para comunicação com APIs externas (ex: Gemini).
+  - **`/data`**: Mock de dados e informações estáticas.
+  - **`/utils`**: Funções utilitárias.
+- **`/public`**: Arquivos estáticos que não passam pelo processo de build (imagens, favicon).
+- **`/api`**: Funções serverless (neste caso, para a comunicação segura com a API do Gemini).
 
 ## 📄 Licença
 
-Este projeto é privado e propriedade da Anhangá Viagens.
+Este projeto é de propriedade privada da Anhangá Viagens.
 
 ---
 
-**Desenvolvido para Anhangá Viagens** ✈️
+<p align="center">
+  Desenvolvido com ❤️ por <a href="https://anhanga.tech" target="_blank">anhangá.tech</a>
+</p>
