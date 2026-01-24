@@ -528,7 +528,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
             <div class="bg-orange-50 p-6 rounded-2xl border border-orange-100 mt-8">
                 <p class="font-bold text-orange-800 mb-2">Quer viver seu próximo festival sem dor de cabeça?</p>
-                <p class="mb-0 text-orange-700">Fale agora com a equipe da Anhangá Viagens e receba um orçamento personalizado, feito para o seu estilo e seu roteiro. <a href="https://wa.me/5511912345678" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-orange-900">Clique aqui para conversar</a> e começar o planejamento do seu festival dos sonhos.</p>
+                <p class="mb-0 text-orange-700">Fale agora com a equipe da Anhangá Viagens e receba um orçamento personalizado, feito para o seu estilo e seu roteiro. <a href="https://wa.me/551152833309" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-orange-900">Clique aqui para conversar</a> e começar o planejamento do seu festival dos sonhos.</p>
             </div>
         `,
         image: "https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
