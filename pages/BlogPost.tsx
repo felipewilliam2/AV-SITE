@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BLOG_POSTS } from '../data/blogData';
 import { Calendar, User, ArrowLeft, Clock, Share2, Tag } from 'lucide-react';
+import { getWhatsAppLink } from '../utils/whatsapp';
 
 import { SEO } from '../components/SEO';
 import { ArticleSchema } from '../components/schemas/ArticleSchema';
@@ -12,6 +13,25 @@ import DOMPurify from 'dompurify';
 const BlogPost: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
     const post = BLOG_POSTS.find(p => p.slug === slug);
+    const contentRef = React.useRef<HTMLDivElement>(null);
+
+    // Update WhatsApp links with tracking
+    useEffect(() => {
+        if (contentRef.current && post) {
+            const links = contentRef.current.querySelectorAll('a[href^="https://wa.me"]');
+            links.forEach(link => {
+                const anchor = link as HTMLAnchorElement;
+                const url = new URL(anchor.href);
+                const currentText = url.searchParams.get('text');
+
+                // Construct message: use existing text or default to post title context
+                const message = currentText || `Olá! Li o post "${post.title}" e gostaria de planejar minha viagem.`;
+
+                // Update href with tracking parameters
+                anchor.href = getWhatsAppLink(message);
+            });
+        }
+    }, [post]);
 
     // Scroll to top on load
     useEffect(() => {
@@ -135,6 +155,7 @@ const BlogPost: React.FC = () => {
 
                             {/* Corpo do Texto Tipografia Editorial */}
                             <div
+                                ref={contentRef}
                                 className="
                                 prose prose-lg md:prose-xl max-w-none 
                                 prose-headings:font-sans prose-headings:font-black prose-headings:tracking-tight prose-headings:text-brand-dark
