@@ -4,6 +4,7 @@
  * v2.1 - Mobile-friendly version using manual encoding
  */
 (function () {
+    console.log('[UTM Tracking] Script started.');
     const GA4_MEASUREMENT_ID = 'G-QDBT5PM4KP';
 
     // Captura o Client ID do GA4 de forma robusta
@@ -32,6 +33,7 @@
     }
 
     function initWhatsAppTracking() {
+        console.log('[UTM Tracking] Initializing WhatsApp tracking...');
         // 1. Capturar Parâmetros da URL
         const urlParams = new URLSearchParams(window.location.search);
         const params = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', 'ttclid', 'wbraid', 'gbraid'];
@@ -40,6 +42,7 @@
 
         // 2. Buscar CID e atualizar links
         getGACid((cid) => {
+            console.log('[UTM Tracking] GA Client ID obtained:', cid);
             if (cid) tracking.cid = cid;
 
             const dataArr = Object.entries(tracking);
@@ -48,9 +51,11 @@
             const dataSuffix = ' || Dados: ' + dataArr.map(([k, v]) => k + '=' + v).join(', ');
 
             // Seleciona todos os botões de WhatsApp
+            console.log('[UTM Tracking] Querying for WhatsApp buttons...');
             const allButtons = document.querySelectorAll('.btn-whatsapp, #btn-whatsapp, a[href*="wa.me"]');
 
             allButtons.forEach(btn => {
+                console.log('[UTM Tracking] Found WhatsApp button:', btn);
                 const href = btn.getAttribute('href');
                 if (!href || !href.includes('wa.me')) return;
 
@@ -83,6 +88,7 @@
 
                 // Add GA4 event tracking for WhatsApp button clicks
                 btn.addEventListener('click', () => {
+                    console.log('[UTM Tracking] WhatsApp button clicked! Checking gtag...');
                     if (typeof gtag === 'function') {
                         gtag('event', 'whatsapp_cta_click', {
                             event_category: 'engagement',
@@ -90,6 +96,8 @@
                             button_text: btn.innerText || 'WhatsApp Button',
                             page_location: window.location.href
                         });
+                    } else {
+                        console.log('[UTM Tracking] gtag is not defined when WhatsApp button was clicked.');
                     }
                 });
             });
