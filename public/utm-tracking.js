@@ -91,8 +91,8 @@
                 const whatsappButton = target.closest('.btn-whatsapp, #btn-whatsapp, a[href*="wa.me"]');
 
                 if (whatsappButton) {
-                    if (typeof window !== 'undefined' && (window as any).dataLayer) {
-                        (window as any).dataLayer.push({
+                    if (typeof window !== 'undefined' && window.dataLayer) {
+                        window.dataLayer.push({
                             event: 'whatsapp_cta_click',
                             event_category: 'engagement',
                             event_label: whatsappButton.getAttribute('href') || 'unknown_whatsapp_link',
