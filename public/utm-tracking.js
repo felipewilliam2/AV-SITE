@@ -86,7 +86,7 @@
 
             // --- NEW EVENT DELEGATION LOGIC ---
             document.body.addEventListener('click', (event) => {
-                const target = event.target as HTMLElement;
+                const target = event.target;
                 // Check if the clicked element or any of its parents is a WhatsApp button
                 const whatsappButton = target.closest('.btn-whatsapp, #btn-whatsapp, a[href*="wa.me"]');
 
