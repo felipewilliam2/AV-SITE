@@ -99,9 +99,6 @@
                             button_text: whatsappButton.innerText || 'WhatsApp Button',
                             page_location: window.location.href
                         });
-                        console.log('[UTM Tracking] Pushed whatsapp_cta_click to dataLayer'); // Temporary log
-                    } else {
-                        console.log('[UTM Tracking] dataLayer not available when whatsapp_cta_click fired'); // Temporary log
                     }
                 }
             });
