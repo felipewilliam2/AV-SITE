@@ -165,6 +165,15 @@ const captureTrackingData = (): string | null => {
 
         console.log('[WhatsApp Tracking] Captured data:', dataString);
 
+        // Push tracking data to dataLayer for GTM to capture
+        if (typeof window !== 'undefined' && (window as any).dataLayer) {
+            (window as any).dataLayer.push({
+                event: 'tracking_data_captured',
+                ...trackingData // Spread the trackingData object into the dataLayer event
+            });
+            console.log('[WhatsApp Tracking] Pushed to dataLayer:', trackingData);
+        }
+
         return dataString;
     }
 

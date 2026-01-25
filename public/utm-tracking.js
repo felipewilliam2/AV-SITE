@@ -80,6 +80,18 @@
                 }
 
                 btn.setAttribute('href', newHref);
+
+                // Add GA4 event tracking for WhatsApp button clicks
+                btn.addEventListener('click', () => {
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'whatsapp_cta_click', {
+                            event_category: 'engagement',
+                            event_label: newHref,
+                            button_text: btn.innerText || 'WhatsApp Button',
+                            page_location: window.location.href
+                        });
+                    }
+                });
             });
         });
     }
