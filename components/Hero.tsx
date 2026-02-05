@@ -1,40 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
 import { Search, MapPin, ChevronDown, Plus, Minus, ChevronLeft, ChevronRight, Plane, Loader2, Sparkles, Calendar, User, Briefcase, Wallet, Palmtree, Heart, Baby, Compass, Users, DollarSign, Gem, Crown } from 'lucide-react';
-
-// --- VIDEO DATABASE ---
-const HERO_VIDEOS = [
-  {
-    // Rio de Janeiro / Tropical Brazil
-    id: 1,
-    url: "https://www.pexels.com/pt-br/download/video/16863167/",
-    poster: "https://images.pexels.com/photos/2868242/pexels-photo-2868242.jpeg"
-  },
-  {
-    // Paris / Europa
-    id: 2,
-    url: "https://www.pexels.com/pt-br/download/video/7197880/",
-    poster: "https://images.pexels.com/photos/1530259/pexels-photo-1530259.jpeg"
-  },
-  {
-    // Maldivas / Praia Paradisíaca
-    id: 3,
-    url: "https://www.pexels.com/pt-br/download/video/4069480/",
-    poster: "https://images.pexels.com/photos/1483053/pexels-photo-1483053.jpeg"
-  },
-  {
-    // New York / Urbano
-    id: 4,
-    url: "https://www.pexels.com/pt-br/download/video/31312984/",
-    poster: "https://images.pexels.com/photos/12110576/pexels-photo-12110576.jpeg"
-  },
-  {
-    // Natureza / Montanhas
-    id: 5,
-    url: "https://www.pexels.com/pt-br/download/video/3120431/",
-    poster: "https://images.pexels.com/photos/4027087/pexels-photo-4027087.jpeg"
-  }
-];
+import { HERO_VIDEOS } from '../data/mediaConfig';
 
 // --- DATA: COMPREHENSIVE DESTINATION LIST (IATA & TOURIST HOTSPOTS) ---
 // Baseada em destinos populares de agências de viagem
@@ -336,7 +303,17 @@ const Hero: React.FC = () => {
     return days;
   };
 
+  // Helper to check if a date is in the past (before today)
+  const isDateInPast = (date: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date < today;
+  };
+
   const handleDateClick = (date: Date) => {
+    // Block clicks on past dates
+    if (isDateInPast(date)) return;
+
     if (!startDate || (startDate && endDate)) {
       setStartDate(date);
       setEndDate(null);
@@ -369,8 +346,24 @@ const Hero: React.FC = () => {
   };
 
   const changeMonth = (offset: number) => {
-    const newDate = new Date(currentMonth.setMonth(currentMonth.getMonth() + offset));
-    setCurrentMonth(new Date(newDate));
+    const newDate = new Date(currentMonth);
+    newDate.setMonth(newDate.getMonth() + offset);
+
+    // Prevent navigating to months before current month
+    const today = new Date();
+    if (newDate.getFullYear() < today.getFullYear() ||
+        (newDate.getFullYear() === today.getFullYear() && newDate.getMonth() < today.getMonth())) {
+      return;
+    }
+
+    setCurrentMonth(newDate);
+  };
+
+  // Check if we can go to the previous month
+  const canGoToPreviousMonth = () => {
+    const today = new Date();
+    return currentMonth.getFullYear() > today.getFullYear() ||
+           (currentMonth.getFullYear() === today.getFullYear() && currentMonth.getMonth() > today.getMonth());
   };
 
   // Helper to get selected objects
@@ -543,9 +536,16 @@ const Hero: React.FC = () => {
                 {showCalendar && (
                   <div onClick={(e) => e.stopPropagation()} className="absolute top-full left-0 md:left-auto md:right-0 bg-white rounded-3xl shadow-2xl border-2 border-gray-100 mt-4 p-6 z-[60] w-full md:w-80 cursor-default animate-pop-in origin-top">
                     <div className="flex items-center justify-between mb-4">
-                      <button onClick={() => changeMonth(-1)} className="p-1 hover:bg-gray-100 rounded-full text-gray-600 transition-colors"><ChevronLeft className="w-5 h-5" /></button>
+                      <button
+                        onClick={() => changeMonth(-1)}
+                        disabled={!canGoToPreviousMonth()}
+                        className={`p-1 rounded-full transition-colors ${canGoToPreviousMonth() ? 'hover:bg-gray-100 text-gray-600' : 'text-gray-300 cursor-not-allowed'}`}
+                        aria-label="Mês anterior"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
                       <span className="font-bold text-gray-800">{MONTH_NAMES[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
-                      <button onClick={() => changeMonth(1)} className="p-1 hover:bg-gray-100 rounded-full text-gray-600 transition-colors"><ChevronRight className="w-5 h-5" /></button>
+                      <button onClick={() => changeMonth(1)} className="p-1 hover:bg-gray-100 rounded-full text-gray-600 transition-colors" aria-label="Próximo mês"><ChevronRight className="w-5 h-5" /></button>
                     </div>
                     <div className="grid grid-cols-7 mb-2 text-center text-xs font-bold text-gray-400">
                       {WEEK_DAYS.map((day, i) => <div key={i}>{day}</div>)}
@@ -555,12 +555,15 @@ const Hero: React.FC = () => {
                         if (!date) return <div key={`empty-${i}`} />;
                         const isSelected = isDateSelected(date);
                         const inRange = isDateInRange(date);
+                        const isPast = isDateInPast(date);
                         return (
                           <button
                             key={i}
                             onClick={() => handleDateClick(date)}
-                            className={`h-9 w-9 mx-auto flex items-center justify-center text-sm rounded-full transition-all duration-200 border-2 
-                                          ${isSelected ? 'bg-brand-cyan border-brand-cyan text-white font-bold scale-110' : inRange ? 'bg-brand-light border-transparent text-brand-cyan font-bold' : 'border-transparent text-gray-600 hover:bg-gray-100'}
+                            disabled={isPast}
+                            aria-disabled={isPast}
+                            className={`h-9 w-9 mx-auto flex items-center justify-center text-sm rounded-full transition-all duration-200 border-2
+                                          ${isPast ? 'border-transparent text-gray-300 cursor-not-allowed' : isSelected ? 'bg-brand-cyan border-brand-cyan text-white font-bold scale-110' : inRange ? 'bg-brand-light border-transparent text-brand-cyan font-bold' : 'border-transparent text-gray-600 hover:bg-gray-100'}
                                         `}
                           >
                             {date.getDate()}

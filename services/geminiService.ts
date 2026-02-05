@@ -34,6 +34,15 @@ export const getTravelAdvice = async (history: { role: 'user' | 'model', text: s
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
+
+      // Handle rate limiting specifically
+      if (response.status === 429) {
+        const retryAfter = errorData.retryAfter || 60;
+        return {
+          text: `⏳ Você enviou muitas mensagens. Por favor, aguarde ${retryAfter} segundos e tente novamente.\n\nEnquanto isso, você pode falar diretamente conosco pelo WhatsApp!`
+        };
+      }
+
       throw new Error(errorData.error || `Server responded with ${response.status}`);
     }
 

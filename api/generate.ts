@@ -4,6 +4,78 @@ export const config = {
     runtime: 'edge',
 };
 
+// =============================================================================
+// RATE LIMITING - Simple in-memory implementation for Edge Functions
+// For production with multiple regions, consider upgrading to Vercel KV or Upstash
+// =============================================================================
+
+interface RateLimitEntry {
+    count: number;
+    resetTime: number;
+}
+
+// In-memory store (resets on cold starts, but effective for basic protection)
+const rateLimitStore = new Map<string, RateLimitEntry>();
+
+// Configuration
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute window
+const RATE_LIMIT_MAX_REQUESTS = 10; // Max 10 requests per minute per IP
+
+function getClientIP(request: Request): string {
+    // Try various headers that might contain the real IP
+    const forwardedFor = request.headers.get('x-forwarded-for');
+    if (forwardedFor) {
+        return forwardedFor.split(',')[0].trim();
+    }
+
+    const realIP = request.headers.get('x-real-ip');
+    if (realIP) {
+        return realIP;
+    }
+
+    // Vercel-specific header
+    const vercelForwardedFor = request.headers.get('x-vercel-forwarded-for');
+    if (vercelForwardedFor) {
+        return vercelForwardedFor.split(',')[0].trim();
+    }
+
+    return 'unknown';
+}
+
+function checkRateLimit(clientIP: string): { allowed: boolean; remaining: number; resetIn: number } {
+    const now = Date.now();
+    const entry = rateLimitStore.get(clientIP);
+
+    // Clean up expired entries periodically (simple garbage collection)
+    if (rateLimitStore.size > 1000) {
+        for (const [key, value] of rateLimitStore.entries()) {
+            if (now > value.resetTime) {
+                rateLimitStore.delete(key);
+            }
+        }
+    }
+
+    if (!entry || now > entry.resetTime) {
+        // First request or window expired - create new entry
+        rateLimitStore.set(clientIP, {
+            count: 1,
+            resetTime: now + RATE_LIMIT_WINDOW_MS
+        });
+        return { allowed: true, remaining: RATE_LIMIT_MAX_REQUESTS - 1, resetIn: RATE_LIMIT_WINDOW_MS };
+    }
+
+    if (entry.count >= RATE_LIMIT_MAX_REQUESTS) {
+        // Rate limit exceeded
+        return { allowed: false, remaining: 0, resetIn: entry.resetTime - now };
+    }
+
+    // Increment counter
+    entry.count++;
+    return { allowed: true, remaining: RATE_LIMIT_MAX_REQUESTS - entry.count, resetIn: entry.resetTime - now };
+}
+
+// =============================================================================
+
 // Definição da ferramenta para gerar o link (Movemos para o servidor para consistência)
 const budgetTool: FunctionDeclaration = {
     name: "generate_budget_link",
@@ -72,10 +144,43 @@ const SYSTEM_INSTRUCTION = `
 `;
 
 export default async function handler(request: Request) {
+    // CORS headers for all responses
+    const corsHeaders = {
+        'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
+    // Handle CORS preflight
+    if (request.method === 'OPTIONS') {
+        return new Response(null, { status: 204, headers: corsHeaders });
+    }
+
     if (request.method !== 'POST') {
         return new Response(JSON.stringify({ error: 'Method not allowed' }), {
             status: 405,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        });
+    }
+
+    // Rate limiting check
+    const clientIP = getClientIP(request);
+    const rateLimit = checkRateLimit(clientIP);
+
+    if (!rateLimit.allowed) {
+        console.warn(`RATE_LIMIT: IP ${clientIP} exceeded limit. Reset in ${Math.ceil(rateLimit.resetIn / 1000)}s`);
+        return new Response(JSON.stringify({
+            error: 'Muitas requisições. Por favor, aguarde um momento.',
+            retryAfter: Math.ceil(rateLimit.resetIn / 1000)
+        }), {
+            status: 429,
+            headers: {
+                'Content-Type': 'application/json',
+                'Retry-After': String(Math.ceil(rateLimit.resetIn / 1000)),
+                'X-RateLimit-Remaining': '0',
+                'X-RateLimit-Reset': String(Math.ceil(rateLimit.resetIn / 1000)),
+                ...corsHeaders
+            },
         });
     }
 
@@ -88,7 +193,7 @@ export default async function handler(request: Request) {
                 error: 'Server configuration error: API key missing'
             }), {
                 status: 500,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', ...corsHeaders },
             });
         }
 
@@ -97,7 +202,7 @@ export default async function handler(request: Request) {
         if (!contents) {
             return new Response(JSON.stringify({ error: 'Contents are required' }), {
                 status: 400,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', ...corsHeaders },
             });
         }
 
@@ -125,17 +230,23 @@ export default async function handler(request: Request) {
             functionCall: functionCallPart?.functionCall
         }), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-RateLimit-Remaining': String(rateLimit.remaining),
+                'X-RateLimit-Reset': String(Math.ceil(rateLimit.resetIn / 1000)),
+                ...corsHeaders
+            },
         });
 
-    } catch (error: any) {
-        console.error('SERVER: Error proxying to Gemini:', error);
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        console.error('SERVER: Error proxying to Gemini:', errorMessage);
         return new Response(JSON.stringify({
             error: 'Error processing request',
-            details: error.message
+            details: errorMessage
         }), {
             status: 500,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', ...corsHeaders },
         });
     }
 }
