@@ -65,8 +65,6 @@ const HowItWorks: React.FC = () => {
       </div>
 
       {/* Floating Blobs (Background) */}
-      <div className="absolute top-20 left-10 w-64 h-64 bg-yellow-200/40 rounded-full blur-3xl mix-blend-multiply filter animate-pulse"></div>
-      <div className="absolute bottom-20 right-10 w-80 h-80 bg-cyan-200/40 rounded-full blur-3xl mix-blend-multiply filter animate-pulse" style={{ animationDelay: '2s' }}></div>
 
       <div className="container mx-auto px-6 relative z-10">
         
