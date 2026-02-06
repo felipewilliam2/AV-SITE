@@ -1,5 +1,12 @@
 import React from 'react';
-import { MessageCircle, PenTool, CreditCard, Plane, Sparkles, ArrowRight, Star, Heart } from 'lucide-react';
+import MessageCircle from 'lucide-react/dist/esm/icons/message-circle';
+import PenTool from 'lucide-react/dist/esm/icons/pen-tool';
+import CreditCard from 'lucide-react/dist/esm/icons/credit-card';
+import Plane from 'lucide-react/dist/esm/icons/plane';
+import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
+import Star from 'lucide-react/dist/esm/icons/star';
+import Heart from 'lucide-react/dist/esm/icons/heart';
 
 const HowItWorks: React.FC = () => {
   const steps = [

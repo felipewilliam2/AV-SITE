@@ -1,6 +1,11 @@
 import React from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
-import { MessageSquare, ArrowRight, Ticket, Plane, QrCode, Smartphone } from 'lucide-react';
+import MessageSquare from 'lucide-react/dist/esm/icons/message-square';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
+import Ticket from 'lucide-react/dist/esm/icons/ticket';
+import Plane from 'lucide-react/dist/esm/icons/plane';
+import QrCode from 'lucide-react/dist/esm/icons/qr-code';
+import Smartphone from 'lucide-react/dist/esm/icons/smartphone';
 
 const CallToAction: React.FC = () => {
 

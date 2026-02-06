@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { BLOG_POSTS } from '../data/blogData';
-import { Calendar, User, ArrowLeft, Clock, Share2, Tag } from 'lucide-react';
+import Calendar from 'lucide-react/dist/esm/icons/calendar';
+import User from 'lucide-react/dist/esm/icons/user';
+import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
+import Clock from 'lucide-react/dist/esm/icons/clock';
+import Share2 from 'lucide-react/dist/esm/icons/share-2';
+import Tag from 'lucide-react/dist/esm/icons/tag';
 import { getWhatsAppLink } from '../utils/whatsapp';
 
 import { SEO } from '../components/SEO';

@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { Calendar, User, ArrowRight, Tag, BookOpen, Sparkles } from 'lucide-react';
+import Calendar from 'lucide-react/dist/esm/icons/calendar';
+import User from 'lucide-react/dist/esm/icons/user';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
+import Tag from 'lucide-react/dist/esm/icons/tag';
+import BookOpen from 'lucide-react/dist/esm/icons/book-open';
+import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
 import { Link } from 'react-router-dom';
 import { BLOG_POSTS } from '../data/blogData';
 import { SocialShare } from './SocialShare';

@@ -1,7 +1,13 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Phone, Mail, MapPin, Globe2, Heart } from 'lucide-react';
+import Instagram from 'lucide-react/dist/esm/icons/instagram';
+import Facebook from 'lucide-react/dist/esm/icons/facebook';
+import Phone from 'lucide-react/dist/esm/icons/phone';
+import Mail from 'lucide-react/dist/esm/icons/mail';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
+import Globe2 from 'lucide-react/dist/esm/icons/globe-2';
+import Heart from 'lucide-react/dist/esm/icons/heart';
 
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();

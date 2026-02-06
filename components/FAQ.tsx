@@ -1,6 +1,12 @@
 
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Sparkles, Plane, Hotel, Ticket, MapPin } from 'lucide-react';
+import ChevronDown from 'lucide-react/dist/esm/icons/chevron-down';
+import ChevronUp from 'lucide-react/dist/esm/icons/chevron-up';
+import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
+import Plane from 'lucide-react/dist/esm/icons/plane';
+import Hotel from 'lucide-react/dist/esm/icons/hotel';
+import Ticket from 'lucide-react/dist/esm/icons/ticket';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 
 interface FAQItemProps {
     question: string;

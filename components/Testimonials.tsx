@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Quote, MessageSquareHeart } from 'lucide-react';
+import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
+import ChevronRight from 'lucide-react/dist/esm/icons/chevron-right';
+import Quote from 'lucide-react/dist/esm/icons/quote';
+import MessageSquareHeart from 'lucide-react/dist/esm/icons/message-square-heart';
 
 const Testimonials: React.FC = () => {
     const testimonials = [

@@ -1,7 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
-import { Menu, X, Phone, ChevronDown } from 'lucide-react';
+import Menu from 'lucide-react/dist/esm/icons/menu';
+import X from 'lucide-react/dist/esm/icons/x';
+import Phone from 'lucide-react/dist/esm/icons/phone';
+import ChevronDown from 'lucide-react/dist/esm/icons/chevron-down';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {

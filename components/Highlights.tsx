@@ -1,7 +1,12 @@
 import React from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
 import { LazyImage } from './ui/LazyImage';
-import { UserCheck, Sparkles, FileCheck, Compass, ShieldCheck, ArrowRight } from 'lucide-react';
+import UserCheck from 'lucide-react/dist/esm/icons/user-check';
+import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
+import FileCheck from 'lucide-react/dist/esm/icons/file-check';
+import Compass from 'lucide-react/dist/esm/icons/compass';
+import ShieldCheck from 'lucide-react/dist/esm/icons/shield-check';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
 
 interface HighlightItem {
     icon: React.ElementType;

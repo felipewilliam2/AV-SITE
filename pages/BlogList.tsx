@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BLOG_POSTS } from '../data/blogData';
-import { Calendar, User, ArrowRight, Search, BookOpen } from 'lucide-react';
+import Calendar from 'lucide-react/dist/esm/icons/calendar';
+import User from 'lucide-react/dist/esm/icons/user';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
+import Search from 'lucide-react/dist/esm/icons/search';
+import BookOpen from 'lucide-react/dist/esm/icons/book-open';
 import { SocialShare } from '../components/SocialShare';
 
 const BlogList: React.FC = () => {

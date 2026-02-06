@@ -1,6 +1,27 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { getWhatsAppLink } from '../utils/whatsapp';
-import { Search, MapPin, ChevronDown, Plus, Minus, ChevronLeft, ChevronRight, Plane, Loader2, Sparkles, Calendar, User, Briefcase, Wallet, Palmtree, Heart, Baby, Compass, Users, DollarSign, Gem, Crown } from 'lucide-react';
+import Search from 'lucide-react/dist/esm/icons/search';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
+import ChevronDown from 'lucide-react/dist/esm/icons/chevron-down';
+import Plus from 'lucide-react/dist/esm/icons/plus';
+import Minus from 'lucide-react/dist/esm/icons/minus';
+import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
+import ChevronRight from 'lucide-react/dist/esm/icons/chevron-right';
+import Plane from 'lucide-react/dist/esm/icons/plane';
+import Loader2 from 'lucide-react/dist/esm/icons/loader-2';
+import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
+import Calendar from 'lucide-react/dist/esm/icons/calendar';
+import User from 'lucide-react/dist/esm/icons/user';
+import Briefcase from 'lucide-react/dist/esm/icons/briefcase';
+import Wallet from 'lucide-react/dist/esm/icons/wallet';
+import Palmtree from 'lucide-react/dist/esm/icons/palmtree';
+import Heart from 'lucide-react/dist/esm/icons/heart';
+import Baby from 'lucide-react/dist/esm/icons/baby';
+import Compass from 'lucide-react/dist/esm/icons/compass';
+import Users from 'lucide-react/dist/esm/icons/users';
+import DollarSign from 'lucide-react/dist/esm/icons/dollar-sign';
+import Gem from 'lucide-react/dist/esm/icons/gem';
+import Crown from 'lucide-react/dist/esm/icons/crown';
 import { HERO_VIDEOS } from '../data/mediaConfig';
 
 // --- DATA: COMPREHENSIVE DESTINATION LIST (IATA & TOURIST HOTSPOTS) ---

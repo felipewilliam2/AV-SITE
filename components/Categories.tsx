@@ -1,5 +1,8 @@
 import React from 'react';
-import { MapPin, ArrowRight, TrendingUp, Star } from 'lucide-react';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
+import Star from 'lucide-react/dist/esm/icons/star';
 
 const Categories: React.FC = () => {
   const popularDestinations = [
