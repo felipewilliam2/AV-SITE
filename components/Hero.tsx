@@ -457,8 +457,6 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 
         {/* Floating Blobs for Fluidity */}
-        <div className="absolute top-20 right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-float pointer-events-none"></div>
-        <div className="absolute bottom-40 left-10 w-48 h-48 bg-yellow-300/20 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10 pt-40 pb-12">
